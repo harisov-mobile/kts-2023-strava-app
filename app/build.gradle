@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// чтобы ktlint использовать
+apply from: "../ktlint.gradle"
+
 android {
     namespace 'ru.internetcloud.strava'
     compileSdk 33
