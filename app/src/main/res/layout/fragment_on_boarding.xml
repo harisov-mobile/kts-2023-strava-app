@@ -30,7 +30,7 @@
         android:id="@+id/strava_logo_image_view"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_marginTop="@dimen/huge_margin"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
