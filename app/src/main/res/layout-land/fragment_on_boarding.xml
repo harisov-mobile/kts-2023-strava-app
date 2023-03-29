@@ -16,40 +16,33 @@
         android:id="@+id/bikers_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         android:scaleType="centerCrop"
-
+        app:srcCompat="@drawable/strava_bikers"
+        android:contentDescription="@string/description_logo"
         app:layout_constraintBottom_toTopOf="@id/middle_horizontal_guideline"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/strava_bikers"
-        android:contentDescription="@string/description_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/strava_logo_image_view"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/huge_margin"
-
+        app:srcCompat="@drawable/strava_logo"
+        android:contentDescription="@string/description_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/strava_logo"
-        android:contentDescription="@string/description_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_margin="@dimen/big_margin"
-
         android:gravity="center"
         android:text="@string/slogan"
         android:textColor="?attr/colorOnPrimary"
-
         android:textSize="@dimen/slogan_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +50,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/get_started_button"
-        style="@style/get_started_button_style"
+        style="@style/getStartedButtonStyle"
         android:text="@string/get_started"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
