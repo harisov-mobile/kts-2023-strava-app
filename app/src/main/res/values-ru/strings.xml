@@ -5,4 +5,7 @@
     <string name="get_started">Начать</string>
     <string name="description_logo">Логотип Страва</string>
     <string name="description_bikers">Велосипедисты</string>
+    <string name="email_hint">Эл.почта</string>
+    <string name="login_button">Вход</string>
+    <string name="password_hint">Пароль</string>
 </resources>

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 // чтобы ktlint использовать
@@ -55,4 +56,7 @@ dependencies {
 
     // reflection-free flavor
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingPropertyDelegateVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timberVersion"
 }

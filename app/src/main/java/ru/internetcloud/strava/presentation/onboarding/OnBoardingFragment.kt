@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.color.MaterialColors
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentOnBoardingBinding
+import timber.log.Timber
 
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
@@ -21,7 +22,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
         hideBars()
 
         binding.getStartedButton.setOnClickListener {
-            launchSecondFragment()
+            launchLoginFragment()
         }
     }
 
@@ -30,8 +31,9 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
         showBars()
     }
 
-    private fun launchSecondFragment() {
-        findNavController().navigate(R.id.action_onBoardingFragment_to_secondFragment)
+    private fun launchLoginFragment() {
+        Timber.tag("rustam").d("launchLoginFragment")
+        findNavController().navigate(R.id.action_onBoardingFragment_to_loginFragment)
     }
 
     private fun hideBars() {
