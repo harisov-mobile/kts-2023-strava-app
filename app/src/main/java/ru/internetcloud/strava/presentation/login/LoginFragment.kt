@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentLoginBinding
+import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -17,7 +18,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Timber.d("onViewCreated")
         binding.loginButton.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
@@ -26,6 +27,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onStart() {
         super.onStart()
+        Timber.d("onStart")
         // doOnTextChanged нужно навешивать здесь, а не в onCreateView или onViewCreated, т.к. там еще не восстановлено
         // EditText и слушатели будут "дергаться" лишний раз когда ОС Андроид сама восстановит состояние EditText
         setupOnTextChangedListeners()
