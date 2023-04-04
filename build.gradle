@@ -1,3 +1,11 @@
+
+buildscript {
+    ext {
+        navVersion = "2.5.3"
+        viewBindingPropertyDelegateVersion = "1.5.8"
+    }
+}
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '7.4.2' apply false

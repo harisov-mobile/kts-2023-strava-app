@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Strava-client</string>
+    <string name="slogan">Лучшее приложение для бегунов и велосипедистов</string>
+    <string name="get_started">Начать</string>
+    <string name="description_logo">Логотип Страва</string>
+    <string name="description_bikers">Велосипедисты</string>
+</resources>

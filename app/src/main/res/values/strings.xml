@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Strava</string>
+    <string name="app_name">Strava-client</string>
+    <string name="slogan">The #1 app for runners and cyclists</string>
+    <string name="get_started">Get Started</string>
+    <string name="description_logo">Strava logotype</string>
+    <string name="description_bikers">Bikers</string>
 </resources>
