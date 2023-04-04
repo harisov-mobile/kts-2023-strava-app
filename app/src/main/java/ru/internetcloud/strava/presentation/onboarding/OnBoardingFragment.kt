@@ -1,4 +1,4 @@
-package ru.internetcloud.strava
+package ru.internetcloud.strava.presentation.onboarding
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.color.MaterialColors
+import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentOnBoardingBinding
 
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
