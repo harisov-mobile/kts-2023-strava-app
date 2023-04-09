@@ -7,6 +7,11 @@ import timber.log.Timber
 
 class TestActivity : AppCompatActivity(R.layout.activity_test) {
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")

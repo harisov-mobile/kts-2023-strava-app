@@ -72,4 +72,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onDetach()
         Timber.d("onDetach")
     }
+
 }
