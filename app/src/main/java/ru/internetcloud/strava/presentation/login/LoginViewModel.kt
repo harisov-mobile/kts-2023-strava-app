@@ -2,33 +2,69 @@ package ru.internetcloud.strava.presentation.login
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import ru.internetcloud.strava.R
 
 class LoginViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val _state = savedStateHandle.getLiveData(KEY_LOGIN_STATE, LoginState())
+    private val _state: MutableLiveData<LoginState> =
+        savedStateHandle.getLiveData(KEY_LOGIN_STATE, LoginState.InitialState)
     val state: LiveData<LoginState>
         get() = _state
 
-    fun setEmail(email: String) {
-        _state.value = _state.value?.copy(email = email) ?: LoginState(email = email)
-        checkValidation()
+    fun checkValidationAccordingLoginState(email: String, password: String) {
+        if (!(state.value is LoginState.InitialState)) {
+            checkValidation(email = email, password = password)
+        }
     }
 
-    fun setPassword(password: String) {
-        _state.value = _state.value?.copy(password = password) ?: LoginState(password = password)
-        checkValidation()
+    private fun checkValidation(email: String, password: String) {
+        if (isEmailValid(email) && isPasswordValid(password)) {
+            _state.value = LoginState.IsValid
+        } else {
+            _state.value = LoginState.NotValid(
+                IncorrectFields(
+                    isEmailIncorrect = !isEmailValid(email),
+                    isPasswordIncorrect = !isPasswordValid(password),
+                    validPasswordLengh = VALID_PASSWORD_LENGTH,
+                    showErrorsInSnackbar = false
+                )
+            )
+        }
     }
 
-    fun checkValidation() {
-        _state.value?.let { currentState ->
-            if (currentState.password.length >= VALID_PASSWORD_LENGTH &&
-                Patterns.EMAIL_ADDRESS.matcher(currentState.email).matches()) {
-                _state.value = currentState.copy(loginEnabled = true)
-            } else {
-                _state.value = currentState.copy(loginEnabled = false)
-            }
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length >= VALID_PASSWORD_LENGTH
+    }
+
+    fun login(email: String, password: String) {
+        checkValidation(email, password)
+        if (state.value is LoginState.IsValid) {
+            checkAuth(
+                AuthParameters(email = email, password = password)
+            )
+        } else if (state.value is LoginState.NotValid) {
+            _state.value = LoginState.NotValid(
+                incorrectFields = (state.value as LoginState.NotValid).incorrectFields.copy(
+                    showErrorsInSnackbar = true
+                )
+            )
+        }
+    }
+
+    private fun checkAuth(authParameters: AuthParameters) {
+        // здесь должна быть проверка авторизации на сервере, допустим, что авторизация всегда проходит:
+        val isAuthSuccessful = true
+        if (isAuthSuccessful) {
+            _state.value = LoginState.Success
+        } else {
+            _state.value = LoginState.Error(stringResId = R.string.auth_not_passed)
         }
     }
 

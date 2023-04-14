@@ -1,11 +1,23 @@
 package ru.internetcloud.strava.presentation.login
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class LoginState(
-    val email: String = "",
-    val password: String = "",
-    val loginEnabled: Boolean = false
-) : Parcelable
+sealed class LoginState : Parcelable {
+
+    @Parcelize
+    object InitialState : LoginState()
+
+    @Parcelize
+    data class NotValid(val incorrectFields: IncorrectFields) : LoginState()
+
+    @Parcelize
+    object IsValid : LoginState()
+
+    @Parcelize
+    object Success : LoginState()
+
+    @Parcelize
+    data class Error(@StringRes val stringResId: Int) : LoginState()
+}

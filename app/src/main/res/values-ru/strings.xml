@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Strava-client</string>
-    <string name="slogan">Лучшее приложение для бегунов и велосипедистов</string>
     <string name="get_started">Начать</string>
     <string name="description_logo">Логотип Страва</string>
     <string name="description_bikers">Велосипедисты</string>
@@ -9,4 +8,14 @@
     <string name="login_button">Вход</string>
     <string name="password_hint">Пароль</string>
     <string name="test_activity_label">Тестовая активити</string>
+    <string name="launch_test_activity_button">Запустить тестовую активити</string>
+    <string name="email_incorrect">Неправильный адрес эл.почты</string>
+    <string name="password_incorrect">Неправильный пароль, длина пароля должна быть не меньше %s символов</string>
+    <string name="auth_not_passed">Неверный эл.адрес или пароль. Попробуйте еще раз.</string>
+    <string name="on_boarding_image">изображение для онбординга</string>
+    <string name="slogan_bikers">Лучшее приложение для бегунов и велосипедистов</string>
+    <string name="slogan_runner">Тренировка - лучшее начало</string>
+    <string name="slogan_pool">Откройте, коснитесь - и вперед!</string>
+    <string name="slogan_people">Анализируйте и становитесь лучше</string>
+    <string name="likes_amount">Количество лайков = %s</string>
 </resources>

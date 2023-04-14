@@ -10,24 +10,31 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.color.MaterialColors
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentOnBoardingBinding
+import ru.internetcloud.strava.presentation.util.autoCleared
 
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
 
+    private var adapter: OnBoardingAdapter by autoCleared()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         hideBars()
-
-        binding.getStartedButton.setOnClickListener {
-            launchLoginFragment()
-        }
+        initAdapter()
+        setupClickListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         showBars()
+    }
+
+    private fun setupClickListeners() {
+        binding.getStartedButton.setOnClickListener {
+            launchLoginFragment()
+        }
     }
 
     private fun launchLoginFragment() {
@@ -36,7 +43,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
     private fun hideBars() {
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) // hide status bar
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide() // hide action bar
     }
 
     private fun showBars() {
@@ -56,5 +63,35 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
         requireActivity().window.statusBarColor = colorPrimaryVariant
 
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
+    }
+
+    private fun initAdapter() {
+        adapter = OnBoardingAdapter()
+
+        with(binding) {
+            onBoardingVewPager.adapter = adapter
+            dotsIndicator.setViewPager2(onBoardingVewPager)
+        }
+
+        adapter.setItems(
+            listOf(
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_bikers,
+                    titleResId = R.string.slogan_bikers
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_runner,
+                    titleResId = R.string.slogan_runner
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_pool,
+                    titleResId = R.string.slogan_pool
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_people,
+                    titleResId = R.string.slogan_people
+                )
+            )
+        )
     }
 }
