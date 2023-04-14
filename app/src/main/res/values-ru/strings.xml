@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Strava-client</string>
-    <string name="slogan">Лучшее приложение для бегунов и велосипедистов</string>
-    <string name="get_started">Начать</string>
-    <string name="description_logo">Логотип Страва</string>
-    <string name="description_bikers">Велосипедисты</string>
-    <string name="email_hint">Эл.почта</string>
-    <string name="login_button">Вход</string>
-    <string name="password_hint">Пароль</string>
-    <string name="test_activity_label">Тестовая активити</string>
+
+    <string name="onboarding_get_started">Начать</string>
+    <string name="onboarding_description_logo">Логотип Страва</string>
+    <string name="onboarding_description_bikers">Велосипедисты</string>
+    <string name="onboarding_image">изображение для онбординга</string>
+    <string name="onboarding_slogan_bikers">Лучшее приложение для бегунов и велосипедистов</string>
+    <string name="onboarding_slogan_runner">Тренировка - лучшее начало</string>
+    <string name="onboarding_slogan_pool">Откройте, коснитесь - и вперед!</string>
+    <string name="onboarding_slogan_people">Анализируйте и становитесь лучше</string>
+
+    <string name="login_email_hint">Эл.почта</string>
+    <string name="login_login_button">Вход</string>
+    <string name="login_password_hint">Пароль</string>
+    <string name="login_email_incorrect">Неправильный адрес эл.почты</string>
+    <string name="login_password_incorrect">Неправильный пароль, длина пароля должна быть не меньше %s символов</string>
+    <string name="login_auth_not_passed">Неверный эл.адрес или пароль. Попробуйте еще раз.</string>
+
+    <string name="auth_login_button">Войти через Strava.com</string>
+    <string name="auth_canceled">Аутентификация не выполнена</string>
+
+    <string name="main_likes_amount">Количество лайков = %s</string>
+
+    <string name="navigation_item_home">Главная</string>
+    <string name="navigation_item_groups">Группы</string>
+    <string name="navigation_item_you">Вы</string>
+
+    <string name="strava_server_unavailable">На сервере Strava произошла ошибка. Если проблема не исчезнет, обратитесь в службу поддержки.</string>
+    <string name="try_again_button">Повторить попытку</string>
+    <string name="training_list_is_empty">Нет ни одной тренировки</string>
+    <string name="no_data">Нет данных</string>
+
+    <string name="profile_following">Подписки</string>
+    <string name="profile_followers">Подписчики</string>
+
+    <string name="training_app_bar_title">Тренировка</string>
+    <string name="training_time_title">Время</string>
+    <string name="training_distance_title">Расстояние</string>
+    <string name="training_speed_title">Скорость</string>
+    <string name="training_hours_minutes">%sч. %sмин.</string>
+    <string name="training_minutes_seconds">%sмин. %sсек.</string>
+    <string name="training_distance_format">%.2f км</string>
+    <string name="training_speed_format">%.1f км/ч</string>
+
+    <string name="groups_under_constraction">В разработке</string>
 </resources>

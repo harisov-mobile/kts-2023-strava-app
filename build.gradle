@@ -1,9 +1,25 @@
 
 buildscript {
     ext {
+        appAuthVersion = "0.9.1"
+        composeVersion = "1.4.0"
+        composeNavigationVersion = "2.5.2"
+        coilComposeVersion = "2.1.0"
+        dotsIndicatorVersion = "4.2"
+        immutableVersion = "0.3.5"
+        fakeDataVersion = "1.0.2"
+        lifecycleComposeVersion = "2.6.1"
         navVersion = "2.5.3"
-        viewBindingPropertyDelegateVersion = "1.5.8"
+        okhttpVersion = "4.9.3"
+        runtimeLiveDataVersion = "1.2.1"
+        retrofitVersion = "2.9.0"
         timberVersion = "5.0.1"
+        viewBindingPropertyDelegateVersion = "1.5.8"
+    }
+
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
     }
 }
 
