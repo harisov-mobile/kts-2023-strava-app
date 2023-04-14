@@ -3,6 +3,7 @@ buildscript {
     ext {
         navVersion = "2.5.3"
         viewBindingPropertyDelegateVersion = "1.5.8"
+        timberVersion = "5.0.1"
     }
 }
 

@@ -4,4 +4,8 @@
     <string name="get_started">Get Started</string>
     <string name="description_logo">Strava logotype</string>
     <string name="description_bikers">Bikers</string>
+    <string name="email_hint">Email</string>
+    <string name="login_button">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="test_activity_label">Test activity</string>
 </resources>
