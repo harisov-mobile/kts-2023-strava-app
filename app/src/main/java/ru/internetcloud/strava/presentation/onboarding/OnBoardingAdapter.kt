@@ -5,13 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.internetcloud.strava.databinding.OnboardingItemBinding
 
-class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingViewHolder>() {
-
-    private var items: List<OnBoardingUI> = listOf()
-
-    fun setItems(items: List<OnBoardingUI>) {
-        this.items = items
-    }
+class OnBoardingAdapter(private val items: List<OnBoardingUI>) : RecyclerView.Adapter<OnBoardingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoardingViewHolder {
         return OnBoardingViewHolder(

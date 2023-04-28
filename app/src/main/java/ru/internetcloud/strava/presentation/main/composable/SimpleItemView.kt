@@ -51,7 +51,7 @@ fun LazyItemScope.SimpleItemView(item: SimpleItem, onLikeClickListener: (Item) -
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = String.format(
-                    stringResource(R.string.likes_amount),
+                    stringResource(R.string.main_likes_amount),
                     item.likesCount.toString()
                 ),
                 color = colorResource(id = R.color.tangelo)

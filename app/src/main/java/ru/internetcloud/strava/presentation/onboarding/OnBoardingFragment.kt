@@ -38,7 +38,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
     }
 
     private fun launchLoginFragment() {
-        findNavController().navigate(R.id.action_onBoardingFragment_to_loginFragment)
+        findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToLoginFragment())
     }
 
     private fun hideBars() {
@@ -66,32 +66,30 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
     }
 
     private fun initAdapter() {
-        adapter = OnBoardingAdapter()
+        adapter = OnBoardingAdapter(
+            listOf(
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_bikers,
+                    titleResId = R.string.onboarding_slogan_bikers
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_runner,
+                    titleResId = R.string.onboarding_slogan_runner
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_pool,
+                    titleResId = R.string.onboarding_slogan_pool
+                ),
+                OnBoardingUI(
+                    imageResId = R.drawable.strava_people,
+                    titleResId = R.string.onboarding_slogan_people
+                )
+            )
+        )
 
         with(binding) {
             onBoardingVewPager.adapter = adapter
             dotsIndicator.setViewPager2(onBoardingVewPager)
         }
-
-        adapter.setItems(
-            listOf(
-                OnBoardingUI(
-                    imageResId = R.drawable.strava_bikers,
-                    titleResId = R.string.slogan_bikers
-                ),
-                OnBoardingUI(
-                    imageResId = R.drawable.strava_runner,
-                    titleResId = R.string.slogan_runner
-                ),
-                OnBoardingUI(
-                    imageResId = R.drawable.strava_pool,
-                    titleResId = R.string.slogan_pool
-                ),
-                OnBoardingUI(
-                    imageResId = R.drawable.strava_people,
-                    titleResId = R.string.slogan_people
-                )
-            )
-        )
     }
 }

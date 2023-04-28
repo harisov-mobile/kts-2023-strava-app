@@ -69,13 +69,7 @@ class MainViewModel : ViewModel() {
 
     fun increaseLikes(item: Item) {
         val items = mutableListState.value.items
-        var foundIndex = NOT_FOUND
-        for (index in 0 until items.size) {
-            if (items.get(index).id == item.id) {
-                foundIndex = index
-                break
-            }
-        }
+        val foundIndex = mutableListState.value.items.indexOf(item)
         if (foundIndex == NOT_FOUND) {
             throw IllegalStateException("Not found element with id = ${item.id}")
         }

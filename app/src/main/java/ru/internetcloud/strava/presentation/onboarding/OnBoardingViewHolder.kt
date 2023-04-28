@@ -1,5 +1,7 @@
 package ru.internetcloud.strava.presentation.onboarding
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import ru.internetcloud.strava.databinding.OnboardingItemBinding
 
@@ -12,11 +14,11 @@ class OnBoardingViewHolder(
         setTitle(items.titleResId)
     }
 
-    private fun setImage(imageResId: Int) {
+    private fun setImage(@DrawableRes imageResId: Int) {
         binding.onBoardingImage.setImageResource(imageResId)
     }
 
-    private fun setTitle(titleResId: Int) {
+    private fun setTitle(@StringRes titleResId: Int) {
         binding.onBoardingTitle.setText(titleResId)
     }
 }

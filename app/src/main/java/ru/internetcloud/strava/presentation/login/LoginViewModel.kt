@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.login
 
+import android.app.Application
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import ru.internetcloud.strava.R
 
-class LoginViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+class LoginViewModel(private val app: Application, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _state: MutableLiveData<LoginState> =
         savedStateHandle.getLiveData(KEY_LOGIN_STATE, LoginState.InitialState)
@@ -24,12 +25,19 @@ class LoginViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         if (isEmailValid(email) && isPasswordValid(password)) {
             _state.value = LoginState.IsValid
         } else {
+            val isEmailIncorrect = !isEmailValid(email)
+            val isPasswordIncorrect = !isPasswordValid(password)
             _state.value = LoginState.NotValid(
                 IncorrectFields(
-                    isEmailIncorrect = !isEmailValid(email),
-                    isPasswordIncorrect = !isPasswordValid(password),
-                    validPasswordLengh = VALID_PASSWORD_LENGTH,
-                    showErrorsInSnackbar = false
+                    isEmailIncorrect = isEmailIncorrect,
+                    isPasswordIncorrect = isPasswordIncorrect,
+                    showErrorsInSnackbar = false,
+                    errorsMessage = getMultiLineErrorMessage(
+                        isEmailIncorrect = isEmailIncorrect,
+                        isPasswordIncorrect = isPasswordIncorrect
+                    ),
+                    incorrectEmailMessage = getIncorrectEmailMessage(isEmailIncorrect),
+                    incorrectPasswordMessage = getIncorrectPasswordMessage(isPasswordIncorrect)
                 )
             )
         }
@@ -64,12 +72,54 @@ class LoginViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         if (isAuthSuccessful) {
             _state.value = LoginState.Success
         } else {
-            _state.value = LoginState.Error(stringResId = R.string.auth_not_passed)
+            _state.value = LoginState.Error(stringResId = R.string.login_auth_not_passed)
+        }
+    }
+
+    private fun getMultiLineErrorMessage(isEmailIncorrect: Boolean, isPasswordIncorrect: Boolean): String {
+        var message = ""
+        if (isEmailIncorrect) {
+            val temp = getIncorrectEmailMessage(isEmailIncorrect)
+            if (message.isBlank()) {
+                message = temp
+            } else {
+                message = message + "\n" + temp
+            }
+        }
+
+        if (isPasswordIncorrect) {
+            val temp = getIncorrectPasswordMessage(isPasswordIncorrect)
+            if (message.isBlank()) {
+                message = temp
+            } else {
+                message = message + "\n" + temp
+            }
+        }
+        return message
+    }
+
+    private fun getIncorrectEmailMessage(isEmailIncorrect: Boolean): String {
+        return if (isEmailIncorrect) {
+            app.getString(R.string.login_email_incorrect)
+        } else {
+            EMPTY_MESSAGE
+        }
+    }
+
+    private fun getIncorrectPasswordMessage(isPasswordIncorrect: Boolean): String {
+        return if (isPasswordIncorrect) {
+            String.format(
+                app.getString(R.string.login_password_incorrect),
+                VALID_PASSWORD_LENGTH.toString()
+            )
+        } else {
+            EMPTY_MESSAGE
         }
     }
 
     companion object {
         private const val VALID_PASSWORD_LENGTH = 8
         private const val KEY_LOGIN_STATE = "key_login_state"
+        private const val EMPTY_MESSAGE = ""
     }
 }

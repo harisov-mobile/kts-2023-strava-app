@@ -1,22 +1,23 @@
 package ru.internetcloud.strava.presentation.login
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.snackbar.Snackbar
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentLoginBinding
+import ru.internetcloud.strava.presentation.util.closeKeyboard
+import ru.internetcloud.strava.presentation.util.snackbar
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory(requireActivity().application)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,47 +62,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun handleNotValidState(state: LoginState.NotValid) {
-        var message = ""
-        binding.emailTextInputLayout.error = if (state.incorrectFields.isEmailIncorrect) {
-            val temp = getString(R.string.email_incorrect)
-            if (message.isBlank()) {
-                message = temp
-            } else {
-                message = message + "\n" + temp
-            }
-            temp
-        } else {
-            null
-        }
-
-        binding.passwordTextInputLayout.error = if (state.incorrectFields.isPasswordIncorrect) {
-            val temp = String.format(
-                getString(R.string.password_incorrect),
-                state.incorrectFields.validPasswordLengh.toString()
-            )
-            if (message.isBlank()) {
-                message = temp
-            } else {
-                message = message + "\n" + temp
-            }
-            temp
-        } else {
-            null
-        }
+        binding.emailTextInputLayout.error = state.incorrectFields.incorrectEmailMessage
+        binding.passwordTextInputLayout.error = state.incorrectFields.incorrectPasswordMessage
 
         if (state.incorrectFields.showErrorsInSnackbar &&
             (state.incorrectFields.isEmailIncorrect || state.incorrectFields.isPasswordIncorrect)
         ) {
-            Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+            snackbar(view = binding.root, message = state.incorrectFields.errorsMessage, isLengthShort = false)
         }
     }
 
     private fun handleError(state: LoginState.Error) {
-        Snackbar.make(binding.root, getString(state.stringResId), Snackbar.LENGTH_LONG).show()
+        snackbar(view = binding.root, message = getString(state.stringResId), isLengthShort = false)
     }
 
     private fun goToMainScreen() {
-        findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
     }
 
     private fun setupOnTextChangedListeners() {
@@ -118,11 +94,5 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             email = binding.emailEditText.text.toString(),
             password = binding.passwordEditText.text.toString()
         )
-    }
-
-    private fun closeKeyboard() {
-        (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-            hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
-        }
     }
 }

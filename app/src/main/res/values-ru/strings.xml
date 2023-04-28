@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Strava-client</string>
-    <string name="get_started">Начать</string>
-    <string name="description_logo">Логотип Страва</string>
-    <string name="description_bikers">Велосипедисты</string>
-    <string name="email_hint">Эл.почта</string>
-    <string name="login_button">Вход</string>
-    <string name="password_hint">Пароль</string>
-    <string name="test_activity_label">Тестовая активити</string>
-    <string name="launch_test_activity_button">Запустить тестовую активити</string>
-    <string name="email_incorrect">Неправильный адрес эл.почты</string>
-    <string name="password_incorrect">Неправильный пароль, длина пароля должна быть не меньше %s символов</string>
-    <string name="auth_not_passed">Неверный эл.адрес или пароль. Попробуйте еще раз.</string>
-    <string name="on_boarding_image">изображение для онбординга</string>
-    <string name="slogan_bikers">Лучшее приложение для бегунов и велосипедистов</string>
-    <string name="slogan_runner">Тренировка - лучшее начало</string>
-    <string name="slogan_pool">Откройте, коснитесь - и вперед!</string>
-    <string name="slogan_people">Анализируйте и становитесь лучше</string>
-    <string name="likes_amount">Количество лайков = %s</string>
+
+    <string name="onboarding_get_started">Начать</string>
+    <string name="onboarding_description_logo">Логотип Страва</string>
+    <string name="onboarding_description_bikers">Велосипедисты</string>
+    <string name="onboarding_image">изображение для онбординга</string>
+    <string name="onboarding_slogan_bikers">Лучшее приложение для бегунов и велосипедистов</string>
+    <string name="onboarding_slogan_runner">Тренировка - лучшее начало</string>
+    <string name="onboarding_slogan_pool">Откройте, коснитесь - и вперед!</string>
+    <string name="onboarding_slogan_people">Анализируйте и становитесь лучше</string>
+
+    <string name="login_email_hint">Эл.почта</string>
+    <string name="login_login_button">Вход</string>
+    <string name="login_password_hint">Пароль</string>
+    <string name="login_email_incorrect">Неправильный адрес эл.почты</string>
+    <string name="login_password_incorrect">Неправильный пароль, длина пароля должна быть не меньше %s символов</string>
+    <string name="login_auth_not_passed">Неверный эл.адрес или пароль. Попробуйте еще раз.</string>
+
+    <string name="main_likes_amount">Количество лайков = %s</string>
 </resources>

@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class IncorrectFields(
     val isEmailIncorrect: Boolean = false,
     val isPasswordIncorrect: Boolean = false,
-    val validPasswordLengh: Int = 0,
-    val showErrorsInSnackbar: Boolean = false
+    val showErrorsInSnackbar: Boolean = false,
+    val errorsMessage: String,
+    val incorrectEmailMessage: String,
+    val incorrectPasswordMessage: String
 ) : Parcelable

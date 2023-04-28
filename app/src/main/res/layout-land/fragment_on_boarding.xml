@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/huge_margin"
         tools:background="@color/teal_200"
         app:srcCompat="@drawable/strava_logo"
-        android:contentDescription="@string/description_logo"
+        android:contentDescription="@string/onboarding_description_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/getStartedButton"
         style="@style/getStartedButtonStyle"
-        android:text="@string/get_started"
+        android:text="@string/onboarding_get_started"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
