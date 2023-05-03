@@ -3,55 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tangelo_light">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/tangelo_light" >
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middle_horizontal_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
-
-    <ImageView
-        android:id="@+id/bikers_image_view"
-        android:layout_width="0dp"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onBoardingVewPager"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/strava_bikers"
-        android:contentDescription="@string/description_logo"
-        app:layout_constraintBottom_toTopOf="@id/middle_horizontal_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/dotsIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/strava_logo_image_view"
+        android:id="@+id/stravaLogoImageView"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/huge_margin"
+        tools:background="@color/teal_200"
         app:srcCompat="@drawable/strava_logo"
-        android:contentDescription="@string/description_logo"
+        android:contentDescription="@string/onboarding_description_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="0dp"
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_margin"
-        android:gravity="center"
-        android:text="@string/slogan"
-        android:textColor="?attr/colorOnPrimary"
-        android:textSize="@dimen/slogan_text_size"
+        android:layout_marginBottom="@dimen/huge_margin"
+        android:theme="@style/DotsIndicatorLand"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsWidthFactor="2.5"
+        app:layout_constraintBottom_toTopOf="@+id/getStartedButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/middle_horizontal_guideline" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/get_started_button"
+        android:id="@+id/getStartedButton"
         style="@style/getStartedButtonStyle"
-        android:text="@string/get_started"
+        android:text="@string/onboarding_get_started"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

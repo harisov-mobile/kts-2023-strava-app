@@ -1,11 +1,21 @@
 <resources>
     <string name="app_name">Strava-client</string>
-    <string name="slogan">The #1 app for runners and cyclists</string>
-    <string name="get_started">Get Started</string>
-    <string name="description_logo">Strava logotype</string>
-    <string name="description_bikers">Bikers</string>
-    <string name="email_hint">Email</string>
-    <string name="login_button">Login</string>
-    <string name="password_hint">Password</string>
-    <string name="test_activity_label">Test activity</string>
+
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_description_logo">Strava logotype</string>
+    <string name="onboarding_description_bikers">Bikers</string>
+    <string name="onboarding_image">on boarding image</string>
+    <string name="onboarding_slogan_bikers">The #1 app for runners and cyclists</string>
+    <string name="onboarding_slogan_runner">Start by sweating</string>
+    <string name="onboarding_slogan_pool">Open, tap, go</string>
+    <string name="onboarding_slogan_people">Get better by analysis</string>
+
+    <string name="login_login_button">Login</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_email_incorrect">Please enter a valid email address</string>
+    <string name="login_password_incorrect">Password incorrect, at least %s characters</string>
+    <string name="login_auth_not_passed">Wrong email address or password, please try again</string>
+
+    <string name="main_likes_amount">Amount of likes = %s</string>
 </resources>
