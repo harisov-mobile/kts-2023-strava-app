@@ -2,6 +2,7 @@
 buildscript {
     ext {
         appAuthVersion = "0.9.1"
+        coilComposeVersion = "2.1.0"
         composeVersion = "1.4.0"
         composeNavigationVersion = "2.5.2"
         coilComposeVersion = "2.1.0"
@@ -9,6 +10,7 @@ buildscript {
         immutableVersion = "0.3.5"
         fakeDataVersion = "1.0.2"
         lifecycleComposeVersion = "2.6.1"
+        moshiVersion = "1.14.0"
         navVersion = "2.5.3"
         okhttpVersion = "4.9.3"
         runtimeLiveDataVersion = "1.2.1"
