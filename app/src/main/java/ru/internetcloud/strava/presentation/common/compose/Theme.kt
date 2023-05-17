@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.main
+package ru.internetcloud.strava.presentation.common.compose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme

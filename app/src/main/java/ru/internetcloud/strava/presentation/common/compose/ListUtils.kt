@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.oldmain
+package ru.internetcloud.strava.presentation.common.compose
 
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
-import ru.internetcloud.strava.presentation.oldmain.composable.LoadingData
 
 private typealias DefaultItemListKey<T> = ((item: T) -> Any)
 private typealias KeyResult = ((index: Int, item: Any) -> Any)

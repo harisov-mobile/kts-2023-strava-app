@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.main
+package ru.internetcloud.strava.presentation.common.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

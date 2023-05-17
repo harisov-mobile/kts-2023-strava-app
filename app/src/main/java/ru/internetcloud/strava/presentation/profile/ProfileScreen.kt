@@ -27,9 +27,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.model.Profile
-import ru.internetcloud.strava.presentation.main.ShowEmptyData
-import ru.internetcloud.strava.presentation.main.ShowError
-import ru.internetcloud.strava.presentation.main.ShowLoadingData
+import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
+import ru.internetcloud.strava.presentation.common.compose.ShowError
+import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 import ru.internetcloud.strava.presentation.util.addPartWithComma

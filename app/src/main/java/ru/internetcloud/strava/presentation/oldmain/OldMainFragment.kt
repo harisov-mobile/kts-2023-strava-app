@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.internetcloud.strava.presentation.common.compose.itemsWithListState
+import ru.internetcloud.strava.presentation.common.compose.itemsWithState
+import ru.internetcloud.strava.presentation.common.compose.loadNextPage
 import ru.internetcloud.strava.presentation.oldmain.composable.ComplexItemView
 import ru.internetcloud.strava.presentation.oldmain.composable.SimpleItemView
 import ru.internetcloud.strava.presentation.oldmain.model.ComplexItem
@@ -40,8 +44,10 @@ class OldMainFragment : Fragment() {
                     when (item) {
                         is SimpleItem -> SimpleItemView(
                             item = item,
-                            onLikeClickListener = { item ->
-                                viewModel.increaseLikes(item)
+                            onLikeClickListener = remember {
+                                { item ->
+                                    viewModel.increaseLikes(item)
+                                }
                             }
                         )
                         is ComplexItem -> ComplexItemView(item = item, onItemClick = {})

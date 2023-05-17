@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
+import ru.internetcloud.strava.presentation.common.compose.StravaTheme
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState

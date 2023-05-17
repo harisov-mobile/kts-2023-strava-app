@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.oldmain.composable
+package ru.internetcloud.strava.presentation.common.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.internetcloud.strava.presentation.util.applyIf
 
 @Composable
 fun LazyItemScope.LoadingData(
@@ -27,8 +28,4 @@ fun LazyItemScope.LoadingData(
     ) {
         CircularProgressIndicator()
     }
-}
-
-inline fun <T> T.applyIf(predicate: Boolean, block: T.() -> T): T {
-    return if (predicate) block() else this
 }
