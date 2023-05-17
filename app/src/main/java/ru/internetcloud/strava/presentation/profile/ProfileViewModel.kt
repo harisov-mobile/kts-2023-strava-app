@@ -30,8 +30,7 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
 
-            val dataResponse = getProfileUseCase.getProfile()
-            when (dataResponse) {
+            when (val dataResponse = getProfileUseCase.getProfile()) {
                 is DataResponse.Success -> {
                     _screenState.value = UiState.Success(data = dataResponse.data)
                 }

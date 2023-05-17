@@ -37,16 +37,13 @@ class TrainingListViewModel : ViewModel() {
 
             var profileWithTrainings: ProfileWithTrainingList
 
-            val profileDataResponse = getProfileUseCase.getProfile()
-
-            when (profileDataResponse) {
+            when (val profileDataResponse = getProfileUseCase.getProfile()) {
                 is DataResponse.Success -> {
                     profileWithTrainings = ProfileWithTrainingList(
                         profile = profileDataResponse.data,
                         trainingList = emptyList()
                     )
-                    val trainingsDataResponse = getTrainingsUseCase.getTrainings(page = 1)
-                    when (trainingsDataResponse) {
+                    when (val trainingsDataResponse = getTrainingsUseCase.getTrainings(page = 1)) {
                         is DataResponse.Success -> {
                             val list = trainingsDataResponse.data.toList()
                             if (list.isEmpty()) {

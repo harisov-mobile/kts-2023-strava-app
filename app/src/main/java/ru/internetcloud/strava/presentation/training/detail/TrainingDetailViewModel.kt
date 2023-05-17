@@ -35,13 +35,10 @@ class TrainingDetailViewModel(id: Long) : ViewModel() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
 
-            val profileDataResponse = getProfileUseCase.getProfile()
-
-            when (profileDataResponse) {
+            when (val profileDataResponse = getProfileUseCase.getProfile()) {
                 is DataResponse.Success -> {
                     val profile = profileDataResponse.data
-                    val trainingDataResponse = getTrainingUseCase.getTraining(id = id)
-                    when (trainingDataResponse) {
+                    when (val trainingDataResponse = getTrainingUseCase.getTraining(id = id)) {
                         is DataResponse.Success -> {
                             val profileWithTraining = ProfileWithTraining(
                                 profile = profile,
