@@ -24,7 +24,7 @@ class ProfileRepositoryImpl : ProfileRepository {
                     DataResponse.Error(exception = java.lang.IllegalStateException("No athlete found"))
                 }
             } else {
-                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string() ?: ""))
+                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
             result = DataResponse.Error(e)

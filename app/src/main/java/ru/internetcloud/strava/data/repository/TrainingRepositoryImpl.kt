@@ -27,7 +27,7 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Success(emptyList<TrainingListItem>())
                 }
             } else {
-                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string() ?: ""))
+                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
             result = DataResponse.Error(e)
@@ -48,7 +48,7 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Error(exception = java.lang.IllegalStateException("No activity found with id = $id"))
                 }
             } else {
-                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string() ?: ""))
+                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
             result = DataResponse.Error(e)

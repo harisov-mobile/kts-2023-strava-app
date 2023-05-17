@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import ru.internetcloud.strava.presentation.util.orDefault
 
 fun NavGraphBuilder.homeScreenNavGraph(
     trainingListScreenContent: @Composable () -> Unit,
@@ -26,7 +27,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
                 }
             )
         ) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getLong("id") ?: 0
+            val id = navBackStackEntry.arguments?.getLong("id").orDefault()
             trainingDetailScreenContent(id = id)
         }
     }

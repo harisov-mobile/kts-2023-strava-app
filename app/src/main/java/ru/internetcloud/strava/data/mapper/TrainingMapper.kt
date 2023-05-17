@@ -14,7 +14,7 @@ class TrainingMapper {
             movingTime = trainingDTO.movingTime,
             type = trainingDTO.type,
             startDate = DateTimeConverter.fromStringToDate(trainingDTO.startDate),
-            description = trainingDTO.description ?: ""
+            description = trainingDTO.description.orEmpty()
         )
     }
 }
