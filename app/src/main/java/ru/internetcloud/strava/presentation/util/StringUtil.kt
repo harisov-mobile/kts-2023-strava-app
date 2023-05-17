@@ -1,17 +1,17 @@
 package ru.internetcloud.strava.presentation.util
 
 fun String.addLine(line: String): String {
-    if (this.isEmpty()) {
-        return line
+    return if (this.isEmpty()) {
+        line
     } else {
-        return "$this\n$line"
+        "$this\n$line"
     }
 }
 
 fun String.addPartWithComma(part: String): String {
-    if (part.isEmpty()) {
-        return this
+    return if (part.isEmpty()) {
+        this
     } else {
-        return "$this, $part"
+        "$this, $part"
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.presentation.util.addLine
 
 class LoginViewModel(private val app: Application, savedStateHandle: SavedStateHandle) : ViewModel() {
 
@@ -36,8 +37,8 @@ class LoginViewModel(private val app: Application, savedStateHandle: SavedStateH
                         isEmailIncorrect = isEmailIncorrect,
                         isPasswordIncorrect = isPasswordIncorrect
                     ),
-                    incorrectEmailMessage = getIncorrectEmailMessage(isEmailIncorrect),
-                    incorrectPasswordMessage = getIncorrectPasswordMessage(isPasswordIncorrect)
+                    incorrectEmailMessage = if (isEmailIncorrect) getIncorrectEmailMessage() else EMPTY_MESSAGE,
+                    incorrectPasswordMessage = if (isPasswordIncorrect) getIncorrectPasswordMessage() else EMPTY_MESSAGE
                 )
             )
         }
@@ -77,44 +78,23 @@ class LoginViewModel(private val app: Application, savedStateHandle: SavedStateH
     }
 
     private fun getMultiLineErrorMessage(isEmailIncorrect: Boolean, isPasswordIncorrect: Boolean): String {
-        var message = ""
+        val message = EMPTY_MESSAGE
         if (isEmailIncorrect) {
-            val temp = getIncorrectEmailMessage(isEmailIncorrect)
-            if (message.isBlank()) {
-                message = temp
-            } else {
-                message = message + "\n" + temp
-            }
+            message.addLine(getIncorrectEmailMessage())
         }
 
         if (isPasswordIncorrect) {
-            val temp = getIncorrectPasswordMessage(isPasswordIncorrect)
-            if (message.isBlank()) {
-                message = temp
-            } else {
-                message = message + "\n" + temp
-            }
+            message.addLine(getIncorrectPasswordMessage())
         }
         return message
     }
 
-    private fun getIncorrectEmailMessage(isEmailIncorrect: Boolean): String {
-        return if (isEmailIncorrect) {
-            app.getString(R.string.login_email_incorrect)
-        } else {
-            EMPTY_MESSAGE
-        }
+    private fun getIncorrectEmailMessage(): String {
+        return app.getString(R.string.login_email_incorrect)
     }
 
-    private fun getIncorrectPasswordMessage(isPasswordIncorrect: Boolean): String {
-        return if (isPasswordIncorrect) {
-            String.format(
-                app.getString(R.string.login_password_incorrect),
-                VALID_PASSWORD_LENGTH.toString()
-            )
-        } else {
-            EMPTY_MESSAGE
-        }
+    private fun getIncorrectPasswordMessage(): String {
+        return app.getString(R.string.login_password_incorrect)
     }
 
     companion object {
