@@ -1,11 +1,25 @@
 package ru.internetcloud.strava.data.network.model
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class TrainingListItemDTO(
+    @Json(name = "id")
     val id: Long,
+
+    @Json(name = "name")
     val name: String,
+
+    @Json(name = "distance")
     val distance: Float,
-    val moving_time: Int,
-    val athleteid: Long,
+
+    @Json(name = "moving_time")
+    val movingTime: Int,
+
+    @Json(name = "type")
     val type: String,
-    val start_date: String
+
+    @Json(name = "start_date")
+    val startDate: String
 )

@@ -12,7 +12,6 @@ class TrainingConverter {
                 name = training.name,
                 distance = training.distance,
                 movingTime = training.movingTime,
-                athleteId = training.athleteId,
                 type = training.type,
                 startDate = training.startDate
             )

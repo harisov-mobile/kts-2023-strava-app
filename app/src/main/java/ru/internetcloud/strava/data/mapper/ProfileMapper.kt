@@ -14,10 +14,10 @@ class ProfileMapper {
             state = profileDTO.state ?: "",
             country = profileDTO.country ?: "",
             sex = profileDTO.sex ?: "",
-            imageUrlMedium = profileDTO.profile_medium ?: "",
+            imageUrlMedium = profileDTO.profileMedium ?: "",
             imageUrl = profileDTO.profile ?: "",
-            friendCount = profileDTO.friend_count ?: 0,
-            followerCount = profileDTO.follower_count ?: 0
+            friendCount = profileDTO.friendCount ?: 0,
+            followerCount = profileDTO.followerCount ?: 0
         )
     }
 }

@@ -11,10 +11,9 @@ class TrainingListItemMapper {
             id = trainingDTO.id,
             name = trainingDTO.name,
             distance = trainingDTO.distance,
-            movingTime = trainingDTO.moving_time,
-            athleteId = trainingDTO.athleteid,
+            movingTime = trainingDTO.movingTime,
             type = trainingDTO.type,
-            startDate = DateTimeConverter.fromStringToDate(trainingDTO.start_date)
+            startDate = DateTimeConverter.fromStringToDate(trainingDTO.startDate)
         )
     }
 
