@@ -2,6 +2,7 @@ package ru.internetcloud.strava.presentation.training.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,29 +41,31 @@ fun ShowTrainingListScreen(
                 }
             )
         }
-    ) { it ->
-        when (currentState) {
-            is UiState.Error -> {
-                ShowError(
-                    message = stringResource(id = R.string.strava_server_unavailable),
-                    onTryAgainClick = {
-                        viewModel.fetchStravaActivities()
-                    }
-                )
-            }
-            UiState.Loading -> {
-                ShowLoadingData()
-            }
-            is UiState.Success -> {
-                ShowTrainings(
-                    viewModel = viewModel,
-                    paddingValues = paddingValues,
-                    profileWithTrainings = currentState.data,
-                    onTrainingClickListener = onTrainingClickListener
-                )
-            }
-            UiState.EmptyData -> {
-                ShowEmptyData(message = stringResource(id = R.string.training_list_is_empty))
+    ) { paddingContent ->
+        Box(modifier = Modifier.padding(paddingContent)) {
+            when (currentState) {
+                is UiState.Error -> {
+                    ShowError(
+                        message = stringResource(id = R.string.strava_server_unavailable),
+                        onTryAgainClick = {
+                            viewModel.fetchStravaActivities()
+                        }
+                    )
+                }
+                UiState.Loading -> {
+                    ShowLoadingData()
+                }
+                is UiState.Success -> {
+                    ShowTrainings(
+                        viewModel = viewModel,
+                        paddingValues = paddingValues,
+                        profileWithTrainings = currentState.data,
+                        onTrainingClickListener = onTrainingClickListener
+                    )
+                }
+                UiState.EmptyData -> {
+                    ShowEmptyData(message = stringResource(id = R.string.training_list_is_empty))
+                }
             }
         }
     }

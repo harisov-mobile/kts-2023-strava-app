@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
@@ -126,7 +129,9 @@ private fun ShowGroupsScreen(
                 }
             )
         }
-    ) { it ->
-        ShowEmptyData(message = stringResource(id = R.string.groups_under_constraction))
+    ) { paddingContent ->
+        Box(modifier = Modifier.padding(paddingContent)) {
+            ShowEmptyData(message = stringResource(id = R.string.groups_under_constraction))
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.training.detail
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -66,29 +67,31 @@ fun ShowTrainingDetailScreen(
                 }
             )
         }
-    ) { it ->
-        when (currentState) {
-            is UiState.Error -> {
-                ShowError(
-                    message = stringResource(id = R.string.strava_server_unavailable),
-                    onTryAgainClick = {
-                        viewModel.fetchTraining(id = trainingId)
-                    }
-                )
-            }
-            UiState.Loading -> {
-                ShowLoadingData()
-            }
-            is UiState.Success -> {
-                ShowTraining(
-                    viewModel = viewModel,
-                    paddingValues = paddingValues,
-                    profile = currentState.data.profile,
-                    training = currentState.data.training
-                )
-            }
-            is UiState.EmptyData -> {
-                ShowEmptyData(message = stringResource(id = R.string.no_data))
+    ) { paddingContent ->
+        Box(modifier = Modifier.padding(paddingContent)) {
+            when (currentState) {
+                is UiState.Error -> {
+                    ShowError(
+                        message = stringResource(id = R.string.strava_server_unavailable),
+                        onTryAgainClick = {
+                            viewModel.fetchTraining(id = trainingId)
+                        }
+                    )
+                }
+                UiState.Loading -> {
+                    ShowLoadingData()
+                }
+                is UiState.Success -> {
+                    ShowTraining(
+                        viewModel = viewModel,
+                        paddingValues = paddingValues,
+                        profile = currentState.data.profile,
+                        training = currentState.data.training
+                    )
+                }
+                is UiState.EmptyData -> {
+                    ShowEmptyData(message = stringResource(id = R.string.no_data))
+                }
             }
         }
     }
