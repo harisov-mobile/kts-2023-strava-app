@@ -45,7 +45,7 @@ class TrainingRepositoryImpl : TrainingRepository {
                 result = trainingDTO?.let { currentDTO ->
                     DataResponse.Success(trainingMapper.fromDtoToDomain(currentDTO))
                 } ?: let {
-                    DataResponse.Error(exception = java.lang.IllegalStateException("No activity found with id = $id"))
+                    DataResponse.Error(exception = IllegalStateException("No training found with id = $id"))
                 }
             } else {
                 result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))

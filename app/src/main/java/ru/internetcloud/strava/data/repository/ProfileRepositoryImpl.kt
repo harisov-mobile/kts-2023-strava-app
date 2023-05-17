@@ -21,7 +21,7 @@ class ProfileRepositoryImpl : ProfileRepository {
                     val stravaAthlete = stravaAthleteMapper.fromDtoToDomain(currentDTO)
                     DataResponse.Success(stravaAthlete)
                 } ?: let {
-                    DataResponse.Error(exception = java.lang.IllegalStateException("No athlete found"))
+                    DataResponse.Error(exception = IllegalStateException("No athlete found"))
                 }
             } else {
                 DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
