@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.domain.model.DataResponse
@@ -30,8 +29,6 @@ class ProfileViewModel : ViewModel() {
     fun fetchProfile() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
-
-            delay(2000)
 
             val dataResponse = getProfileUseCase.getProfile()
             when (dataResponse) {

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.data.repository.TrainingRepositoryImpl
@@ -35,8 +34,6 @@ class TrainingListViewModel : ViewModel() {
     fun fetchStravaActivities() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
-
-            delay(2000)
 
             var profileWithTrainings: ProfileWithTrainingList
 

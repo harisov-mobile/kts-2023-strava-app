@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.github.javafaker.Faker
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ class OldMainViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            delay(1000)
             mutableListState.value = mutableListState.value.copy(
                 items = randomList(20, 0),
                 isListLoading = false,
@@ -57,7 +55,6 @@ class OldMainViewModel : ViewModel() {
             isPageLoading = true
         )
         viewModelScope.launch {
-            delay(1000)
             val items = mutableListState.value.items
             mutableListState.value = mutableListState.value.copy(
                 items = items.addAll(randomList(20, items.size)),
