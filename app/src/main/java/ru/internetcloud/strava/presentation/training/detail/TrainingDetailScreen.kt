@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.main
+package ru.internetcloud.strava.presentation.training.detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,8 +31,9 @@ import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.model.Profile
 import ru.internetcloud.strava.domain.model.Training
 import ru.internetcloud.strava.domain.util.TrainingConverter
-import ru.internetcloud.strava.presentation.training.detail.TrainingDetailViewModel
-import ru.internetcloud.strava.presentation.training.detail.TrainingDetailViewModelFactory
+import ru.internetcloud.strava.presentation.main.ShowEmptyData
+import ru.internetcloud.strava.presentation.main.ShowError
+import ru.internetcloud.strava.presentation.main.ShowLoadingData
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState

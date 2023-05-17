@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.main
+package ru.internetcloud.strava.presentation.training.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.model.ProfileWithTrainingList
-import ru.internetcloud.strava.presentation.training.list.TrainingItemView
-import ru.internetcloud.strava.presentation.training.list.TrainingListViewModel
+import ru.internetcloud.strava.presentation.main.ShowEmptyData
+import ru.internetcloud.strava.presentation.main.ShowError
+import ru.internetcloud.strava.presentation.main.ShowLoadingData
 import ru.internetcloud.strava.presentation.util.UiState
 
 @Composable

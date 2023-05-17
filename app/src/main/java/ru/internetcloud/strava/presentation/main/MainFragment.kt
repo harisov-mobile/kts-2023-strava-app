@@ -24,6 +24,8 @@ import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
+import ru.internetcloud.strava.presentation.training.detail.ShowTrainingDetailScreen
+import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
 
 class MainFragment : Fragment() {
 
