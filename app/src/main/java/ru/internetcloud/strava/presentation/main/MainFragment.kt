@@ -30,6 +30,12 @@ import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.ShowTrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
 
+private val navItemList = listOf(
+    NavigationItem.Home,
+    NavigationItem.Groups,
+    NavigationItem.You
+)
+
 class MainFragment : Fragment() {
 
     override fun onCreateView(
@@ -54,11 +60,8 @@ fun MainScreen() {
             BottomNavigation {
                 val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
 
-                val items = listOf(
-                    NavigationItem.Home,
-                    NavigationItem.Groups,
-                    NavigationItem.You
-                )
+                val items = navItemList
+
                 items.forEach { item ->
                     val selected = navBackStackEntry?.destination?.hierarchy?.any {
                         it.route == item.screen.route
