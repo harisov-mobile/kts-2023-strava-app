@@ -1,6 +1,5 @@
 package ru.internetcloud.strava.data.repository
 
-import android.util.Log
 import ru.internetcloud.strava.data.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.mapper.TrainingMapper
 import ru.internetcloud.strava.data.network.api.StravaApiFactory

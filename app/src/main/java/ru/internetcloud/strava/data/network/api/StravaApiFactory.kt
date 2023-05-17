@@ -1,7 +1,6 @@
 package ru.internetcloud.strava.data.network.api
 
 import android.content.Context
-import android.util.Log
 import net.openid.appauth.AuthorizationService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -9,7 +8,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import ru.internetcloud.strava.presentation.auth.TokenStorage
-import timber.log.Timber
 
 object StravaApiFactory {
 
