@@ -44,4 +44,7 @@
     <string name="training_speed_format">%.1f km/h</string>
 
     <string name="groups_under_constraction">Under constraction</string>
+
+    <string name="oldmain_id">id = %s</string>
+    <string name="oldmain_text_under_image">Like if you like android</string>
 </resources>

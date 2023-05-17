@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.internetcloud.strava.R
@@ -34,7 +35,7 @@ fun LazyItemScope.ImageItemView(onItemClick: () -> Unit) {
             contentDescription = null
         )
         Text(
-            text = "Ставь лайк если любишь андроид",
+            text = stringResource(id = R.string.oldmain_text_under_image),
             textAlign = TextAlign.Center
         )
     }

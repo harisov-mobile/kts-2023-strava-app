@@ -45,4 +45,7 @@
     <string name="training_speed_format">%.1f км/ч</string>
 
     <string name="groups_under_constraction">В разработке</string>
+
+    <string name="oldmain_id">id = %s</string>
+    <string name="oldmain_text_under_image">Ставь лайк если любишь андроид</string>
 </resources>
