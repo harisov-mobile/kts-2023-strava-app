@@ -57,7 +57,6 @@ fun ShowTrainingListScreen(
                 }
                 is UiState.Success -> {
                     ShowTrainings(
-                        viewModel = viewModel,
                         paddingValues = paddingValues,
                         profileWithTrainings = currentState.data,
                         onTrainingClickListener = onTrainingClickListener
@@ -73,7 +72,6 @@ fun ShowTrainingListScreen(
 
 @Composable
 private fun ShowTrainings(
-    viewModel: TrainingListViewModel,
     paddingValues: PaddingValues,
     profileWithTrainings: ProfileWithTrainingList,
     onTrainingClickListener: (id: Long) -> Unit

@@ -67,7 +67,6 @@ fun ShowProfileScreen(
                 }
                 is UiState.Success -> {
                     ShowProfile(
-                        viewModel = viewModel,
                         paddingValues = paddingValues,
                         profile = currentState.data
                     )
@@ -82,63 +81,64 @@ fun ShowProfileScreen(
 
 @Composable
 private fun ShowProfile(
-    viewModel: ProfileViewModel,
     paddingValues: PaddingValues,
     profile: Profile
 ) {
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Row {
-            AsyncImage(
-                modifier = Modifier
-                    .size(124.dp)
-                    .clip(CircleShape),
-                model = profile.imageUrl,
-                placeholder = painterResource(id = R.drawable.no_photo),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Spacer(modifier = Modifier.height(24.dp))
-                Text(
-                    text = "${profile.firstName} ${profile.lastName}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+    Box(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(124.dp)
+                        .clip(CircleShape),
+                    model = profile.imageUrl,
+                    placeholder = painterResource(id = R.drawable.no_photo),
+                    contentDescription = null
                 )
-                Text(
-                    text = profile.city.addPartWithComma(profile.state).addPartWithComma(profile.country),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
-                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        text = "${profile.firstName} ${profile.lastName}",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = profile.city.addPartWithComma(profile.state).addPartWithComma(profile.country),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
             }
-        }
-        Spacer(modifier = Modifier.height(32.dp))
-        Row {
-            Column() {
-                Text(
-                    text = stringResource(id = R.string.profile_following),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = profile.friendCount.toString(),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column() {
-                Text(
-                    text = stringResource(id = R.string.profile_followers),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = profile.followerCount.toString(),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal
-                )
+            Spacer(modifier = Modifier.height(32.dp))
+            Row {
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.profile_following),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = profile.friendCount.toString(),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.profile_followers),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = profile.followerCount.toString(),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
             }
         }
     }

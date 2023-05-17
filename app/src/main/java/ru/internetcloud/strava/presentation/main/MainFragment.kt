@@ -131,7 +131,10 @@ private fun ShowGroupsScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            ShowEmptyData(message = stringResource(id = R.string.groups_under_constraction))
+            ShowEmptyData(
+                modifier = Modifier.padding(paddingValues),
+                message = stringResource(id = R.string.groups_under_constraction)
+            )
         }
     }
 }
