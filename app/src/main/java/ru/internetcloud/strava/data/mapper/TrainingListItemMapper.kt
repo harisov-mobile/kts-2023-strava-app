@@ -6,7 +6,7 @@ import ru.internetcloud.strava.presentation.util.DateTimeConverter
 
 class TrainingListItemMapper {
 
-    fun fromDtoToDomain(trainingDTO: TrainingListItemDTO): TrainingListItem {
+    private fun fromDtoToDomain(trainingDTO: TrainingListItemDTO): TrainingListItem {
         return TrainingListItem(
             id = trainingDTO.id,
             name = trainingDTO.name,
