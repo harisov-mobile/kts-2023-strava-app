@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
@@ -91,9 +92,10 @@ fun MainScreen() {
             trainingListScreenContent = {
                 ShowTrainingListScreen(
                     paddingValues = paddingValues,
-                    onTrainingClickListener = { currentId ->
-                        // клик на элемент списка
-                        navigationState.navigateToDetail(currentId)
+                    onTrainingClickListener = remember {
+                        { currentId ->
+                            navigationState.navigateToDetail(currentId)
+                        }
                     }
                 )
             },
@@ -101,8 +103,10 @@ fun MainScreen() {
                 ShowTrainingDetailScreen(
                     paddingValues = paddingValues,
                     trainingId = currentTrainingId,
-                    onBackPressed = {
-                        navigationState.navHostController.popBackStack()
+                    onBackPressed = remember {
+                        {
+                            navigationState.navHostController.popBackStack()
+                        }
                     }
                 )
             },

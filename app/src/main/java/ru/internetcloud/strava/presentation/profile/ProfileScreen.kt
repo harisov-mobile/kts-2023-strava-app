@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -57,8 +58,10 @@ fun ShowProfileScreen(
                         message = stringResource(id = R.string.strava_server_unavailable).addLine(
                             currentState.exception.message.toString()
                         ),
-                        onTryAgainClick = {
-                            viewModel.fetchProfile()
+                        onTryAgainClick = remember {
+                            {
+                                viewModel.fetchProfile()
+                            }
                         }
                     )
                 }
