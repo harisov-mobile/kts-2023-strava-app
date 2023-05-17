@@ -5,9 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class IncorrectFields(
-    val isEmailIncorrect: Boolean = false,
-    val isPasswordIncorrect: Boolean = false,
-    val showErrorsInSnackbar: Boolean = false,
+    val isEmailIncorrect: Boolean,
+    val isPasswordIncorrect: Boolean,
+    val showErrorsInSnackbar: Boolean,
     val errorsMessage: String,
     val incorrectEmailMessage: String,
     val incorrectPasswordMessage: String
