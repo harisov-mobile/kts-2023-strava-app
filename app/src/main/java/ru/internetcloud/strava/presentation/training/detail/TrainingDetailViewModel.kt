@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.repository.ProfileRepositoryImpl
-import ru.internetcloud.strava.data.repository.TrainingRepositoryImpl
-import ru.internetcloud.strava.domain.model.DataResponse
-import ru.internetcloud.strava.domain.model.ProfileWithTraining
-import ru.internetcloud.strava.domain.usecase.GetProfileUseCase
-import ru.internetcloud.strava.domain.usecase.GetTrainingUseCase
+import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
+import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
+import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
+import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
+import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 
 class TrainingDetailViewModel(id: Long) : ViewModel() {

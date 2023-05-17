@@ -1,7 +1,7 @@
 package ru.internetcloud.strava
 
 import android.app.Application
-import ru.internetcloud.strava.data.network.api.StravaApiFactory
+import ru.internetcloud.strava.data.common.StravaApiFactory
 import timber.log.Timber
 
 class App : Application() {

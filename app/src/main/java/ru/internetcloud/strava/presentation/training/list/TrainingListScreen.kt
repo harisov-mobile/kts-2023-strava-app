@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.domain.model.ProfileWithTrainingList
+import ru.internetcloud.strava.domain.profile.model.ProfileWithTrainingList
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData

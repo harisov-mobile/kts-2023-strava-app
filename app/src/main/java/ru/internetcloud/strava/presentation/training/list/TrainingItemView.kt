@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.domain.model.Profile
-import ru.internetcloud.strava.domain.model.TrainingListItem
+import ru.internetcloud.strava.domain.profile.model.Profile
+import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.util.Calculator
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.Formatter
@@ -84,7 +84,9 @@ fun TimeDistanceSpeed(
     modifier: Modifier = Modifier,
     training: TrainingListItem
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         Column {
             Text(
                 text = stringResource(id = R.string.training_time_title),

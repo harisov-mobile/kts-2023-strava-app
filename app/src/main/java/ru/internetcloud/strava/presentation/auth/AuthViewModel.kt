@@ -16,6 +16,7 @@ import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.data.auth.network.AuthRepository
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.repository.ProfileRepositoryImpl
-import ru.internetcloud.strava.domain.model.DataResponse
-import ru.internetcloud.strava.domain.model.Profile
-import ru.internetcloud.strava.domain.usecase.GetProfileUseCase
+import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
+import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.profile.model.Profile
+import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 
 class ProfileViewModel : ViewModel() {
