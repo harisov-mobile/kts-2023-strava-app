@@ -18,16 +18,16 @@ class TrainingRepositoryImpl : TrainingRepository {
 
         try {
             val networkResponse = StravaApiFactory.trainingApi.getTrainings(page = page)
-            if (networkResponse.isSuccessful) {
+            result = if (networkResponse.isSuccessful) {
                 val listDTO = networkResponse.body()
-                result = listDTO?.let { currentListDTO ->
+                listDTO?.let { currentListDTO ->
                     val list = trainingListItemMapper.fromListDtoToListDomain(currentListDTO)
                     DataResponse.Success(list)
                 } ?: let {
-                    DataResponse.Success(emptyList<TrainingListItem>())
+                    DataResponse.Success(emptyList())
                 }
             } else {
-                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
             result = DataResponse.Error(e)
@@ -36,22 +36,20 @@ class TrainingRepositoryImpl : TrainingRepository {
     }
 
     override suspend fun getTraining(id: Long): DataResponse<Training> {
-        var result: DataResponse<Training>
-
-        try {
+        val result: DataResponse<Training> = try {
             val networkResponse = StravaApiFactory.trainingApi.getTraining(id = id)
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
-                result = trainingDTO?.let { currentDTO ->
+                trainingDTO?.let { currentDTO ->
                     DataResponse.Success(trainingMapper.fromDtoToDomain(currentDTO))
                 } ?: let {
                     DataResponse.Error(exception = IllegalStateException("No training found with id = $id"))
                 }
             } else {
-                result = DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
-            result = DataResponse.Error(e)
+            DataResponse.Error(e)
         }
         return result
     }

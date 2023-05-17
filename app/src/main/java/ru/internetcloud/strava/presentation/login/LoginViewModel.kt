@@ -17,7 +17,7 @@ class LoginViewModel(private val app: Application, savedStateHandle: SavedStateH
         get() = _state
 
     fun checkValidationAccordingLoginState(email: String, password: String) {
-        if (!(state.value is LoginState.InitialState)) {
+        if (state.value !is LoginState.InitialState) {
             checkValidation(email = email, password = password)
         }
     }
