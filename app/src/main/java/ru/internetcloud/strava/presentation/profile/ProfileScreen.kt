@@ -13,7 +13,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -21,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
@@ -35,7 +35,7 @@ import ru.internetcloud.strava.presentation.util.addPartWithComma
 @Composable
 fun ShowProfileScreen() {
     val viewModel: ProfileViewModel = viewModel()
-    val screenState = viewModel.screenState.observeAsState(UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value
 
     Scaffold(
