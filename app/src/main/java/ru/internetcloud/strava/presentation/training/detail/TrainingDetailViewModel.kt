@@ -1,9 +1,10 @@
 package ru.internetcloud.strava.presentation.training.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
@@ -13,7 +14,7 @@ import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 
-class TrainingDetailViewModel(id: Long) : ViewModel() {
+class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
@@ -21,11 +22,11 @@ class TrainingDetailViewModel(id: Long) : ViewModel() {
     private val profileRepository = ProfileRepositoryImpl()
     private val getProfileUseCase = GetProfileUseCase(profileRepository)
 
-    private val initialState = UiState.Loading
+    private val initialState =
+        savedStateHandle.get<UiState<ProfileWithTraining>>(KEY_TRAINING_DETAIL_STATE) ?: UiState.Loading
 
-    private val _screenState = MutableLiveData<UiState<ProfileWithTraining>>(initialState)
-    val screenState: LiveData<UiState<ProfileWithTraining>>
-        get() = _screenState
+    private val _screenState = MutableStateFlow(initialState)
+    val screenState = _screenState.asStateFlow()
 
     init {
         fetchTraining(id)
@@ -56,5 +57,9 @@ class TrainingDetailViewModel(id: Long) : ViewModel() {
                 }
             }
         }
+    }
+
+    companion object {
+        private const val KEY_TRAINING_DETAIL_STATE = "key_training_detail_state"
     }
 }
