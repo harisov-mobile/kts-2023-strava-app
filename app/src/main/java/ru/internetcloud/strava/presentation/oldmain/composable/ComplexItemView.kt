@@ -51,7 +51,7 @@ fun LazyItemScope.ComplexItemView(item: ComplexItem, onItemClick: () -> Unit) {
                 fontWeight = FontWeight.Normal
             )
             Text(
-                text = String.format(stringResource(R.string.oldmain_id), item.id.toString())
+                text = stringResource(R.string.oldmain_id, item.id)
             )
         }
     }
