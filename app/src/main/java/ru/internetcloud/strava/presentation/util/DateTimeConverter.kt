@@ -15,13 +15,11 @@ class DateTimeConverter {
 
         @SuppressLint("SimpleDateFormat")
         fun fromStringToDate(dateString: String): Date {
-            val date: Date
-            date = try {
+            return try {
                 SimpleDateFormat(INPUT_DATE_TIME_FORMAT).parse(dateString) as Date
             } catch (e: Exception) {
                 SimpleDateFormat(INPUT_DATE_TIME_FORMAT).parse(ERROR_DATE) as Date
             }
-            return date
         }
 
         @SuppressLint("SimpleDateFormat")
