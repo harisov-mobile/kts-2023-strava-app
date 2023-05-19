@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -44,11 +43,7 @@ class OldMainFragment : Fragment() {
                     when (item) {
                         is SimpleItem -> SimpleItemView(
                             item = item,
-                            onLikeClickListener = remember {
-                                { item ->
-                                    viewModel.increaseLikes(item)
-                                }
-                            }
+                            onLikeClickListener = viewModel::increaseLikes
                         )
                         is ComplexItem -> ComplexItemView(item = item, onItemClick = {})
                     }
