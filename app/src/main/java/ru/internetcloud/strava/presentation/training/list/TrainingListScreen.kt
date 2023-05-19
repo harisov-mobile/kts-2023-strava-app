@@ -11,11 +11,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTrainingList
@@ -29,7 +29,7 @@ fun ShowTrainingListScreen(
     onTrainingClickListener: (id: Long) -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
-    val screenState = viewModel.screenState.observeAsState(UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value
 
     Scaffold(
