@@ -2,7 +2,6 @@ package ru.internetcloud.strava.presentation.training.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -41,7 +40,6 @@ import ru.internetcloud.strava.presentation.util.UiState
 
 @Composable
 fun ShowTrainingDetailScreen(
-    paddingValues: PaddingValues,
     onBackPressed: () -> Unit,
     trainingId: Long
 ) {
@@ -83,7 +81,6 @@ fun ShowTrainingDetailScreen(
                 }
                 is UiState.Success -> {
                     ShowTraining(
-                        paddingValues = paddingValues,
                         profile = currentState.data.profile,
                         training = currentState.data.training
                     )
@@ -98,52 +95,49 @@ fun ShowTrainingDetailScreen(
 
 @Composable
 private fun ShowTraining(
-    paddingValues: PaddingValues,
     profile: Profile,
     training: Training
 ) {
-    Box(modifier = Modifier.padding(paddingValues)) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Row {
-                AsyncImage(
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape),
-                    model = profile.imageUrlMedium,
-                    placeholder = painterResource(id = R.drawable.no_photo),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "${profile.firstName} ${profile.lastName}",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = training.name,
-                fontWeight = FontWeight.Bold
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Row {
+            AsyncImage(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape),
+                model = profile.imageUrlMedium,
+                placeholder = painterResource(id = R.drawable.no_photo),
+                contentDescription = null
             )
-            if (training.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = training.description,
+                    text = "${profile.firstName} ${profile.lastName}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Normal
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = training.name,
+            fontWeight = FontWeight.Bold
+        )
+        if (training.description.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = training.description,
+                fontWeight = FontWeight.Normal
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
     }
 }

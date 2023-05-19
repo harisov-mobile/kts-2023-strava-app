@@ -26,7 +26,6 @@ import ru.internetcloud.strava.presentation.util.UiState
 
 @Composable
 fun ShowTrainingListScreen(
-    paddingValues: PaddingValues,
     onTrainingClickListener: (id: Long) -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
@@ -57,7 +56,6 @@ fun ShowTrainingListScreen(
                 }
                 is UiState.Success -> {
                     ShowTrainings(
-                        paddingValues = paddingValues,
                         profileWithTrainings = currentState.data,
                         onTrainingClickListener = onTrainingClickListener
                     )
@@ -72,13 +70,11 @@ fun ShowTrainingListScreen(
 
 @Composable
 private fun ShowTrainings(
-    paddingValues: PaddingValues,
     profileWithTrainings: ProfileWithTrainingList,
     onTrainingClickListener: (id: Long) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
-            .padding(paddingValues)
             .background(Color(android.graphics.Color.parseColor("#E9E7E6"))),
         contentPadding = PaddingValues(
             top = 16.dp,

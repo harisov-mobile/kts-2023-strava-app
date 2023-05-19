@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.main.composable
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -8,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -60,29 +62,22 @@ fun MainScreen() {
         }
     ) { paddingValues ->
         AppNavGraph(
+            modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                ShowTrainingListScreen(
-                    paddingValues = paddingValues,
-                    onTrainingClickListener = navigationState::navigateToDetail
-                )
+                ShowTrainingListScreen(onTrainingClickListener = navigationState::navigateToDetail)
             },
             trainingDetailScreenContent = { currentTrainingId ->
                 ShowTrainingDetailScreen(
-                    paddingValues = paddingValues,
                     trainingId = currentTrainingId,
                     onBackPressed = navigationState.navHostController::popBackStack
                 )
             },
             groupsScreenContent = {
-                ShowGroupsScreen(
-                    paddingValues = paddingValues
-                )
+                ShowGroupsScreen()
             },
             youScreenContent = {
-                ShowProfileScreen(
-                    paddingValues = paddingValues
-                )
+                ShowProfileScreen()
             }
         )
     }
