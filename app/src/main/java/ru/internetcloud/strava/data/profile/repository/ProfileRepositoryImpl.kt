@@ -11,11 +11,9 @@ class ProfileRepositoryImpl : ProfileRepository {
     private val stravaAthleteMapper = ProfileMapper()
 
     override suspend fun getProfile(): DataResponse<Profile> {
-        var result: DataResponse<Profile>
-
-        try {
+        return try {
             val networkResponse = StravaApiFactory.profileApi.getProfile()
-            result = if (networkResponse.isSuccessful) {
+            if (networkResponse.isSuccessful) {
                 val stravaAthleteDTO = networkResponse.body()
                 stravaAthleteDTO?.let { currentDTO ->
                     val stravaAthlete = stravaAthleteMapper.fromDtoToDomain(currentDTO)
@@ -27,8 +25,7 @@ class ProfileRepositoryImpl : ProfileRepository {
                 DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
-            result = DataResponse.Error(e)
+            DataResponse.Error(e)
         }
-        return result
     }
 }
