@@ -8,7 +8,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -65,22 +64,14 @@ fun MainScreen() {
             trainingListScreenContent = {
                 ShowTrainingListScreen(
                     paddingValues = paddingValues,
-                    onTrainingClickListener = remember {
-                        { currentId ->
-                            navigationState.navigateToDetail(currentId)
-                        }
-                    }
+                    onTrainingClickListener = navigationState::navigateToDetail
                 )
             },
             trainingDetailScreenContent = { currentTrainingId ->
                 ShowTrainingDetailScreen(
                     paddingValues = paddingValues,
                     trainingId = currentTrainingId,
-                    onBackPressed = remember {
-                        {
-                            navigationState.navHostController.popBackStack()
-                        }
-                    }
+                    onBackPressed = navigationState.navHostController::popBackStack
                 )
             },
             groupsScreenContent = {
