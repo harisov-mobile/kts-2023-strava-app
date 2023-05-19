@@ -10,7 +10,6 @@ import ru.internetcloud.strava.presentation.common.compose.StravaTheme
 import ru.internetcloud.strava.presentation.main.composable.MainScreen
 
 class MainFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

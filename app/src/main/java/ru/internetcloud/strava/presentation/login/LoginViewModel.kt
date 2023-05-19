@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.presentation.util.addLine
 
+
 class LoginViewModel(private val app: Application, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _state: MutableLiveData<LoginState> =
