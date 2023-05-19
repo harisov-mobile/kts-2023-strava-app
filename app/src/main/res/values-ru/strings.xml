@@ -48,4 +48,6 @@
 
     <string name="oldmain_id">id = %d</string>
     <string name="oldmain_text_under_image">Ставь лайк если любишь андроид</string>
+
+    <string name="no_internet_connection">Нет интернет-соединения</string>
 </resources>

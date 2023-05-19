@@ -47,4 +47,6 @@
 
     <string name="oldmain_id">id = %d</string>
     <string name="oldmain_text_under_image">Like if you like android</string>
+
+    <string name="no_internet_connection">No Internet connection</string>
 </resources>
