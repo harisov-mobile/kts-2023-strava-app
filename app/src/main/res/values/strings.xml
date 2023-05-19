@@ -17,5 +17,34 @@
     <string name="login_password_incorrect">Password incorrect, at least %s characters</string>
     <string name="login_auth_not_passed">Wrong email address or password, please try again</string>
 
+    <string name="auth_login_button">Login with Strava.com</string>
+    <string name="auth_canceled">Authentication failed</string>
+
     <string name="main_likes_amount">Amount of likes = %s</string>
+
+    <string name="navigation_item_home">Home</string>
+    <string name="navigation_item_groups">Groups</string>
+    <string name="navigation_item_you">You</string>
+
+    <string name="strava_server_unavailable">The Strava server has encountered an error. Please contact support if the problem persists.</string>
+    <string name="try_again_button">Try again</string>
+    <string name="training_list_is_empty">There are no activities yet</string>
+    <string name="no_data">No data</string>
+
+    <string name="profile_following">Following</string>
+    <string name="profile_followers">Followers</string>
+
+    <string name="training_app_bar_title">Training</string>
+    <string name="training_time_title">Time</string>
+    <string name="training_distance_title">Distance</string>
+    <string name="training_speed_title">Speed</string>
+    <string name="training_hours_minutes">%sh %sm</string>
+    <string name="training_minutes_seconds">%sm %ss</string>
+    <string name="training_distance_format">%.2f km</string>
+    <string name="training_speed_format">%.1f km/h</string>
+
+    <string name="groups_under_constraction">Under constraction</string>
+
+    <string name="oldmain_id">id = %d</string>
+    <string name="oldmain_text_under_image">Like if you like android</string>
 </resources>
