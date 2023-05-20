@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.data.training.repository
 
+import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
@@ -25,10 +26,10 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Success(emptyList())
                 }
             } else {
-                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(e)
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
         }
     }
 
@@ -43,10 +44,10 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Error(exception = IllegalStateException("No training found with id = $id"))
                 }
             } else {
-                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(e)
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
         }
     }
 }

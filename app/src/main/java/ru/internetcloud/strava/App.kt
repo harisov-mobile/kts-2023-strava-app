@@ -1,6 +1,7 @@
 package ru.internetcloud.strava
 
 import android.app.Application
+import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import timber.log.Timber
 
@@ -9,6 +10,7 @@ class App : Application() {
         super.onCreate()
 
         StravaApiFactory.init(this)
+        ErrorMessageConverter.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

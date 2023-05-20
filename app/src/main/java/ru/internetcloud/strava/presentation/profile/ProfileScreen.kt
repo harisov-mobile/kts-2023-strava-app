@@ -51,7 +51,8 @@ fun ShowProfileScreen() {
             when (currentState) {
                 is UiState.Error -> {
                     ShowError(
-                        message = stringResource(id = R.string.strava_server_unavailable).addLine(
+                        message = stringResource(id = R.string.strava_server_unavailable)
+                            .addLine(
                             currentState.exception.message.toString()
                         ),
                         onTryAgainClick = viewModel::fetchProfile
