@@ -11,7 +11,6 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import ru.internetcloud.strava.domain.internet.InternetStatusRepository
-import timber.log.Timber
 
 class InternetStatusRepositoryImpl : InternetStatusRepository {
 
@@ -28,15 +27,11 @@ class InternetStatusRepositoryImpl : InternetStatusRepository {
             val networkCallback = object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     availableNetworks.add(network.toString())
-                    Timber.tag("rustam").d("onAvailable, trySendBlocking = true, network = $network")
-                    Timber.tag("rustam").d("onAvailable, trySendBlocking = true, availableNetworks = ${availableNetworks.joinToString(",")}")
                     trySendBlocking(true)
                 }
 
                 override fun onLost(network: Network) {
                     availableNetworks.remove(network.toString())
-                    Timber.tag("rustam").d("onLost, trySendBlocking = false, network = $network")
-                    Timber.tag("rustam").d("onLost, trySendBlocking = false, availableNetworks = ${availableNetworks.joinToString(",")}")
                     if (availableNetworks.isEmpty()) {
                         trySendBlocking(false)
                     }
