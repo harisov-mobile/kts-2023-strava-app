@@ -14,11 +14,9 @@ class TrainingRepositoryImpl : TrainingRepository {
     private val trainingListItemMapper = TrainingListItemMapper()
 
     override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
-        var result: DataResponse<List<TrainingListItem>>
-
-        try {
+        return try {
             val networkResponse = StravaApiFactory.trainingApi.getTrainings(page = page)
-            result = if (networkResponse.isSuccessful) {
+            if (networkResponse.isSuccessful) {
                 val listDTO = networkResponse.body()
                 listDTO?.let { currentListDTO ->
                     val list = trainingListItemMapper.fromListDtoToListDomain(currentListDTO)
@@ -30,13 +28,12 @@ class TrainingRepositoryImpl : TrainingRepository {
                 DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
             }
         } catch (e: Exception) {
-            result = DataResponse.Error(e)
+            DataResponse.Error(e)
         }
-        return result
     }
 
     override suspend fun getTraining(id: Long): DataResponse<Training> {
-        val result: DataResponse<Training> = try {
+        return try {
             val networkResponse = StravaApiFactory.trainingApi.getTraining(id = id)
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
@@ -51,6 +48,5 @@ class TrainingRepositoryImpl : TrainingRepository {
         } catch (e: Exception) {
             DataResponse.Error(e)
         }
-        return result
     }
 }
