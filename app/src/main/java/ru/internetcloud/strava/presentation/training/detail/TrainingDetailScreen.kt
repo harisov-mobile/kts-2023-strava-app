@@ -37,6 +37,7 @@ import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
+import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
 fun ShowTrainingDetailScreen(
@@ -70,7 +71,10 @@ fun ShowTrainingDetailScreen(
             when (currentState) {
                 is UiState.Error -> {
                     ShowError(
-                        message = stringResource(id = R.string.strava_server_unavailable),
+                        message = stringResource(id = R.string.strava_server_unavailable)
+                            .addLine(
+                                currentState.exception.message.toString()
+                            ),
                         onTryAgainClick = {
                             viewModel.fetchTraining(id = trainingId)
                         }

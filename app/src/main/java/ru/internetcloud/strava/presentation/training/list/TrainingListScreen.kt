@@ -23,6 +23,7 @@ import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.util.UiState
+import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
 fun ShowTrainingListScreen(
@@ -45,7 +46,10 @@ fun ShowTrainingListScreen(
             when (currentState) {
                 is UiState.Error -> {
                     ShowError(
-                        message = stringResource(id = R.string.strava_server_unavailable),
+                        message = stringResource(id = R.string.strava_server_unavailable)
+                            .addLine(
+                                currentState.exception.message.toString()
+                            ),
                         onTryAgainClick = {
                             viewModel.fetchStravaActivities()
                         }

@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.data.profile.repository
 
+import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.profile.mapper.ProfileMapper
 import ru.internetcloud.strava.domain.common.model.DataResponse
@@ -19,13 +20,13 @@ class ProfileRepositoryImpl : ProfileRepository {
                     val stravaAthlete = stravaAthleteMapper.fromDtoToDomain(currentDTO)
                     DataResponse.Success(stravaAthlete)
                 } ?: let {
-                    DataResponse.Error(exception = IllegalStateException("No athlete found"))
+                    DataResponse.Error(exception = IllegalStateException("No profile found"))
                 }
             } else {
-                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(e)
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
         }
     }
 }
