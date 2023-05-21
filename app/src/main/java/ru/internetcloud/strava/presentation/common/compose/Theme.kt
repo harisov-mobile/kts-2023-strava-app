@@ -10,11 +10,13 @@ import androidx.compose.ui.graphics.Color
 
 @SuppressLint("ConflictingOnColor")
 private val DarkColorPalette = darkColors(
-    primary = Black900,
+    primary = tangelo,
     primaryVariant = Black900,
     secondary = Black900,
+    background = Color.Black,
     onPrimary = Color.White,
-    onSecondary = Black500
+    onSecondary = Color.White,
+    secondaryVariant = Black500
 )
 
 @SuppressLint("ConflictingOnColor")
