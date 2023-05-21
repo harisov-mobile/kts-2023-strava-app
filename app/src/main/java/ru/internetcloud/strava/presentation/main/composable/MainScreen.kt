@@ -2,6 +2,7 @@ package ru.internetcloud.strava.presentation.main.composable
 
 import android.annotation.SuppressLint
 import android.app.Application
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -66,6 +67,7 @@ fun MainScreen(app: Application) {
                         it.route == item.screen.route
                     } ?: false
                     BottomNavigationItem(
+                        modifier = Modifier.background(MaterialTheme.colors.surface),
                         selected = selected,
                         onClick = {
                             if (!selected) {
@@ -78,8 +80,8 @@ fun MainScreen(app: Application) {
                         label = {
                             Text(text = stringResource(id = item.titleResId))
                         },
-                        selectedContentColor = MaterialTheme.colors.onPrimary,
-                        unselectedContentColor = MaterialTheme.colors.onSecondary
+                        selectedContentColor = MaterialTheme.colors.primary,
+                        unselectedContentColor = MaterialTheme.colors.secondaryVariant
                     )
                 }
             }

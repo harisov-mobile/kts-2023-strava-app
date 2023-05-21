@@ -22,12 +22,17 @@ private val LightColorPalette = lightColors(
     primary = tangelo,
     primaryVariant = tangelo_dark,
     secondary = Color.White,
+    background = gray_light,
     onPrimary = Color.White,
-    onSecondary = Black900
+    onSecondary = Black900,
+    secondaryVariant = Black500
 )
 
 @Composable
-fun StravaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun StravaTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
