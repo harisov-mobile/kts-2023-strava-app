@@ -1,6 +1,5 @@
 package ru.internetcloud.strava.presentation.training.list
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -78,8 +76,6 @@ private fun ShowTrainings(
     onTrainingClickListener: (id: Long) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier
-            .background(Color(android.graphics.Color.parseColor("#E9E7E6"))),
         contentPadding = PaddingValues(
             top = 16.dp,
             start = 8.dp,
