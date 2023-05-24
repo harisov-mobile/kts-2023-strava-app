@@ -3,6 +3,7 @@ package ru.internetcloud.strava
 import android.app.Application
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
+import ru.internetcloud.strava.data.onboarding.OnboardingSharedPreferencesStorage
 import timber.log.Timber
 
 class App : Application() {
@@ -11,6 +12,7 @@ class App : Application() {
 
         StravaApiFactory.init(this)
         ErrorMessageConverter.init(this)
+        OnboardingSharedPreferencesStorage.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
