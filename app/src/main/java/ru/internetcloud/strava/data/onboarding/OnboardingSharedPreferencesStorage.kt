@@ -18,11 +18,11 @@ object OnboardingSharedPreferencesStorage {
 
     fun getOnboardingParams(): OnboardingParams {
         return OnboardingParams(
-            isFirstLaunch = onboardingSharedPrefs.getBoolean(KEY_FIRST_LAUNCH, false)
+            isFirstLaunch = onboardingSharedPrefs.getBoolean(KEY_FIRST_LAUNCH, true)
         )
     }
 
     fun saveOnboardingParams() {
-        onboardingSharedPrefs.edit().putBoolean(KEY_FIRST_LAUNCH, true).apply()
+        onboardingSharedPrefs.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
     }
 }
