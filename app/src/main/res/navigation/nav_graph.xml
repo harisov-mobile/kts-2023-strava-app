@@ -20,7 +20,7 @@
         android:id="@+id/mainFragment"
         android:name="ru.internetcloud.strava.presentation.main.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        />
     <fragment
         android:id="@+id/authFragment"
         android:name="ru.internetcloud.strava.presentation.auth.AuthFragment"
