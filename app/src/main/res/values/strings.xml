@@ -55,4 +55,9 @@
     <string name="unauthorized_error">Unauthorized</string>
     <string name="forbidden_error">Forbidden</string>
     <string name="internal_server_error">Internal server error</string>
+
+    <string name="logout_confirmation_question">Are you sure you want to log out?</string>
+    <string name="logout_confirm_button">Log out</string>
+    <string name="logout_dismiss_button">Cancel</string>
+
 </resources>

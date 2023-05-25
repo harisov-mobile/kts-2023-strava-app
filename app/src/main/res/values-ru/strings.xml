@@ -56,4 +56,9 @@
     <string name="unauthorized_error">Нет аутентификации</string>
     <string name="forbidden_error">Запрещено - нет доступа</string>
     <string name="internal_server_error">Внутренняя ошибка сервера</string>
+
+    <string name="logout_confirmation_question">Вы собираетесь выйти из аккаунта.\nПродолжить?</string>
+    <string name="logout_confirm_button">Выйти</string>
+    <string name="logout_dismiss_button">Отмена</string>
+
 </resources>

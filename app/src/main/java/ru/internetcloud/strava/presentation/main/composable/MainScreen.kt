@@ -24,6 +24,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.presentation.logout.LogoutDialog
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
@@ -51,6 +52,8 @@ fun MainScreen(app: Application) {
         initialValue = true
     )
     val noInternetConnectionMessage = stringResource(id = R.string.no_internet_connection)
+
+    val showLogoutDialog = viewModel.showLogoutDialog.collectAsStateWithLifecycle(initialValue = false)
 
     Scaffold(
         snackbarHost = {
@@ -100,6 +103,13 @@ fun MainScreen(app: Application) {
                 }
             }
         }
+
+        LogoutDialog(
+            show = showLogoutDialog.value,
+            onDismiss = viewModel::onLogoutDialogDismiss,
+            onConfirm = viewModel::onLogoutDialogConfirm
+        )
+
         AppNavGraph(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,

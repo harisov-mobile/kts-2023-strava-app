@@ -7,18 +7,30 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import ru.internetcloud.strava.presentation.logout.LogoutClickHelper
 
 @Composable
 fun TopBarWithLogout(
     title: String
 ) {
+    val scope = rememberCoroutineScope()
+
     TopAppBar(
         title = {
             Text(text = title)
         },
         actions = {
             IconButton(
-                onClick = { }
+                onClick = remember {
+                    {
+                        scope.launch {
+                            LogoutClickHelper.onLogoutClick()
+                        }
+                    }
+                }
             ) {
                 Icon(
                     imageVector = Icons.Default.Logout,
