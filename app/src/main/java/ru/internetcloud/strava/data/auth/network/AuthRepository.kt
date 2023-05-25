@@ -19,5 +19,7 @@ class AuthRepository {
         TokenStorage.accessToken = tokens.accessToken
         TokenStorage.refreshToken = tokens.refreshToken
         TokenStorage.idToken = tokens.idToken
+
+        TokenStorage.saveTokenToPrefs()
     }
 }
