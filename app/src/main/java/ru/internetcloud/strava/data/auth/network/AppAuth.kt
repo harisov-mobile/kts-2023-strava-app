@@ -57,9 +57,9 @@ object AppAuth {
                     response != null -> {
                         // получение токена произошло успешно
                         val tokens = TokensModel(
-                            accessToken = response.accessToken.orEmpty(),
-                            refreshToken = response.refreshToken.orEmpty(),
-                            idToken = response.idToken.orEmpty()
+                            accessToken = response.accessToken,
+                            refreshToken = response.refreshToken,
+                            idToken = response.idToken
                         )
                         continuation.resumeWith(Result.success(tokens))
                     }
