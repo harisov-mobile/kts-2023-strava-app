@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +29,7 @@ import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
+import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 import ru.internetcloud.strava.presentation.util.addPartWithComma
@@ -42,11 +42,7 @@ fun ShowProfileScreen() {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.navigation_item_you))
-                }
-            )
+            TopBarWithLogout(title = stringResource(id = R.string.navigation_item_you))
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
