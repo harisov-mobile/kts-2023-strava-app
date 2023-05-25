@@ -3,7 +3,7 @@ package ru.internetcloud.strava.data.token
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import ru.internetcloud.strava.data.auth.network.model.TokensModel
+import ru.internetcloud.strava.domain.token.model.TokensModel
 
 object TokenSharedPreferencesStorage {
 

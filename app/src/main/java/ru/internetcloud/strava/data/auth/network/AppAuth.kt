@@ -12,7 +12,7 @@ import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
 import ru.internetcloud.strava.BuildConfig
-import ru.internetcloud.strava.data.auth.network.model.TokensModel
+import ru.internetcloud.strava.domain.token.model.TokensModel
 
 object AppAuth {
 

@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.data.auth.network.model
+package ru.internetcloud.strava.domain.token.model
 
 data class TokensModel(
     val accessToken: String? = null,

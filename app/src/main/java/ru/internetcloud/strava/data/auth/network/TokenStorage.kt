@@ -1,7 +1,7 @@
 package ru.internetcloud.strava.data.auth.network
 
-import ru.internetcloud.strava.data.auth.network.model.TokensModel
 import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.domain.token.model.TokensModel
 
 object TokenStorage {
     var accessToken: String? = null
