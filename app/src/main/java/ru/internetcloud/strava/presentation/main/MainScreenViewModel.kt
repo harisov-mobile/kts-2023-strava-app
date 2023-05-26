@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.main.composable
+package ru.internetcloud.strava.presentation.main
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

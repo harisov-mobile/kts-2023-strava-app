@@ -26,6 +26,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.presentation.logout.LogoutDialog
+import ru.internetcloud.strava.presentation.main.MainScreenViewModel
+import ru.internetcloud.strava.presentation.main.MainScreenViewModelFactory
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
