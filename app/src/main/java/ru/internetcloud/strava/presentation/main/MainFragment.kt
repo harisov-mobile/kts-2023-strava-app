@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.internetcloud.strava.presentation.common.compose.StravaTheme
 import ru.internetcloud.strava.presentation.main.composable.MainScreen
 
@@ -17,7 +18,10 @@ class MainFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             StravaTheme {
-                MainScreen(app = requireActivity().application)
+                MainScreen(
+                    app = requireActivity().application,
+                    onNavigate = { dest: Int -> findNavController().navigate(dest) }
+                )
             }
         }
     }

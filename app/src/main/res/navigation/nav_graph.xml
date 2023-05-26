@@ -20,7 +20,13 @@
         android:id="@+id/mainFragment"
         android:name="ru.internetcloud.strava.presentation.main.MainFragment"
         android:label="MainFragment"
-        />
+        >
+        <action
+            android:id="@+id/action_mainFragment_to_logoutFragment"
+            app:destination="@id/logoutFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="ru.internetcloud.strava.presentation.auth.AuthFragment"
@@ -52,4 +58,9 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="ru.internetcloud.strava.presentation.logout.LogoutFragment"
+        android:label="LogoutFragment"
+        tools:layout="@layout/fragment_logout"/>
 </navigation>

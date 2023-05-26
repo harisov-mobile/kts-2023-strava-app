@@ -60,5 +60,7 @@
     <string name="logout_confirmation_question">Вы собираетесь выйти из аккаунта.\nПродолжить?</string>
     <string name="logout_confirm_button">Выйти</string>
     <string name="logout_dismiss_button">Отмена</string>
+    <string name="logout_button">Logout</string>
+    <string name="logout_canceled">Logout failed</string>
 
 </resources>

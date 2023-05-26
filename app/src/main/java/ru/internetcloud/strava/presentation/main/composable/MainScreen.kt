@@ -14,6 +14,7 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -40,7 +41,10 @@ private val navItemList = listOf(
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun MainScreen(app: Application) {
+fun MainScreen(
+    app: Application,
+    onNavigate: (Int) -> Unit
+) {
     val navigationState = rememberNavigationState()
 
     val snackbarHostState = SnackbarHostState()
@@ -129,5 +133,11 @@ fun MainScreen(app: Application) {
                 ShowProfileScreen()
             }
         )
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.navigateLogoutFlow.collect {
+            onNavigate(R.id.action_mainFragment_to_logoutFragment)
+        }
     }
 }

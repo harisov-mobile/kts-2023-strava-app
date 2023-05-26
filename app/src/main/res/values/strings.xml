@@ -59,5 +59,7 @@
     <string name="logout_confirmation_question">Are you sure you want to log out?</string>
     <string name="logout_confirm_button">Log out</string>
     <string name="logout_dismiss_button">Cancel</string>
+    <string name="logout_button">Logout</string>
+    <string name="logout_canceled">Logout failed</string>
 
 </resources>

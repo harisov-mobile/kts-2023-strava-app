@@ -8,6 +8,7 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
+import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
@@ -75,6 +76,12 @@ object AppAuth {
         return ClientSecretPost(BuildConfig.CLIENT_SECRET)
     }
 
+    fun getEndSessionRequest(): EndSessionRequest {
+        return EndSessionRequest.Builder(serviceConfiguration)
+            .setPostLogoutRedirectUri(AuthConfig.LOGOUT_CALLBACK_URL.toUri())
+            .build()
+    }
+
     private object AuthConfig {
         const val AUTH_URI = "https://www.strava.com/oauth/mobile/authorize"
         const val TOKEN_URI = "https://www.strava.com/oauth/token"
@@ -86,5 +93,6 @@ object AppAuth {
         // создан файл keystore.properties и в этот файл помещены значения CLIENT_ID и CLIENT_SECRET
 
         const val CALLBACK_URL = "ru.internetcloud.strava.oauth://internetcloud.ru/callback"
+        const val LOGOUT_CALLBACK_URL = "ru.internetcloud.strava.oauth://internetcloud.ru/logout_callback"
     }
 }

@@ -2,6 +2,7 @@ package ru.internetcloud.strava.data.auth.network
 
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
+import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.TokenRequest
 
 class AuthRepository {
@@ -21,5 +22,19 @@ class AuthRepository {
         TokenStorage.idToken = tokens.idToken
 
         TokenStorage.saveTokenToPrefs()
+    }
+
+    fun getEndSessionRequest(): EndSessionRequest {
+        return AppAuth.getEndSessionRequest()
+    }
+
+    fun corruptAccessToken() {
+        TokenStorage.accessToken = "fake token"
+    }
+
+    fun logout() {
+        TokenStorage.accessToken = null
+        TokenStorage.refreshToken = null
+        TokenStorage.idToken = null
     }
 }

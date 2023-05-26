@@ -3,6 +3,8 @@ package ru.internetcloud.strava.presentation.main.composable
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +29,11 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
     private val _showLogoutDialog = MutableStateFlow(false)
     val showLogoutDialog = _showLogoutDialog.asStateFlow()
 
+    private val navigateLogoutEventChannel = Channel<Unit>(Channel.BUFFERED)
+
+    val navigateLogoutFlow: Flow<Unit>
+        get() = navigateLogoutEventChannel.receiveAsFlow()
+
     init {
         viewModelScope.launch {
             onLogoutClickFlow.collect {
@@ -41,8 +48,9 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
 
     fun onLogoutDialogConfirm() {
         _showLogoutDialog.value = false
-        // Continue with executing the confirmed action
         Timber.tag("rustam").d("onLogoutDialogConfirm")
+        // Continue with executing the confirmed action
+        navigateLogoutEventChannel.trySendBlocking(Unit)
     }
 
     fun onLogoutDialogDismiss() {
