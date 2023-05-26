@@ -60,6 +60,6 @@
     <string name="logout_confirm_button">Log out</string>
     <string name="logout_dismiss_button">Cancel</string>
     <string name="logout_button">Logout</string>
-    <string name="logout_canceled">Logout failed</string>
+    <string name="logout_error">Logout failed</string>
 
 </resources>

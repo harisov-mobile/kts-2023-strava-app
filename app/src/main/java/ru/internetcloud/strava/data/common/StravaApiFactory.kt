@@ -10,6 +10,7 @@ import retrofit2.create
 import ru.internetcloud.strava.data.auth.network.TokenStorage
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationFailedInterceptor
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationInterceptor
+import ru.internetcloud.strava.data.logout.network.api.LogoutApi
 import ru.internetcloud.strava.data.profile.network.api.ProfileApi
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
 
@@ -24,6 +25,9 @@ object StravaApiFactory {
         get() = retrofit?.create() ?: error("retrofit is not initialized")
 
     val profileApi: ProfileApi
+        get() = retrofit?.create() ?: error("retrofit is not initialized")
+
+    val logoutApi: LogoutApi
         get() = retrofit?.create() ?: error("retrofit is not initialized")
 
     fun init(context: Context) {

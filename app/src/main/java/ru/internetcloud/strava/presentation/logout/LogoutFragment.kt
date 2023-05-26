@@ -22,12 +22,12 @@ class LogoutFragment : Fragment(R.layout.fragment_logout) {
     private val logoutResponse = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if(result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == Activity.RESULT_OK) {
             viewModel.webLogoutComplete()
         } else {
             // логаут отменен
             // делаем complete тк github не редиректит после логаута и пользователь закрывает CCT
-            //viewModel.webLogoutComplete()
+            // viewModel.webLogoutComplete()
         }
     }
 
@@ -47,7 +47,7 @@ class LogoutFragment : Fragment(R.layout.fragment_logout) {
         }
 
         viewModel.logoutCompletedFlow.launchAndCollectIn(viewLifecycleOwner) {
-            //findNavController().resetNavGraph(R.navigation.nav_graph)
+            // findNavController().resetNavGraph(R.navigation.nav_graph)
         }
     }
 }

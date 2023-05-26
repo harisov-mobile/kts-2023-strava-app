@@ -61,6 +61,6 @@
     <string name="logout_confirm_button">Выйти</string>
     <string name="logout_dismiss_button">Отмена</string>
     <string name="logout_button">Logout</string>
-    <string name="logout_canceled">Logout failed</string>
+    <string name="logout_error">Произошла ошибка при выходе из аккаунта.</string>
 
 </resources>

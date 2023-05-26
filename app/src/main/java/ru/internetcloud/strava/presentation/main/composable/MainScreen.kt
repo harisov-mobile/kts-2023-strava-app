@@ -2,6 +2,7 @@ package ru.internetcloud.strava.presentation.main.composable
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -18,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,6 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.presentation.logout.LogoutDialog
+import ru.internetcloud.strava.presentation.main.MainScreenEvent
 import ru.internetcloud.strava.presentation.main.MainScreenViewModel
 import ru.internetcloud.strava.presentation.main.MainScreenViewModelFactory
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
@@ -60,6 +63,8 @@ fun MainScreen(
     val noInternetConnectionMessage = stringResource(id = R.string.no_internet_connection)
 
     val showLogoutDialog = viewModel.showLogoutDialog.collectAsStateWithLifecycle(initialValue = false)
+
+    val context = LocalContext.current
 
     Scaffold(
         snackbarHost = {
@@ -138,8 +143,15 @@ fun MainScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.navigateLogoutFlow.collect {
-            onNavigate(R.id.action_mainFragment_to_logoutFragment)
+        viewModel.screenEventFlow.collect { event ->
+            when (event) {
+                is MainScreenEvent.NavigateToLogout -> {
+                    onNavigate(R.id.action_mainFragment_to_authFragment)
+                }
+                is MainScreenEvent.ShowMessage -> {
+                    Toast.makeText(context, event.messageRes, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
