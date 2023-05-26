@@ -9,13 +9,13 @@ import ru.internetcloud.strava.data.training.network.model.TrainingListItemDTO
 
 interface TrainingApi {
 
-    @GET("activities")
+    @GET("api/v3/activities")
     suspend fun getTrainings(
         @Query(QUERY_PARAM_PAGE)
         page: Int
     ): Response<List<TrainingListItemDTO>>
 
-    @GET("activities/{id}")
+    @GET("api/v3/activities/{id}")
     suspend fun getTraining(
         @Path(PATH_PARAM_ID)
         id: Long

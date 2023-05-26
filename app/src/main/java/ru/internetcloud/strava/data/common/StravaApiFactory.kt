@@ -15,7 +15,7 @@ import ru.internetcloud.strava.data.training.network.api.TrainingApi
 
 object StravaApiFactory {
 
-    private const val BASE_URL = "https://www.strava.com/api/v3/"
+    private const val BASE_URL = "https://www.strava.com/"
 
     private var okHttpClient: OkHttpClient? = null
     private var retrofit: Retrofit? = null
