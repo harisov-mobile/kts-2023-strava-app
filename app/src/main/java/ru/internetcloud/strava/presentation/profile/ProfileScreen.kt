@@ -25,10 +25,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
+import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
@@ -59,7 +61,8 @@ fun ShowProfileScreen() {
                 }
                 is UiState.Success -> {
                     ShowProfile(
-                        profile = currentState.data
+                        profile = currentState.data,
+                        source = currentState.source
                     )
                 }
                 UiState.EmptyData -> {
@@ -72,13 +75,15 @@ fun ShowProfileScreen() {
 
 @Composable
 private fun ShowProfile(
-    profile: Profile
+    profile: Profile,
+    source: Source
 ) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.surface)
             .padding(16.dp)
     ) {
+        ShowSource(source)
         Row {
             AsyncImage(
                 modifier = Modifier

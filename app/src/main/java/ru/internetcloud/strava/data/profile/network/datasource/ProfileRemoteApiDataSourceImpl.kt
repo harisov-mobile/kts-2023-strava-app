@@ -4,6 +4,7 @@ import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.profile.mapper.ProfileMapper
 import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
 
 class ProfileRemoteApiDataSourceImpl : ProfileRemoteApiDataSource {
@@ -17,8 +18,8 @@ class ProfileRemoteApiDataSourceImpl : ProfileRemoteApiDataSource {
             if (networkResponse.isSuccessful) {
                 val stravaAthleteDTO = networkResponse.body()
                 stravaAthleteDTO?.let { currentDTO ->
-                    val stravaAthlete = profileMapper.fromDtoToDomain(currentDTO)
-                    DataResponse.Success(stravaAthlete)
+                    val profile = profileMapper.fromDtoToDomain(currentDTO)
+                    DataResponse.Success(profile, source = Source.RemoteApi)
                 } ?: let {
                     DataResponse.Error(exception = IllegalStateException("No profile found"))
                 }

@@ -65,4 +65,5 @@
     <string name="logout_button">Logout</string>
     <string name="logout_error">Logout failed</string>
 
+    <string name="source_description">Displays data from local storage</string>
 </resources>

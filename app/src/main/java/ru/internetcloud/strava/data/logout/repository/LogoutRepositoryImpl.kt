@@ -5,6 +5,7 @@ import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.logout.mapper.LogoutMapper
 import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.logout.LogoutRepository
 import ru.internetcloud.strava.domain.logout.model.LogoutAnswer
 
@@ -19,7 +20,7 @@ class LogoutRepositoryImpl : LogoutRepository {
             if (networkResponse.isSuccessful) {
                 val logoutAnswerDTO = networkResponse.body()
                 logoutAnswerDTO?.let { currentDTO ->
-                    DataResponse.Success(logoutMapper.fromDtoToDomain(currentDTO))
+                    DataResponse.Success(logoutMapper.fromDtoToDomain(currentDTO), source = Source.RemoteApi)
                 } ?: let {
                     DataResponse.Error(exception = IllegalStateException("No logout answer found"))
                 }

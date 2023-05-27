@@ -1,8 +1,10 @@
 package ru.internetcloud.strava.presentation.util
 
+import ru.internetcloud.strava.domain.common.model.Source
+
 sealed interface UiState<out T> {
 
-    data class Success<out T>(val data: T) : UiState<T>
+    data class Success<out T>(val data: T, val source: Source) : UiState<T>
 
     data class Error(val exception: Exception) : UiState<Nothing>
 

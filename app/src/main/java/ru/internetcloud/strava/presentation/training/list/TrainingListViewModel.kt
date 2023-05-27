@@ -53,7 +53,10 @@ class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 profileWithTrainings = profileWithTrainings.copy(
                                     trainingList = trainingsDataResponse.data.toList()
                                 )
-                                _screenState.value = UiState.Success(data = profileWithTrainings)
+                                _screenState.value = UiState.Success(
+                                    data = profileWithTrainings,
+                                    source = trainingsDataResponse.source
+                                )
                             }
                         }
                         is DataResponse.Error -> {

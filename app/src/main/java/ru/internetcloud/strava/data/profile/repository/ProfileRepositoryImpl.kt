@@ -4,6 +4,7 @@ import ru.internetcloud.strava.data.profile.cache.datasource.ProfileLocalDataSou
 import ru.internetcloud.strava.data.profile.mapper.ProfileMapper
 import ru.internetcloud.strava.data.profile.network.datasource.ProfileRemoteApiDataSourceImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.model.Profile
 
@@ -20,7 +21,10 @@ class ProfileRepositoryImpl : ProfileRepository {
             profileLocalDataSource.insertProfile(profileMapper.fromDomainToDbModel(result.data))
         } else {
             profileLocalDataSource.getProfile()?.let { profileDbModel ->
-                result = DataResponse.Success(data = profileMapper.fromDbModelToDomain(profileDbModel))
+                result = DataResponse.Success(
+                    data = profileMapper.fromDbModelToDomain(profileDbModel),
+                    source = Source.LocalCache
+                )
             }
         }
 

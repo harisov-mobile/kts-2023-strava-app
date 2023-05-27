@@ -45,7 +45,10 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
                                 profile = profile,
                                 training = trainingDataResponse.data
                             )
-                            _screenState.value = UiState.Success(data = profileWithTraining)
+                            _screenState.value = UiState.Success(
+                                data = profileWithTraining,
+                                source = trainingDataResponse.source
+                            )
                         }
                         is DataResponse.Error -> {
                             _screenState.value = UiState.Error(exception = trainingDataResponse.exception)
