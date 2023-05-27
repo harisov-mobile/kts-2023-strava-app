@@ -1,7 +1,9 @@
 package ru.internetcloud.strava.presentation.start
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import ru.internetcloud.strava.R
 import ru.internetcloud.strava.data.onboarding.repository.OnboardingRepositoryImpl
 import ru.internetcloud.strava.data.token.repository.TokenRepositoryImpl
 import ru.internetcloud.strava.domain.onboarding.usecase.GetOnboardingParamsUseCase
@@ -9,7 +11,7 @@ import ru.internetcloud.strava.domain.onboarding.usecase.SaveOnboardingParamsUse
 import ru.internetcloud.strava.domain.token.usecase.GetTokenUseCase
 import ru.internetcloud.strava.domain.token.usecase.RememberTokenUseCase
 
-class StartViewModel : ViewModel() {
+class StartViewModel(private val app: Application) : ViewModel() {
 
     private val onboardingRepository = OnboardingRepositoryImpl()
     private val getOnboardingParamsUseCase = GetOnboardingParamsUseCase(onboardingRepository)
@@ -29,7 +31,9 @@ class StartViewModel : ViewModel() {
             val token = getTokenUseCase.getToken()
 
             if (token.accessToken.isNullOrEmpty()) {
-                StartFragmentDirections.actionStartFragmentToAuthFragment()
+                StartFragmentDirections.actionStartFragmentToAuthFragment(
+                    message = app.getString(R.string.auth_standart_message)
+                )
             } else {
                 rememberTokenUseCase.rememberToken(token)
                 StartFragmentDirections.actionStartFragmentToMainFragment()

@@ -4,7 +4,6 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import ru.internetcloud.strava.data.auth.network.TokenStorage
-import timber.log.Timber
 
 class AuthorizationInterceptor : Interceptor {
 
@@ -20,7 +19,6 @@ class AuthorizationInterceptor : Interceptor {
         return newBuilder()
             .apply {
                 val token = TokenStorage.accessToken
-                Timber.tag("rustam").d("addTokenHeader, accessToken = $token")
                 if (token != null) {
                     header(AUTH_HEADER_NAME, token.withBearer())
                 }

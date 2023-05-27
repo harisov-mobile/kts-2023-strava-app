@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 
 class StartFragment : Fragment() {
 
-    private val startViewModel: StartViewModel by viewModels()
+    private val startViewModel: StartViewModel by viewModels {
+        StartViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

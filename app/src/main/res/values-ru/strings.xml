@@ -20,6 +20,9 @@
 
     <string name="auth_login_button">Войти через Strava.com</string>
     <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="auth_try_again">Произошла ошибка аутентификации. Необходимо войти через Strava.com еще раз.</string>
+    <string name="auth_after_logout">Вы вышли из аккаунта.\nДля продолжения работы в приложении необходимо войти через Strava.com.</string>
+    <string name="auth_standart_message">Для продолжения необходимо войти через Strava.com.</string>
 
     <string name="main_likes_amount">Количество лайков = %s</string>
 
@@ -50,11 +53,11 @@
     <string name="oldmain_text_under_image">Ставь лайк если любишь андроид</string>
 
     <string name="no_internet_connection">Нет интернет-соединения</string>
-    <string name="http_error_code">HTTP код %d</string>
+    <string name="http_error_code">HTTP код ошибки %d</string>
     <string name="unknown_network_error">Ошибка сети</string>
     <string name="bad_request_error">Неправильный запрос от клиента к серверу</string>
     <string name="unauthorized_error">Нет аутентификации</string>
-    <string name="forbidden_error">Запрещено - нет доступа</string>
+    <string name="forbidden_error">Запрещено - нет доступа. Включите VPN.</string>
     <string name="internal_server_error">Внутренняя ошибка сервера</string>
 
     <string name="logout_confirmation_question">Вы собираетесь выйти из аккаунта.\nПродолжить?</string>

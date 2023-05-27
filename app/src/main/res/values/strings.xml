@@ -19,6 +19,9 @@
 
     <string name="auth_login_button">Login with Strava.com</string>
     <string name="auth_canceled">Authentication failed</string>
+    <string name="auth_try_again">An authentication error has occurred. You need to login with Strava.com again.</string>
+    <string name="auth_after_logout">You are logged out.\nYou must be logged in with Strava.com to continue using the app.</string>
+    <string name="auth_standart_message">Для продолжения необходимо войти через Strava.com.</string>
 
     <string name="main_likes_amount">Amount of likes = %s</string>
 
@@ -49,11 +52,11 @@
     <string name="oldmain_text_under_image">Like if you like android</string>
 
     <string name="no_internet_connection">No Internet connection</string>
-    <string name="http_error_code">HTTP code %d</string>
+    <string name="http_error_code">HTTP error code %d</string>
     <string name="unknown_network_error">Network error</string>
     <string name="bad_request_error">Bad request</string>
     <string name="unauthorized_error">Unauthorized</string>
-    <string name="forbidden_error">Forbidden</string>
+    <string name="forbidden_error">Forbidden. Turn on the VPN.</string>
     <string name="internal_server_error">Internal server error</string>
 
     <string name="logout_confirmation_question">Are you sure you want to log out?</string>

@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
             StravaTheme {
                 MainScreen(
                     app = requireActivity().application,
-                    onNavigate = { dest: Int -> findNavController().navigate(dest) }
+                    onNavigate = { dest: Int, args: Bundle? -> findNavController().navigate(dest, args) }
                 )
             }
         }

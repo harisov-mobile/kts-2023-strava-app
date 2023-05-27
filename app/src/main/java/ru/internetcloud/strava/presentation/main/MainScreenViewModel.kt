@@ -1,6 +1,7 @@
 package ru.internetcloud.strava.presentation.main
 
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -9,13 +10,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import ru.internetcloud.strava.R
 import ru.internetcloud.strava.data.internet.repository.InternetStatusRepositoryImpl
 import ru.internetcloud.strava.data.logout.repository.LogoutRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.internet.usecase.GetInternetStatusUseCase
 import ru.internetcloud.strava.domain.logout.usecase.LogoutUseCase
+import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 import ru.internetcloud.strava.presentation.logout.LogoutClickHelper
-import timber.log.Timber
 
 class MainScreenViewModel(private val app: Application) : ViewModel() {
 
@@ -38,10 +40,19 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
     val screenEventFlow: Flow<MainScreenEvent>
         get() = screenEventChannel.receiveAsFlow()
 
+    private val onUnauthorizedEventFlow: Flow<Unit>
+        get() = UnauthorizedHandler.unauthorizedEventChannel.receiveAsFlow()
+
     init {
         viewModelScope.launch {
             onLogoutClickFlow.collect {
                 _showLogoutDialog.value = true
+            }
+        }
+
+        viewModelScope.launch {
+            onUnauthorizedEventFlow.collect {
+                onUnauthorized()
             }
         }
     }
@@ -52,18 +63,19 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
 
     fun onLogoutDialogConfirm() {
         _showLogoutDialog.value = false
-        Timber.tag("rustam").d("onLogoutDialogConfirm")
 
         viewModelScope.launch {
+            val args = Bundle().apply {
+                putString("message", app.getString(R.string.auth_after_logout))
+            }
+
             when (val logoutDataResponse = logoutUseCase.logout()) {
                 is DataResponse.Success -> {
-                    Timber.tag("rustam").d("logoutDataResponse, accessToken = ${logoutDataResponse.data.accessToken}")
-                    screenEventChannel.trySend(MainScreenEvent.NavigateToLogout)
+                    screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
                 }
                 is DataResponse.Error -> {
-                    Timber.tag("rustam").d("logout error, ${logoutDataResponse.exception.message}")
                     // screenEventChannel.trySend(MainScreenEvent.ShowMessage(R.string.logout_error))
-                    screenEventChannel.trySend(MainScreenEvent.NavigateToLogout)
+                    screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
                 }
             }
         }
@@ -71,6 +83,12 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
 
     fun onLogoutDialogDismiss() {
         _showLogoutDialog.value = false
-        Timber.tag("rustam").d("Dismiss")
+    }
+
+    fun onUnauthorized() {
+        val args = Bundle().apply {
+            putString("message", app.getString(R.string.auth_try_again))
+        }
+        screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
     }
 }

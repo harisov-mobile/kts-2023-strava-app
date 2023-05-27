@@ -14,9 +14,8 @@ class LogoutRepositoryImpl : LogoutRepository {
 
     override suspend fun logout(): DataResponse<LogoutAnswer> {
         return try {
-            clearToken() // в любом случае надо удалить в SharedPrefs информацию о токене!
-
             val networkResponse = StravaApiFactory.logoutApi.logout()
+            clearToken() // в любом случае надо удалить в SharedPrefs информацию о токене!
             if (networkResponse.isSuccessful) {
                 val logoutAnswerDTO = networkResponse.body()
                 logoutAnswerDTO?.let { currentDTO ->

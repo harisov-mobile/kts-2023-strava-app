@@ -29,7 +29,12 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
     }
 
     private fun launchLoginFragment() {
-        findNavController().navigate(OnBoardingFragmentDirections.actionOnBoardingFragmentToAuthFragment())
+        findNavController()
+            .navigate(
+                OnBoardingFragmentDirections.actionOnBoardingFragmentToAuthFragment(
+                    message = getString(R.string.auth_standart_message)
+                )
+            )
     }
 
     private fun initAdapter() {

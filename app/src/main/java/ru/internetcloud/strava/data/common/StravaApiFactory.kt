@@ -3,7 +3,6 @@ package ru.internetcloud.strava.data.common
 import android.content.Context
 import net.openid.appauth.AuthorizationService
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -32,14 +31,8 @@ object StravaApiFactory {
 
     fun init(context: Context) {
         okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor {
-                    // Timber.tag("Network").d(it)
-                }
-                    .setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
-            .addNetworkInterceptor(AuthorizationInterceptor())
-            .addNetworkInterceptor(AuthorizationFailedInterceptor(AuthorizationService(context), TokenStorage))
+            .addInterceptor(AuthorizationInterceptor())
+            .addInterceptor(AuthorizationFailedInterceptor(AuthorizationService(context), TokenStorage))
             .build()
 
         retrofit = Retrofit.Builder()

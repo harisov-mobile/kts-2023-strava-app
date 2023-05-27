@@ -2,6 +2,7 @@ package ru.internetcloud.strava.presentation.main.composable
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -48,7 +49,7 @@ private val navItemList = listOf(
 @Composable
 fun MainScreen(
     app: Application,
-    onNavigate: (Int) -> Unit
+    onNavigate: (Int, Bundle?) -> Unit
 ) {
     val navigationState = rememberNavigationState()
 
@@ -146,7 +147,7 @@ fun MainScreen(
         viewModel.screenEventFlow.collect { event ->
             when (event) {
                 is MainScreenEvent.NavigateToLogout -> {
-                    onNavigate(R.id.action_mainFragment_to_authFragment)
+                    onNavigate(R.id.action_mainFragment_to_authFragment, event.args)
                 }
                 is MainScreenEvent.ShowMessage -> {
                     Toast.makeText(context, event.messageRes, Toast.LENGTH_SHORT).show()
