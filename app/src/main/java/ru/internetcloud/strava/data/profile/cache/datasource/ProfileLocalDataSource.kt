@@ -1,8 +1,10 @@
 package ru.internetcloud.strava.data.profile.cache.datasource
 
-import ru.internetcloud.strava.domain.profile.model.Profile
+import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
 
 interface ProfileLocalDataSource {
 
-    suspend fun getProfile(): Profile
+    suspend fun getProfile(): ProfileDbModel?
+
+    suspend fun insertProfile(profileDbModel: ProfileDbModel)
 }

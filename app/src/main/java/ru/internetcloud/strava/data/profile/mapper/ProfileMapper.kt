@@ -34,8 +34,24 @@ class ProfileMapper {
             sex = profileDbModel.sex,
             imageUrlMedium = profileDbModel.imageUrlMedium,
             imageUrl = profileDbModel.imageUrl,
-            friendCount = profileDbModel.friendCount.orDefault(),
-            followerCount = profileDbModel.followerCount.orDefault()
+            friendCount = profileDbModel.friendCount,
+            followerCount = profileDbModel.followerCount
+        )
+    }
+
+    fun fromDomainToDbModel(profile: Profile): ProfileDbModel {
+        return ProfileDbModel(
+            id = profile.id,
+            firstName = profile.firstName,
+            lastName = profile.lastName,
+            city = profile.city,
+            state = profile.state,
+            country = profile.country,
+            sex = profile.sex,
+            imageUrlMedium = profile.imageUrlMedium,
+            imageUrl = profile.imageUrl,
+            friendCount = profile.friendCount,
+            followerCount = profile.followerCount
         )
     }
 }
