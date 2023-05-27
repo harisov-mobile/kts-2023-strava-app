@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.data.profile.mapper
 
+import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
 import ru.internetcloud.strava.data.profile.network.model.ProfileDTO
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.presentation.util.orDefault
@@ -19,6 +20,22 @@ class ProfileMapper {
             imageUrl = profileDTO.profile.orEmpty(),
             friendCount = profileDTO.friendCount.orDefault(),
             followerCount = profileDTO.followerCount.orDefault()
+        )
+    }
+
+    fun fromDbModelToDomain(profileDbModel: ProfileDbModel): Profile {
+        return Profile(
+            id = profileDbModel.id,
+            firstName = profileDbModel.firstName,
+            lastName = profileDbModel.lastName,
+            city = profileDbModel.city,
+            state = profileDbModel.state,
+            country = profileDbModel.country,
+            sex = profileDbModel.sex,
+            imageUrlMedium = profileDbModel.imageUrlMedium,
+            imageUrl = profileDbModel.imageUrl,
+            friendCount = profileDbModel.friendCount.orDefault(),
+            followerCount = profileDbModel.followerCount.orDefault()
         )
     }
 }
