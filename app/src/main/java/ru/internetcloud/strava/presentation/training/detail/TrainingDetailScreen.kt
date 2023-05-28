@@ -31,12 +31,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.util.TrainingConverter
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
+import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
@@ -89,7 +91,8 @@ fun ShowTrainingDetailScreen(
                 is UiState.Success -> {
                     ShowTraining(
                         profile = currentState.data.profile,
-                        training = currentState.data.training
+                        training = currentState.data.training,
+                        source = currentState.source
                     )
                 }
                 is UiState.EmptyData -> {
@@ -103,51 +106,55 @@ fun ShowTrainingDetailScreen(
 @Composable
 private fun ShowTraining(
     profile: Profile,
-    training: Training
+    training: Training,
+    source: Source
 ) {
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colors.surface)
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Row {
-            AsyncImage(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape),
-                model = profile.imageUrlMedium,
-                placeholder = painterResource(id = R.drawable.no_photo),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "${profile.firstName} ${profile.lastName}",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+    Column {
+        ShowSource(source)
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colors.surface)
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Row {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape),
+                    model = profile.imageUrlMedium,
+                    placeholder = painterResource(id = R.drawable.no_photo),
+                    contentDescription = null
                 )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "${profile.firstName} ${profile.lastName}",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = training.name,
+                fontWeight = FontWeight.Bold
+            )
+            if (training.description.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
-                    fontSize = 12.sp,
+                    text = training.description,
                     fontWeight = FontWeight.Normal
                 )
             }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = training.name,
-            fontWeight = FontWeight.Bold
-        )
-        if (training.description.isNotEmpty()) {
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = training.description,
-                fontWeight = FontWeight.Normal
-            )
+            TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
     }
 }
