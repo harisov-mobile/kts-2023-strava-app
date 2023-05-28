@@ -44,6 +44,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
 
     private fun bindViewModel() {
         binding.loginButton.setOnClickListener {
+            viewModel.resetLocalCache()
             viewModel.openLoginPage()
         }
 
