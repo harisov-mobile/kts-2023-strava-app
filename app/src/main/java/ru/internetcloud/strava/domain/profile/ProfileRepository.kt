@@ -6,4 +6,6 @@ import ru.internetcloud.strava.domain.profile.model.Profile
 interface ProfileRepository {
 
     suspend fun getProfile(): DataResponse<Profile>
+
+    suspend fun deleteProfileInLocalCache()
 }

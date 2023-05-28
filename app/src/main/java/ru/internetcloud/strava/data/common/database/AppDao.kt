@@ -17,6 +17,9 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProfile(profileDbModel: ProfileDbModel)
 
+    @Query("DELETE FROM profile")
+    suspend fun deleteProfile()
+
     @Query("DELETE FROM training_list_items")
     suspend fun deleteAllTrainingListItems()
 

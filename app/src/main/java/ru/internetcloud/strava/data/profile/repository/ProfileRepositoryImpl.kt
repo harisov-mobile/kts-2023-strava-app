@@ -30,4 +30,8 @@ class ProfileRepositoryImpl : ProfileRepository {
 
         return result
     }
+
+    override suspend fun deleteProfileInLocalCache() {
+        profileLocalDataSource.deleteProfile()
+    }
 }

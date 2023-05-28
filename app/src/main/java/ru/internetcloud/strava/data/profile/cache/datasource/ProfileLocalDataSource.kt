@@ -7,4 +7,6 @@ interface ProfileLocalDataSource {
     suspend fun getProfile(): ProfileDbModel?
 
     suspend fun insertProfile(profileDbModel: ProfileDbModel)
+
+    suspend fun deleteProfile()
 }

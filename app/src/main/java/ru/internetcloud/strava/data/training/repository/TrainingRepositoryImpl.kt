@@ -23,6 +23,7 @@ class TrainingRepositoryImpl : TrainingRepository {
 
         if (result is DataResponse.Success) {
             trainingLocalDataSource.deleteAllTrainingListItems()
+            trainingLocalDataSource.deleteAllTrainings()
             trainingLocalDataSource.insertTrainingListItems(
                 trainingListItemMapper.fromListDomainToListDbModel(
                     result.data
@@ -42,6 +43,28 @@ class TrainingRepositoryImpl : TrainingRepository {
     }
 
     override suspend fun getTraining(id: Long): DataResponse<Training> {
-        return trainingRemoteApiDataSource.getTraining(id)
+        var result = trainingRemoteApiDataSource.getTraining(id)
+
+        if (result is DataResponse.Success) {
+            trainingLocalDataSource.insertTraining(
+                trainingMapper.fromDomainToDbModel(
+                    result.data
+                )
+            )
+        } else {
+            trainingLocalDataSource.getTraining(id)?.let { trainingDbModel ->
+                result = DataResponse.Success(
+                    data = trainingMapper.fromDbModelToDomain(trainingDbModel),
+                    source = Source.LocalCache
+                )
+            }
+        }
+
+        return result
+    }
+
+    override suspend fun deleteTrainingsInLocalCache() {
+        trainingLocalDataSource.deleteAllTrainings()
+        trainingLocalDataSource.deleteAllTrainingListItems()
     }
 }

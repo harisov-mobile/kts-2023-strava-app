@@ -9,4 +9,6 @@ interface TrainingRepository {
     suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>>
 
     suspend fun getTraining(id: Long): DataResponse<Training>
+
+    suspend fun deleteTrainingsInLocalCache()
 }

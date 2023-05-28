@@ -14,4 +14,8 @@ class ProfileLocalDataSourceImpl : ProfileLocalDataSource {
     override suspend fun insertProfile(profileDbModel: ProfileDbModel) {
         appDao.insertProfile(profileDbModel)
     }
+
+    override suspend fun deleteProfile() {
+        appDao.deleteProfile()
+    }
 }
