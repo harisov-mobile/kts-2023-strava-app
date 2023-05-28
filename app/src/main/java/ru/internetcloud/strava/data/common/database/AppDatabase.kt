@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
+import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
 
-@Database(entities = [ProfileDbModel::class], version = 1, exportSchema = true)
+@Database(entities = [ProfileDbModel::class, TrainingListItemDbModel::class], version = 1, exportSchema = true)
+@TypeConverters(DatabaseTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDao

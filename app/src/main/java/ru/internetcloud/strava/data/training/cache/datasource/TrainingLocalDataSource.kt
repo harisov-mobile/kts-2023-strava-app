@@ -4,5 +4,9 @@ import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
 
 interface TrainingLocalDataSource {
 
-    suspend fun getTrainings(): List<TrainingListItemDbModel>
+    suspend fun getTrainingListItems(): List<TrainingListItemDbModel>
+
+    suspend fun insertTrainingListItems(list: List<TrainingListItemDbModel>)
+
+    suspend fun deleteAllTrainingListItems()
 }
