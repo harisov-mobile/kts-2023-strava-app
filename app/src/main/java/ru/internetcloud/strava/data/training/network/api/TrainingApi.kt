@@ -2,6 +2,7 @@ package ru.internetcloud.strava.data.training.network.api
 
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
@@ -20,6 +21,19 @@ interface TrainingApi {
         @Path(PATH_PARAM_ID)
         id: Long
     ): Response<TrainingDTO>
+
+    @POST("api/v3/activities")
+    suspend fun addTraining(
+        @Query("name") name: String,
+        @Query("type") type: String,
+        @Query("sport_type") sportType: String,
+        @Query("start_date_local") startDate: String,
+        @Query("elapsed_time") elapsedTime: Int,
+        @Query("description") description: String,
+        @Query("distance") distance: Float,
+        @Query("trainer") trainer: Int,
+        @Query("commute") commute: Int
+    )
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"
