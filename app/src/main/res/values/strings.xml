@@ -21,7 +21,7 @@
     <string name="auth_canceled">Authentication failed</string>
     <string name="auth_try_again">An authentication error has occurred. You need to login with Strava.com again.</string>
     <string name="auth_after_logout">You are logged out.\nYou must be logged in with Strava.com to continue using the app.</string>
-    <string name="auth_standart_message">Для продолжения необходимо войти через Strava.com.</string>
+    <string name="auth_standart_message">You must be logged in with Strava.com to continue.</string>
 
     <string name="main_likes_amount">Amount of likes = %s</string>
 
