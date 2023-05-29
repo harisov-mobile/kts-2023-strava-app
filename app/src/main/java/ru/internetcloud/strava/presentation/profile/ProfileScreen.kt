@@ -37,7 +37,7 @@ import ru.internetcloud.strava.presentation.util.addPartWithComma
 @Composable
 fun ShowProfileScreen() {
     val viewModel: ProfileViewModel = viewModel()
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     Scaffold(

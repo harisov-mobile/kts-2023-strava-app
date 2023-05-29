@@ -28,7 +28,7 @@ fun ShowTrainingListScreen(
     onTrainingClickListener: (id: Long) -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     Scaffold(

@@ -50,7 +50,7 @@ fun ShowTrainingDetailScreen(
     val viewModel: TrainingDetailViewModel = viewModel(
         factory = TrainingDetailViewModelFactory(id = trainingId)
     )
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     Scaffold(
