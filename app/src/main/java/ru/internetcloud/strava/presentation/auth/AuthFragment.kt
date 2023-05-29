@@ -50,7 +50,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         }
 
         viewModel.authSuccessFlow.launchAndCollectIn(viewLifecycleOwner) {
-            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToMain2Fragment())
+            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToMainFragment())
         }
     }
 

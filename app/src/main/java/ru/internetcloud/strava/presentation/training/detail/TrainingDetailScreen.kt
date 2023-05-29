@@ -1,9 +1,11 @@
 package ru.internetcloud.strava.presentation.training.detail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,13 +13,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -25,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
@@ -37,6 +40,7 @@ import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
+import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
 fun ShowTrainingDetailScreen(
@@ -46,7 +50,7 @@ fun ShowTrainingDetailScreen(
     val viewModel: TrainingDetailViewModel = viewModel(
         factory = TrainingDetailViewModelFactory(id = trainingId)
     )
-    val screenState = viewModel.screenState.observeAsState(UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     Scaffold(
@@ -70,7 +74,10 @@ fun ShowTrainingDetailScreen(
             when (currentState) {
                 is UiState.Error -> {
                     ShowError(
-                        message = stringResource(id = R.string.strava_server_unavailable),
+                        message = stringResource(id = R.string.strava_server_unavailable)
+                            .addLine(
+                                currentState.exception.message.toString()
+                            ),
                         onTryAgainClick = {
                             viewModel.fetchTraining(id = trainingId)
                         }
@@ -99,7 +106,10 @@ private fun ShowTraining(
     training: Training
 ) {
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .background(MaterialTheme.colors.surface)
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Row {
             AsyncImage(

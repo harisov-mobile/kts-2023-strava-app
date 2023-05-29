@@ -26,7 +26,7 @@
     <string name="navigation_item_groups">Groups</string>
     <string name="navigation_item_you">You</string>
 
-    <string name="strava_server_unavailable">The Strava server has encountered an error. Please contact support if the problem persists.</string>
+    <string name="strava_server_unavailable">An error occurred while trying to get data from the Strava server:</string>
     <string name="try_again_button">Try again</string>
     <string name="training_list_is_empty">There are no activities yet</string>
     <string name="no_data">No data</string>
@@ -47,4 +47,12 @@
 
     <string name="oldmain_id">id = %d</string>
     <string name="oldmain_text_under_image">Like if you like android</string>
+
+    <string name="no_internet_connection">No Internet connection</string>
+    <string name="http_error_code">HTTP code %d</string>
+    <string name="unknown_network_error">Network error</string>
+    <string name="bad_request_error">Bad request</string>
+    <string name="unauthorized_error">Unauthorized</string>
+    <string name="forbidden_error">Forbidden</string>
+    <string name="internal_server_error">Internal server error</string>
 </resources>

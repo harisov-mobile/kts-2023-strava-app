@@ -27,7 +27,7 @@
     <string name="navigation_item_groups">Группы</string>
     <string name="navigation_item_you">Вы</string>
 
-    <string name="strava_server_unavailable">На сервере Strava произошла ошибка. Если проблема не исчезнет, обратитесь в службу поддержки.</string>
+    <string name="strava_server_unavailable">Произошла ошибка при попытке получить данные от сервера Strava:</string>
     <string name="try_again_button">Повторить попытку</string>
     <string name="training_list_is_empty">Нет ни одной тренировки</string>
     <string name="no_data">Нет данных</string>
@@ -48,4 +48,12 @@
 
     <string name="oldmain_id">id = %d</string>
     <string name="oldmain_text_under_image">Ставь лайк если любишь андроид</string>
+
+    <string name="no_internet_connection">Нет интернет-соединения</string>
+    <string name="http_error_code">HTTP код %d</string>
+    <string name="unknown_network_error">Ошибка сети</string>
+    <string name="bad_request_error">Неправильный запрос от клиента к серверу</string>
+    <string name="unauthorized_error">Нет аутентификации</string>
+    <string name="forbidden_error">Запрещено - нет доступа</string>
+    <string name="internal_server_error">Внутренняя ошибка сервера</string>
 </resources>

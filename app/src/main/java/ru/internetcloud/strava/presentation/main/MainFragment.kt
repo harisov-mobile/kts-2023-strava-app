@@ -17,7 +17,7 @@ class MainFragment : Fragment() {
     ): View = ComposeView(requireContext()).apply {
         setContent {
             StravaTheme {
-                MainScreen()
+                MainScreen(app = requireActivity().application)
             }
         }
     }

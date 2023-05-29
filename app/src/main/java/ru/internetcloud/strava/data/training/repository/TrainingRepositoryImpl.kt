@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.data.training.repository
 
+import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
@@ -14,11 +15,9 @@ class TrainingRepositoryImpl : TrainingRepository {
     private val trainingListItemMapper = TrainingListItemMapper()
 
     override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
-        var result: DataResponse<List<TrainingListItem>>
-
-        try {
+        return try {
             val networkResponse = StravaApiFactory.trainingApi.getTrainings(page = page)
-            result = if (networkResponse.isSuccessful) {
+            if (networkResponse.isSuccessful) {
                 val listDTO = networkResponse.body()
                 listDTO?.let { currentListDTO ->
                     val list = trainingListItemMapper.fromListDtoToListDomain(currentListDTO)
@@ -27,16 +26,15 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Success(emptyList())
                 }
             } else {
-                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            result = DataResponse.Error(e)
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
         }
-        return result
     }
 
     override suspend fun getTraining(id: Long): DataResponse<Training> {
-        val result: DataResponse<Training> = try {
+        return try {
             val networkResponse = StravaApiFactory.trainingApi.getTraining(id = id)
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
@@ -46,11 +44,10 @@ class TrainingRepositoryImpl : TrainingRepository {
                     DataResponse.Error(exception = IllegalStateException("No training found with id = $id"))
                 }
             } else {
-                DataResponse.Error(Exception(networkResponse.errorBody()?.string().orEmpty()))
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(e)
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
         }
-        return result
     }
 }
