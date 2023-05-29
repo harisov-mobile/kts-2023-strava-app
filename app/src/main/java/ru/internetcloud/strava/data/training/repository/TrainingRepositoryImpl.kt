@@ -67,4 +67,8 @@ class TrainingRepositoryImpl : TrainingRepository {
         trainingLocalDataSource.deleteAllTrainings()
         trainingLocalDataSource.deleteAllTrainingListItems()
     }
+
+    override suspend fun addTraining(training: Training): DataResponse<Training> {
+        TODO("Not yet implemented")
+    }
 }

@@ -11,4 +11,6 @@ interface TrainingRepository {
     suspend fun getTraining(id: Long): DataResponse<Training>
 
     suspend fun deleteTrainingsInLocalCache()
+
+    suspend fun addTraining(training: Training): DataResponse<Training>
 }

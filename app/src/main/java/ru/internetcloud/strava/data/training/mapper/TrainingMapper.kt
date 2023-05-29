@@ -42,4 +42,20 @@ class TrainingMapper {
             description = trainingDbModel.description
         )
     }
+
+    fun fromDomainToDto(training: Training): TrainingDTO {
+        return TrainingDTO(
+            id = training.id,
+            name = training.name,
+            distance = training.distance,
+            movingTime = training.movingTime,
+            type = training.type,
+            startDate = training.startDate.toString(),
+            description = training.description,
+            elapsedTime = 0,
+            sportType = "",
+            trainer = false,
+            commute = false
+        )
+    }
 }
