@@ -17,12 +17,24 @@ data class TrainingDTO(
     @Json(name = "moving_time")
     val movingTime: Int,
 
+    @Json(name = "elapsed_time")
+    val elapsedTime: Int,
+
     @Json(name = "type")
     val type: String,
+
+    @Json(name = "sport_type")
+    val sportType: String,
 
     @Json(name = "start_date")
     val startDate: String,
 
     @Json(name = "description")
-    val description: String?
+    val description: String?,
+
+    @Json(name = "trainer")
+    val trainer: Boolean,
+
+    @Json(name = "commute")
+    val commute: Boolean
 )
