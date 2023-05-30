@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.training.detail
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -19,9 +22,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -55,6 +64,9 @@ fun ShowTrainingDetailScreen(
     val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value
 
+    val showDropdownMenu = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -67,6 +79,31 @@ fun ShowTrainingDetailScreen(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null
                         )
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { showDropdownMenu.value = !showDropdownMenu.value }) {
+                        Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
+                    }
+                    DropdownMenu(
+                        expanded = showDropdownMenu.value,
+                        onDismissRequest = { showDropdownMenu.value = false }
+                    ) {
+                        DropdownMenuItem(onClick = {
+                            Toast.makeText(context, "Изменить", Toast.LENGTH_SHORT).show()
+                        }) {
+                            Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = "Изменить")
+                        }
+
+                        DropdownMenuItem(onClick = {
+                            Toast.makeText(context, "Удалить", Toast.LENGTH_SHORT).show()
+                        }) {
+                            Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = "Удалить")
+                        }
                     }
                 }
             )
@@ -85,9 +122,11 @@ fun ShowTrainingDetailScreen(
                         }
                     )
                 }
+
                 UiState.Loading -> {
                     ShowLoadingData()
                 }
+
                 is UiState.Success -> {
                     ShowTraining(
                         profile = currentState.data.profile,
@@ -95,6 +134,7 @@ fun ShowTrainingDetailScreen(
                         source = currentState.source
                     )
                 }
+
                 is UiState.EmptyData -> {
                     ShowEmptyData(message = stringResource(id = R.string.no_data))
                 }
