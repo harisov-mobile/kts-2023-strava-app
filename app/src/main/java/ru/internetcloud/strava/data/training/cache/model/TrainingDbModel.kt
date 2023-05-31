@@ -20,12 +20,24 @@ data class TrainingDbModel(
     @ColumnInfo(name = TrainingContract.Columns.MOVING_TIME)
     val movingTime: Int,
 
+    @ColumnInfo(name = TrainingContract.Columns.ELAPSED_TIME)
+    val elapsedTime: Int,
+
     @ColumnInfo(name = TrainingContract.Columns.TYPE)
     val type: String,
+
+    @ColumnInfo(name = TrainingContract.Columns.SPORT_TYPE)
+    val sportType: String,
 
     @ColumnInfo(name = TrainingContract.Columns.START_DATE)
     val startDate: Date,
 
     @ColumnInfo(name = TrainingContract.Columns.DESCRIPTION)
-    val description: String
+    val description: String,
+
+    @ColumnInfo(name = TrainingContract.Columns.TRAINER)
+    val trainer: Boolean,
+
+    @ColumnInfo(name = TrainingContract.Columns.COMMUTE)
+    val commute: Boolean
 )

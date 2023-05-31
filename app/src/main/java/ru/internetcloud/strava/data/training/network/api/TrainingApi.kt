@@ -33,7 +33,7 @@ interface TrainingApi {
         @Query("distance") distance: Float,
         @Query("trainer") trainer: Int,
         @Query("commute") commute: Int
-    ) : Response<TrainingDTO>
+    ): Response<TrainingDTO>
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"

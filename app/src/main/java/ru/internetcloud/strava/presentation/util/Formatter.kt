@@ -30,5 +30,16 @@ class Formatter {
         fun getFormattedValue(value: Double, format: String): String {
             return String.format(format, value)
         }
+
+        fun getHours(movingTime: Int): Int = movingTime / SECONDS_IN_HOUR
+
+        fun getMinutes(movingTime: Int) = (movingTime - getHours(movingTime) * SECONDS_IN_HOUR) / SECONDS_IN_MINUTE
+
+        fun getSeconds(movingTime: Int) =
+            movingTime - getHours(movingTime) * SECONDS_IN_HOUR - getMinutes(movingTime) * SECONDS_IN_MINUTE
+
+        fun getTimeInSeconds(hours: Int, minutes: Int, seconds: Int): Int {
+            return hours * SECONDS_IN_HOUR + minutes * SECONDS_IN_MINUTE + seconds
+        }
     }
 }

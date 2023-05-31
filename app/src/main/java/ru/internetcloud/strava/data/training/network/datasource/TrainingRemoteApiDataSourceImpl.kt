@@ -6,6 +6,7 @@ import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.common.util.toInt
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
@@ -57,7 +58,6 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
 
     override suspend fun addTraining(training: Training): DataResponse<Training> {
         return try {
-
             val newTrainingDTO = trainingMapper.fromDomainToDto(training)
 
             val networkResponse = StravaApiFactory.trainingApi.addTraining(
@@ -68,8 +68,8 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
                 elapsedTime = newTrainingDTO.elapsedTime,
                 description = newTrainingDTO.description.orEmpty(),
                 distance = newTrainingDTO.distance,
-                trainer = newTrainingDTO.trainer.toInt(),
-                commute = newTrainingDTO.commute.toInt()
+                trainer = newTrainingDTO.trainer.orDefault().toInt(),
+                commute = newTrainingDTO.commute.orDefault().toInt()
             )
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()

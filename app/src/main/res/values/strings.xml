@@ -46,6 +46,8 @@
     <string name="training_distance_format">%.2f km</string>
     <string name="training_speed_format">%.1f km/h</string>
 
+    <string name="training_edit_app_bar_title">Edit Activity</string>
+
     <string name="groups_under_constraction">Under constraction</string>
 
     <string name="oldmain_id">id = %d</string>
@@ -66,4 +68,24 @@
     <string name="logout_error">Logout failed</string>
 
     <string name="source_description">Displays data from local storage</string>
+
+    <string name="menu_edit">Изменить</string>
+    <string name="menu_delete">Удалить</string>
+
+    <string name="duration_confirm_button">OK</string>
+    <string name="duration_dismiss_button">Cancel</string>
+
+    <string name="training_edit_save_button">Save</string>
+    <string name="training_edit_discard_button">Discard unsaved changes</string>
+    <string name="training_edit_discard_question">Discard unsaved changes to this activity?</string>
+    <string name="training_edit_discard_dialog_confirm_button">OK</string>
+    <string name="training_edit_discard_dialog_dismiss_button">Cancel</string>
+    <string name="training_edit_field_name">name</string>
+    <string name="training_edit_field_description">description</string>
+    <string name="training_edit_field_sport_type">sport_type</string>
+    <string name="training_edit_field_date">date</string>
+    <string name="training_edit_field_start_time">start time</string>
+    <string name="training_edit_field_duration">duration</string>
+    <string name="training_edit_field_distance">distance, in meters</string>
+    <string name="training_edit_chapter_activity_stats">Activity Stats</string>
 </resources>

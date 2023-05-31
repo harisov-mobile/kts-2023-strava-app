@@ -47,6 +47,8 @@
     <string name="training_distance_format">%.2f км</string>
     <string name="training_speed_format">%.1f км/ч</string>
 
+    <string name="training_edit_app_bar_title">Изменить</string>
+
     <string name="groups_under_constraction">В разработке</string>
 
     <string name="oldmain_id">id = %d</string>
@@ -67,4 +69,24 @@
     <string name="logout_error">Произошла ошибка при выходе из аккаунта.</string>
 
     <string name="source_description">Отображаются данные из локального хранилища</string>
+
+    <string name="menu_edit">Edit Activity</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="duration_confirm_button">OK</string>
+    <string name="duration_dismiss_button">Отмена</string>
+
+    <string name="training_edit_save_button">Сохранить</string>
+    <string name="training_edit_discard_button">Удалить несохраненные изменения</string>
+    <string name="training_edit_discard_question">Discard unsaved changes to this activity?</string>
+    <string name="training_edit_discard_dialog_confirm_button">OK</string>
+    <string name="training_edit_discard_dialog_dismiss_button">Отмена</string>
+    <string name="training_edit_field_name">название</string>
+    <string name="training_edit_field_description">описание</string>
+    <string name="training_edit_field_sport_type">тип</string>
+    <string name="training_edit_field_date">дата</string>
+    <string name="training_edit_field_start_time">время начала</string>
+    <string name="training_edit_field_duration">продолжительность</string>
+    <string name="training_edit_field_distance">дистанция, метры</string>
+    <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
 </resources>

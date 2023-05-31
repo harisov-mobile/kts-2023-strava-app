@@ -56,7 +56,8 @@ import ru.internetcloud.strava.presentation.util.addLine
 @Composable
 fun ShowTrainingDetailScreen(
     onBackPressed: () -> Unit,
-    trainingId: Long
+    trainingId: Long,
+    onEditTraining: (id: Long) -> Unit
 ) {
     val viewModel: TrainingDetailViewModel = viewModel(
         factory = TrainingDetailViewModelFactory(id = trainingId)
@@ -74,7 +75,7 @@ fun ShowTrainingDetailScreen(
                     Text(text = stringResource(id = R.string.training_app_bar_title))
                 },
                 navigationIcon = {
-                    IconButton(onClick = { onBackPressed() }) {
+                    IconButton(onClick = onBackPressed) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null
@@ -90,11 +91,11 @@ fun ShowTrainingDetailScreen(
                         onDismissRequest = { showDropdownMenu.value = false }
                     ) {
                         DropdownMenuItem(onClick = {
-                            Toast.makeText(context, "Изменить", Toast.LENGTH_SHORT).show()
+                            onEditTraining(trainingId)
                         }) {
                             Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = "Изменить")
+                            Text(text = stringResource(id = R.string.menu_edit))
                         }
 
                         DropdownMenuItem(onClick = {
@@ -102,7 +103,7 @@ fun ShowTrainingDetailScreen(
                         }) {
                             Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = "Удалить")
+                            Text(text = stringResource(id = R.string.menu_delete))
                         }
                     }
                 }

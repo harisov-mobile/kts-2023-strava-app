@@ -21,6 +21,10 @@ class NavigationState(val navHostController: NavHostController) {
     fun navigateToDetail(id: Long) {
         navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
     }
+
+    fun navigateToDetailEdit(id: Long) {
+        navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
+    }
 }
 
 @Composable

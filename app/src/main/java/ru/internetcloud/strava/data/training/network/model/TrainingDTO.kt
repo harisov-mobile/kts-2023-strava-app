@@ -33,8 +33,8 @@ data class TrainingDTO(
     val description: String?,
 
     @Json(name = "trainer")
-    val trainer: Boolean,
+    val trainer: Boolean?,
 
     @Json(name = "commute")
-    val commute: Boolean
+    val commute: Boolean?
 )

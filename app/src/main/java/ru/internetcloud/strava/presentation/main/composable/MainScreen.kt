@@ -37,6 +37,7 @@ import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.ShowTrainingDetailScreen
+import ru.internetcloud.strava.presentation.training.edit.ShowTrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
 
 private val navItemList = listOf(
@@ -130,6 +131,13 @@ fun MainScreen(
             },
             trainingDetailScreenContent = { currentTrainingId ->
                 ShowTrainingDetailScreen(
+                    trainingId = currentTrainingId,
+                    onBackPressed = navigationState.navHostController::popBackStack,
+                    onEditTraining = navigationState::navigateToDetailEdit
+                )
+            },
+            trainingDetailEditScreenContent = { currentTrainingId ->
+                ShowTrainingEditScreen(
                     trainingId = currentTrainingId,
                     onBackPressed = navigationState.navHostController::popBackStack
                 )

@@ -2,8 +2,8 @@ package ru.internetcloud.strava.data.profile.mapper
 
 import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
 import ru.internetcloud.strava.data.profile.network.model.ProfileDTO
+import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.profile.model.Profile
-import ru.internetcloud.strava.presentation.util.orDefault
 
 class ProfileMapper {
 
