@@ -7,7 +7,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,6 +41,15 @@ fun ShowTrainingListScreen(
     Scaffold(
         topBar = {
             TopBarWithLogout(title = stringResource(id = R.string.navigation_item_home))
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                backgroundColor =  MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary,
+                onClick = {  }
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = null)
+            }
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
