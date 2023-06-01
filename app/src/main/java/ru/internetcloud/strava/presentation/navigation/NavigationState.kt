@@ -27,6 +27,10 @@ class NavigationState(val navHostController: NavHostController) {
         navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
     }
 
+    fun navigateToDetailAdd() {
+        navHostController.navigate(Screen.TrainingDetailAdd.route)
+    }
+
     fun navigateToDetailWithPopUp(id: Long) {
         navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))

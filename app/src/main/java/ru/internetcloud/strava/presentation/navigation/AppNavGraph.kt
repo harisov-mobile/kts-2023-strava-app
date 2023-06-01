@@ -14,6 +14,7 @@ fun AppNavGraph(
     trainingListScreenContent: @Composable () -> Unit,
     trainingDetailScreenContent: @Composable (id: Long) -> Unit,
     trainingDetailEditScreenContent: @Composable (id: Long) -> Unit,
+    trainingDetailAddScreenContent: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -24,12 +25,14 @@ fun AppNavGraph(
         homeScreenNavGraph(
             trainingListScreenContent = trainingListScreenContent,
             trainingDetailScreenContent = trainingDetailScreenContent,
-            trainingDetailEditScreenContent = trainingDetailEditScreenContent
+            trainingDetailEditScreenContent = trainingDetailEditScreenContent,
+            trainingDetailAddScreenContent = trainingDetailAddScreenContent
         )
 
         composable(Screen.Groups.route) {
             groupsScreenContent()
         }
+
         composable(Screen.You.route) {
             youScreenContent()
         }

@@ -11,7 +11,8 @@ import ru.internetcloud.strava.domain.common.util.orDefault
 fun NavGraphBuilder.homeScreenNavGraph(
     trainingListScreenContent: @Composable () -> Unit,
     trainingDetailScreenContent: @Composable (id: Long) -> Unit,
-    trainingDetailEditScreenContent: @Composable (id: Long) -> Unit
+    trainingDetailEditScreenContent: @Composable (id: Long) -> Unit,
+    trainingDetailAddScreenContent: @Composable () -> Unit
 ) {
     navigation(
         startDestination = Screen.TrainingList.route,
@@ -43,6 +44,10 @@ fun NavGraphBuilder.homeScreenNavGraph(
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong("id").orDefault()
             trainingDetailEditScreenContent(id = id)
+        }
+
+        composable(Screen.TrainingDetailAdd.route) {
+            trainingDetailAddScreenContent()
         }
     }
 }

@@ -70,23 +70,30 @@ import ru.internetcloud.strava.presentation.util.addLine
 @Composable
 fun ShowTrainingEditScreen(
     trainingId: Long,
-    onReturn: (id: Long) -> Unit
+    onReturn: (id: Long) -> Unit,
+    onBackPressed: () -> Unit,
+    editMode: EditMode
 ) {
     val context = LocalContext.current
 
     val comeOutHere = remember { mutableStateOf(false) }
 
     val viewModel: TrainingEditViewModel = viewModel(
-        factory = TrainingEditViewModelFactory(id = trainingId)
+        factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
     )
     val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value
+
+    val topAppBarTitle = when (editMode) {
+        EditMode.Add -> stringResource(id = R.string.training_add_app_bar_title)
+        EditMode.Edit -> stringResource(id = R.string.training_edit_app_bar_title)
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.training_edit_app_bar_title))
+                    Text(text = topAppBarTitle)
                 },
                 navigationIcon = {
                     IconButton(
@@ -95,7 +102,10 @@ fun ShowTrainingEditScreen(
                                 if (currentState is UiState.Success) {
                                     comeOutHere.value = true
                                 } else {
-                                    onReturn(trainingId)
+                                    when (editMode) {
+                                        EditMode.Add -> onBackPressed()
+                                        EditMode.Edit -> onReturn(trainingId)
+                                    }
                                 }
                             }
                         }
@@ -162,7 +172,9 @@ fun ShowTrainingEditScreen(
                             comeOutHere.value = false
                         },
                         trainingId = trainingId,
-                        onReturn = onReturn
+                        onReturn = onReturn,
+                        onBackPressed = onBackPressed,
+                        editMode = editMode
                     )
                 }
 
@@ -201,7 +213,9 @@ private fun ShowTrainingEdit(
     exitHere: () -> Unit,
     stayHere: () -> Unit,
     trainingId: Long,
-    onReturn: (id: Long) -> Unit
+    onReturn: (id: Long) -> Unit,
+    onBackPressed: () -> Unit,
+    editMode: EditMode
 ) {
     val showDurationDialog = remember { mutableStateOf(false) }
 
@@ -449,7 +463,12 @@ private fun ShowTrainingEdit(
             AlertDialog(
                 onDismissRequest = stayHere,
                 confirmButton = {
-                    TextButton(onClick = { onReturn(trainingId) }) {
+                    TextButton(onClick = {
+                        when (editMode) {
+                            EditMode.Add -> onBackPressed()
+                            EditMode.Edit -> onReturn(trainingId)
+                        }
+                    }) {
                         Text(text = stringResource(id = R.string.training_edit_discard_dialog_confirm_button))
                     }
                 },
@@ -462,7 +481,10 @@ private fun ShowTrainingEdit(
                 text = { Text(text = stringResource(id = R.string.training_edit_discard_question)) }
             )
         } else {
-            onReturn(trainingId)
+            when (editMode) {
+                EditMode.Add -> onBackPressed()
+                EditMode.Edit -> onReturn(trainingId)
+            }
         }
     }
 
@@ -470,7 +492,10 @@ private fun ShowTrainingEdit(
         if (isChanged) {
             exitHere()
         } else {
-            onReturn(trainingId)
+            when (editMode) {
+                EditMode.Add -> onBackPressed()
+                EditMode.Edit -> onReturn(trainingId)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package ru.internetcloud.strava.presentation.training.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import java.util.Date
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,11 @@ import ru.internetcloud.strava.domain.training.usecase.UpdateTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 import timber.log.Timber
 
-class TrainingEditViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
+class TrainingEditViewModel(
+    id: Long,
+    editMode: EditMode,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
@@ -35,7 +40,31 @@ class TrainingEditViewModel(id: Long, savedStateHandle: SavedStateHandle) : View
         get() = screenEventChannel.receiveAsFlow()
 
     init {
-        fetchTraining(id)
+        when (editMode) {
+            EditMode.Add -> createTraining()
+            EditMode.Edit -> fetchTraining(id)
+        }
+    }
+
+    private fun createTraining() {
+        val newTraining = Training(
+            id = EMPTY_ID,
+            name = "",
+            distance = 0f,
+            movingTime = 0,
+            elapsedTime = 0,
+            type = INITIAL_SPORT_TYPE,
+            sportType = INITIAL_SPORT_TYPE,
+            startDate = Date(),
+            description = "",
+            trainer = false,
+            commute = false
+        )
+
+        _screenState.value = UiState.Success(
+            data = newTraining,
+            source = Source.RemoteApi
+        )
     }
 
     fun fetchTraining(id: Long) {
@@ -148,5 +177,8 @@ class TrainingEditViewModel(id: Long, savedStateHandle: SavedStateHandle) : View
 
     companion object {
         private const val KEY_TRAINING_EDIT_STATE = "key_training_edit_state"
+
+        private const val EMPTY_ID = -1L
+        private const val INITIAL_SPORT_TYPE = "Run"
     }
 }

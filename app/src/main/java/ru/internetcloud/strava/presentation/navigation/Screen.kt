@@ -20,6 +20,8 @@ sealed class Screen(
         }
     }
 
+    object TrainingDetailAdd : Screen(ROUTE_TRAINING_DETAIL_ADD)
+
     companion object {
         const val ROUTE_HOME = "home"
         const val ROUTE_GROUPS = "groups"
@@ -28,6 +30,7 @@ sealed class Screen(
         const val ROUTE_TRAINING_LIST = "training_list"
         const val ROUTE_TRAINING_DETAIL = "training_detail/{id}"
         const val ROUTE_TRAINING_DETAIL_EDIT = "training_detail_edit/{id}"
+        const val ROUTE_TRAINING_DETAIL_ADD = "training_detail_add"
 
         const val KEY_ID = "id"
     }

@@ -37,6 +37,7 @@ import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.ShowTrainingDetailScreen
+import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.ShowTrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
 
@@ -127,7 +128,10 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                ShowTrainingListScreen(onTrainingClickListener = navigationState::navigateToDetail)
+                ShowTrainingListScreen(
+                    onTrainingClickListener = navigationState::navigateToDetail,
+                    onFABClickListener = navigationState::navigateToDetailAdd
+                )
             },
             trainingDetailScreenContent = { currentTrainingId ->
                 ShowTrainingDetailScreen(
@@ -139,9 +143,21 @@ fun MainScreen(
             trainingDetailEditScreenContent = { currentTrainingId ->
                 ShowTrainingEditScreen(
                     trainingId = currentTrainingId,
-                    onReturn = navigationState::navigateToDetailWithPopUp
+                    onReturn = navigationState::navigateToDetailWithPopUp,
+                    onBackPressed = navigationState.navHostController::popBackStack,
+                    editMode = EditMode.Edit
                 )
             },
+
+            trainingDetailAddScreenContent = {
+                ShowTrainingEditScreen(
+                    trainingId = 0,
+                    onReturn = { },
+                    onBackPressed = navigationState.navHostController::popBackStack,
+                    editMode = EditMode.Add
+                )
+            },
+
             groupsScreenContent = {
                 ShowGroupsScreen()
             },

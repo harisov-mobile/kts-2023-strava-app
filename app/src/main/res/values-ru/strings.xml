@@ -48,6 +48,7 @@
     <string name="training_speed_format">%.1f км/ч</string>
 
     <string name="training_edit_app_bar_title">Изменить</string>
+    <string name="training_add_app_bar_title">Добавить</string>
 
     <string name="groups_under_constraction">В разработке</string>
 

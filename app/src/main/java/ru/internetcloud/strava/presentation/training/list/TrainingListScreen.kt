@@ -14,6 +14,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,8 @@ import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
 fun ShowTrainingListScreen(
-    onTrainingClickListener: (id: Long) -> Unit
+    onTrainingClickListener: (id: Long) -> Unit,
+    onFABClickListener: () -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
     val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
@@ -44,9 +46,9 @@ fun ShowTrainingListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                backgroundColor =  MaterialTheme.colors.primary,
+                backgroundColor = MaterialTheme.colors.primary,
                 contentColor = MaterialTheme.colors.onPrimary,
-                onClick = {  }
+                onClick = remember {{ onFABClickListener() }}
             ) {
                 Icon(Icons.Filled.Add, contentDescription = null)
             }

@@ -47,6 +47,7 @@
     <string name="training_speed_format">%.1f km/h</string>
 
     <string name="training_edit_app_bar_title">Edit Activity</string>
+    <string name="training_add_app_bar_title">Add Activity</string>
 
     <string name="groups_under_constraction">Under constraction</string>
 
