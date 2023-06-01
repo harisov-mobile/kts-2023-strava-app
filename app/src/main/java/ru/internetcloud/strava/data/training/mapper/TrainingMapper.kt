@@ -78,9 +78,9 @@ class TrainingMapper {
             id = training.id,
             name = training.name,
             description = training.description,
-            sportType = "",
-            trainer = false,
-            commute = false
+            sportType = training.sportType,
+            trainer = training.trainer,
+            commute = training.commute
         )
     }
 }

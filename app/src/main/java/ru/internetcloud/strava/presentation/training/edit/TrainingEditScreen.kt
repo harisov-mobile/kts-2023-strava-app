@@ -179,6 +179,7 @@ fun ShowTrainingEditScreen(
                 is TrainingEditScreenEvent.NavigateToTrainingDetail -> {
                     onReturn(event.id)
                 }
+
                 is TrainingEditScreenEvent.ShowMessage -> {
                     Toast.makeText(
                         context,
@@ -308,11 +309,9 @@ private fun ShowTrainingEdit(
         ) {
             suggestions.forEach { label ->
                 DropdownMenuItem(
-                    onClick = remember {
-                        {
-                            expandedSportType.value = false
-                            onEvent(EditTrainingEvent.OnSportTypeChange(label))
-                        }
+                    onClick = {
+                        expandedSportType.value = false
+                        onEvent(EditTrainingEvent.OnSportTypeChange(label))
                     }
                 ) {
                     Text(text = label)
