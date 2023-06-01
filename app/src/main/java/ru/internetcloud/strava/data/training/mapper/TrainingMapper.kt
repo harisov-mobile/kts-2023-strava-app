@@ -2,6 +2,7 @@ package ru.internetcloud.strava.data.training.mapper
 
 import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
+import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
@@ -66,6 +67,17 @@ class TrainingMapper {
             startDate = training.startDate.toString(),
             description = training.description,
             elapsedTime = 0,
+            sportType = "",
+            trainer = false,
+            commute = false
+        )
+    }
+
+    fun fromDomainToUpdateDto(training: Training): TrainingUpdateDTO {
+        return TrainingUpdateDTO(
+            id = training.id,
+            name = training.name,
+            description = training.description,
             sportType = "",
             trainer = false,
             commute = false

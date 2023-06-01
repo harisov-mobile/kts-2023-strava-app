@@ -23,7 +23,24 @@ class NavigationState(val navHostController: NavHostController) {
     }
 
     fun navigateToDetailEdit(id: Long) {
+        navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
+    }
+
+    fun navigateToDetailWithPopUp(id: Long) {
+        navHostController.popBackStack()
+        navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
+    }
+
+    fun navigateToRoute(route: String, popUpTo: Boolean, popUpToInclusive: Boolean) {
+        navHostController.navigate(route) {
+            if (popUpTo) {
+                popUpTo(route) {
+                    inclusive = popUpToInclusive
+                    saveState = false
+                }
+            }
+        }
     }
 }
 

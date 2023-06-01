@@ -3,14 +3,18 @@ package ru.internetcloud.strava.presentation.training.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
+import ru.internetcloud.strava.domain.training.usecase.UpdateTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 import timber.log.Timber
 
@@ -18,12 +22,17 @@ class TrainingEditViewModel(id: Long, savedStateHandle: SavedStateHandle) : View
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
+    private val updateTrainingUseCase = UpdateTrainingUseCase(trainingRepository)
 
     private val initialState =
         savedStateHandle.get<UiState<Training>>(KEY_TRAINING_EDIT_STATE) ?: UiState.Loading
 
     private val _screenState = MutableStateFlow(initialState)
     val screenState = _screenState.asStateFlow()
+
+    private val screenEventChannel = Channel<TrainingEditScreenEvent>(Channel.BUFFERED)
+    val screenEventFlow: Flow<TrainingEditScreenEvent>
+        get() = screenEventChannel.receiveAsFlow()
 
     init {
         fetchTraining(id)
@@ -97,6 +106,44 @@ class TrainingEditViewModel(id: Long, savedStateHandle: SavedStateHandle) : View
             source = (_screenState.value as UiState.Success).source,
             isChanged = true
         )
+    }
+
+    fun saveTraining() {
+        viewModelScope.launch {
+            val training = (_screenState.value as UiState.Success).data
+
+            _screenState.value = UiState.Success(
+                data = training,
+                source = (_screenState.value as UiState.Success).source,
+                isChanged = (_screenState.value as UiState.Success).isChanged,
+                saving = true
+            )
+
+            when (val trainingDataResponse = updateTrainingUseCase.updateTraining(training)) {
+                is DataResponse.Success -> {
+                    _screenState.value = UiState.Success(
+                        data = training,
+                        source = (_screenState.value as UiState.Success).source,
+                        isChanged = false,
+                        saving = false
+                    )
+                    screenEventChannel.trySend(TrainingEditScreenEvent.NavigateToTrainingDetail(id = training.id))
+                }
+
+                is DataResponse.Error -> {
+                    _screenState.value = UiState.Success(
+                        data = training,
+                        source = (_screenState.value as UiState.Success).source,
+                        isChanged = (_screenState.value as UiState.Success).isChanged,
+                        saving = false
+                    )
+                    screenEventChannel
+                        .trySend(
+                            TrainingEditScreenEvent.ShowMessage(trainingDataResponse.exception.message.toString())
+                        )
+                }
+            }
+        }
     }
 
     companion object {

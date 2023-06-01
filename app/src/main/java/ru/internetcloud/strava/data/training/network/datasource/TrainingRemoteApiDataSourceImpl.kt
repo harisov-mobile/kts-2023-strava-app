@@ -10,6 +10,7 @@ import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.common.util.toInt
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
+import timber.log.Timber
 
 class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
 
@@ -72,6 +73,33 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
                 commute = newTrainingDTO.commute.orDefault().toInt()
             )
             if (networkResponse.isSuccessful) {
+                val trainingDTO = networkResponse.body()
+                trainingDTO?.let { currentDTO ->
+                    DataResponse.Success(
+                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        source = Source.RemoteApi
+                    )
+                } ?: let {
+                    DataResponse.Error(exception = IllegalStateException("An error occurred while adding a training."))
+                }
+            } else {
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+            }
+        } catch (e: Exception) {
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+        }
+    }
+
+    override suspend fun updateTraining(training: Training): DataResponse<Training> {
+        return try {
+            val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training)
+
+            val networkResponse = StravaApiFactory.trainingApi.updateTraining(
+                id = trainingUpdateDTO.id,
+                training = trainingUpdateDTO
+            )
+            if (networkResponse.isSuccessful) {
+                Timber.tag("rustam").d("networkResponse = $networkResponse")
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
                     DataResponse.Success(

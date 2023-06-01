@@ -139,7 +139,7 @@ fun MainScreen(
             trainingDetailEditScreenContent = { currentTrainingId ->
                 ShowTrainingEditScreen(
                     trainingId = currentTrainingId,
-                    onBackPressed = navigationState.navHostController::popBackStack
+                    onReturn = navigationState::navigateToDetailWithPopUp
                 )
             },
             groupsScreenContent = {

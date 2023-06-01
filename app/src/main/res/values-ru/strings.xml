@@ -78,7 +78,7 @@
 
     <string name="training_edit_save_button">Сохранить</string>
     <string name="training_edit_discard_button">Удалить несохраненные изменения</string>
-    <string name="training_edit_discard_question">Discard unsaved changes to this activity?</string>
+    <string name="training_edit_discard_question">Удалить несохраненные изменения в этой тренировке?</string>
     <string name="training_edit_discard_dialog_confirm_button">OK</string>
     <string name="training_edit_discard_dialog_dismiss_button">Отмена</string>
     <string name="training_edit_field_name">название</string>
@@ -89,4 +89,5 @@
     <string name="training_edit_field_duration">продолжительность</string>
     <string name="training_edit_field_distance">дистанция, метры</string>
     <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
+    <string name="training_edit_saving_error">Не удалось сохранить тренировку:</string>
 </resources>

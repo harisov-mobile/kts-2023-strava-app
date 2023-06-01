@@ -11,4 +11,6 @@ interface TrainingRemoteApiDataSource {
     suspend fun getTraining(id: Long): DataResponse<Training>
 
     suspend fun addTraining(training: Training): DataResponse<Training>
+
+    suspend fun updateTraining(training: Training): DataResponse<Training>
 }

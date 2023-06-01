@@ -3,6 +3,7 @@ package ru.internetcloud.strava.presentation.training.edit
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +20,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -36,6 +38,7 @@ import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -63,13 +66,14 @@ import ru.internetcloud.strava.presentation.util.DurationPickerDialog
 import ru.internetcloud.strava.presentation.util.Formatter
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
-import timber.log.Timber
 
 @Composable
 fun ShowTrainingEditScreen(
-    onBackPressed: () -> Unit,
-    trainingId: Long
+    trainingId: Long,
+    onReturn: (id: Long) -> Unit
 ) {
+    val context = LocalContext.current
+
     val comeOutHere = remember { mutableStateOf(false) }
 
     val viewModel: TrainingEditViewModel = viewModel(
@@ -91,7 +95,7 @@ fun ShowTrainingEditScreen(
                                 if (currentState is UiState.Success) {
                                     comeOutHere.value = true
                                 } else {
-                                    onBackPressed()
+                                    onReturn(trainingId)
                                 }
                             }
                         }
@@ -104,6 +108,12 @@ fun ShowTrainingEditScreen(
                 },
                 actions = {
                     if (currentState is UiState.Success) {
+                        if (currentState.saving) {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colors.surface,
+                                modifier = Modifier.padding(end = 16.dp)
+                            )
+                        }
                         Text(
                             text = stringResource(id = R.string.training_edit_save_button),
                             fontSize = 20.sp,
@@ -111,8 +121,8 @@ fun ShowTrainingEditScreen(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                Timber.tag("rustam").d("training_edit_save_button")
-                            }
+                                    viewModel.saveTraining()
+                                }
                         )
                     }
                 }
@@ -143,20 +153,38 @@ fun ShowTrainingEditScreen(
                     ShowTrainingEdit(
                         training = currentState.data,
                         onEvent = viewModel::handleEvent,
-                        onBackPressed = onBackPressed,
                         isChanged = currentState.isChanged,
-                        exit = comeOutHere.value,
+                        exit = (comeOutHere.value),
                         exitHere = {
                             comeOutHere.value = true
                         },
                         stayHere = {
                             comeOutHere.value = false
-                        }
+                        },
+                        trainingId = trainingId,
+                        onReturn = onReturn
                     )
                 }
 
                 is UiState.EmptyData -> {
                     ShowEmptyData(message = stringResource(id = R.string.no_data))
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.screenEventFlow.collect { event ->
+            when (event) {
+                is TrainingEditScreenEvent.NavigateToTrainingDetail -> {
+                    onReturn(event.id)
+                }
+                is TrainingEditScreenEvent.ShowMessage -> {
+                    Toast.makeText(
+                        context,
+                        event.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -167,11 +195,12 @@ fun ShowTrainingEditScreen(
 private fun ShowTrainingEdit(
     training: Training,
     onEvent: (EditTrainingEvent) -> Unit,
-    onBackPressed: () -> Unit,
     isChanged: Boolean,
     exit: Boolean,
     exitHere: () -> Unit,
-    stayHere: () -> Unit
+    stayHere: () -> Unit,
+    trainingId: Long,
+    onReturn: (id: Long) -> Unit
 ) {
     val showDurationDialog = remember { mutableStateOf(false) }
 
@@ -421,7 +450,7 @@ private fun ShowTrainingEdit(
             AlertDialog(
                 onDismissRequest = stayHere,
                 confirmButton = {
-                    TextButton(onClick = onBackPressed) {
+                    TextButton(onClick = { onReturn(trainingId) }) {
                         Text(text = stringResource(id = R.string.training_edit_discard_dialog_confirm_button))
                     }
                 },
@@ -434,7 +463,7 @@ private fun ShowTrainingEdit(
                 text = { Text(text = stringResource(id = R.string.training_edit_discard_question)) }
             )
         } else {
-            onBackPressed()
+            onReturn(trainingId)
         }
     }
 
@@ -442,7 +471,7 @@ private fun ShowTrainingEdit(
         if (isChanged) {
             exitHere()
         } else {
-            onBackPressed()
+            onReturn(trainingId)
         }
     }
 }
