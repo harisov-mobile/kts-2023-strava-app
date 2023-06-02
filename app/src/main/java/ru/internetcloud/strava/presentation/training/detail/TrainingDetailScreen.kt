@@ -196,6 +196,12 @@ private fun ShowTraining(
             }
             Spacer(modifier = Modifier.height(8.dp))
             TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = training.sportType,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
