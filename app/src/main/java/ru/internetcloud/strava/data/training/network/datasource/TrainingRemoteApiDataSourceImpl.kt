@@ -10,6 +10,7 @@ import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.common.util.toInt
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
+import timber.log.Timber
 
 class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
 
@@ -107,6 +108,24 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
                 } ?: let {
                     DataResponse.Error(exception = IllegalStateException("An error occurred while adding a training."))
                 }
+            } else {
+                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+            }
+        } catch (e: Exception) {
+            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+        }
+    }
+
+    override suspend fun deleteTraining(id: Long): DataResponse<Long> {
+        return try {
+            val networkResponse = StravaApiFactory.trainingApi.deleteTraining(id = id)
+            if (networkResponse.isSuccessful) {
+                Timber.tag("rustam").d("networkResponse = $networkResponse")
+                Timber.tag("rustam").d("networkResponse.body() = ${networkResponse.body()}")
+                    DataResponse.Success(
+                        data = id,
+                        source = Source.RemoteApi
+                    )
             } else {
                 DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }

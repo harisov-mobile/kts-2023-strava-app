@@ -75,4 +75,8 @@ class TrainingRepositoryImpl : TrainingRepository {
     override suspend fun updateTraining(training: Training): DataResponse<Training> {
         return trainingRemoteApiDataSource.updateTraining(training)
     }
+
+    override suspend fun deleteTraining(id: Long): DataResponse<Long> {
+        return trainingRemoteApiDataSource.deleteTraining(id)
+    }
 }
