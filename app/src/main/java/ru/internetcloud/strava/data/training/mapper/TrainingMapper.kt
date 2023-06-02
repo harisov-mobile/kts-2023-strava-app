@@ -3,6 +3,7 @@ package ru.internetcloud.strava.data.training.mapper
 import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
+import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
@@ -64,12 +65,12 @@ class TrainingMapper {
             distance = training.distance,
             movingTime = training.movingTime,
             type = training.type,
-            startDate = training.startDate.toString(),
+            startDate = DateConverter.getDateISO8601String(training.startDate),
             description = training.description,
-            elapsedTime = 0,
-            sportType = "",
-            trainer = false,
-            commute = false
+            elapsedTime = training.elapsedTime,
+            sportType = training.sportType,
+            trainer = training.trainer,
+            commute = training.commute
         )
     }
 

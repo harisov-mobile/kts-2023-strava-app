@@ -45,7 +45,7 @@ interface TrainingApi {
 
         @Body
         training: TrainingUpdateDTO
-    ): Response<TrainingDTO> // Response<ResponseBody> //
+    ): Response<TrainingDTO>
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"

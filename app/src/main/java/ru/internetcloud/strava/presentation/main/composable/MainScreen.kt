@@ -152,7 +152,7 @@ fun MainScreen(
             trainingDetailAddScreenContent = {
                 ShowTrainingEditScreen(
                     trainingId = 0,
-                    onReturn = { },
+                    onReturn = navigationState::navigateToDetailWithPopUp,
                     onBackPressed = navigationState.navHostController::popBackStack,
                     editMode = EditMode.Add
                 )

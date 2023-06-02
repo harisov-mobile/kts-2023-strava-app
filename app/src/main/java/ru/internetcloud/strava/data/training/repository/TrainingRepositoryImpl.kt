@@ -69,7 +69,7 @@ class TrainingRepositoryImpl : TrainingRepository {
     }
 
     override suspend fun addTraining(training: Training): DataResponse<Training> {
-        TODO("Not yet implemented")
+        return trainingRemoteApiDataSource.addTraining(training)
     }
 
     override suspend fun updateTraining(training: Training): DataResponse<Training> {

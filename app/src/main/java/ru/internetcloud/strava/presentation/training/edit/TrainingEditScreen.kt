@@ -225,26 +225,18 @@ private fun ShowTrainingEdit(
 
     val context = LocalContext.current
 
-    val year: Int
-    val month: Int
-    val day: Int
-
     val calendar = Calendar.getInstance()
     calendar.time = training.startDate
-    year = calendar[Calendar.YEAR]
-    month = calendar[Calendar.MONTH]
-    day = calendar[Calendar.DAY_OF_MONTH]
+    val year = calendar[Calendar.YEAR]
+    val month = calendar[Calendar.MONTH]
+    val day = calendar[Calendar.DAY_OF_MONTH]
     val hour = calendar[Calendar.HOUR_OF_DAY]
     val minute = calendar[Calendar.MINUTE]
 
     val datePickerDialog = DatePickerDialog(
         context,
-        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            onEvent(
-                EditTrainingEvent.OnStartDateChange(
-                    DateConverter.getDate(year, month, dayOfMonth, hour, minute)
-                )
-            )
+        { _: DatePicker, newYear: Int, newMonth: Int, newDay: Int ->
+            onEvent(EditTrainingEvent.OnStartDateChange(year = newYear, month = newMonth, day = newDay))
         },
         year,
         month,
@@ -253,12 +245,8 @@ private fun ShowTrainingEdit(
 
     val timePickerDialog = TimePickerDialog(
         context,
-        { _, hour: Int, minute: Int ->
-            onEvent(
-                EditTrainingEvent.OnStartDateChange(
-                    DateConverter.getDate(year, month, day, hour, minute)
-                )
-            )
+        { _, newHour: Int, newMinute: Int ->
+            onEvent(EditTrainingEvent.OnStartTimeChange(hour = newHour, minute = newMinute))
         },
         hour,
         minute,

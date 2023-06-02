@@ -3,6 +3,7 @@ package ru.internetcloud.strava.presentation.training.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import java.util.Calendar
 import java.util.Date
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -13,21 +14,23 @@ import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.training.model.Training
+import ru.internetcloud.strava.domain.training.usecase.AddTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.UpdateTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
-import timber.log.Timber
 
 class TrainingEditViewModel(
     id: Long,
-    editMode: EditMode,
+    private val editMode: EditMode,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
     private val updateTrainingUseCase = UpdateTrainingUseCase(trainingRepository)
+    private val addTrainingUseCase = AddTrainingUseCase(trainingRepository)
 
     private val initialState =
         savedStateHandle.get<UiState<Training>>(KEY_TRAINING_EDIT_STATE) ?: UiState.Loading
@@ -73,15 +76,11 @@ class TrainingEditViewModel(
 
             when (val trainingDataResponse = getTrainingUseCase.getTraining(id = id)) {
                 is DataResponse.Success -> {
-                    val training = trainingDataResponse.data
-
                     if (trainingDataResponse.source is Source.LocalCache) {
                         _screenState.value = UiState.Error(exception = IllegalStateException("Network error"))
                     } else {
-                        Timber.tag("rustam").d("training = $training")
-
                         _screenState.value = UiState.Success(
-                            data = training,
+                            data = trainingDataResponse.data,
                             source = trainingDataResponse.source
                         )
                     }
@@ -111,7 +110,40 @@ class TrainingEditViewModel(
             }
 
             is EditTrainingEvent.OnStartDateChange -> {
-                setScreenState(oldTraining.copy(startDate = editTrainingEvent.startDate))
+                val calendar = Calendar.getInstance()
+                calendar.time = oldTraining.startDate
+                val hour = calendar[Calendar.HOUR_OF_DAY]
+                val minute = calendar[Calendar.MINUTE]
+                setScreenState(
+                    oldTraining.copy(
+                        startDate = DateConverter.getDate(
+                            editTrainingEvent.year,
+                            editTrainingEvent.month,
+                            editTrainingEvent.day,
+                            hour,
+                            minute
+                        )
+                    )
+                )
+            }
+
+            is EditTrainingEvent.OnStartTimeChange -> {
+                val calendar = Calendar.getInstance()
+                calendar.time = oldTraining.startDate
+                val year = calendar[Calendar.YEAR]
+                val month = calendar[Calendar.MONTH]
+                val day = calendar[Calendar.DAY_OF_MONTH]
+                setScreenState(
+                    oldTraining.copy(
+                        startDate = DateConverter.getDate(
+                            year,
+                            month,
+                            day,
+                            editTrainingEvent.hour,
+                            editTrainingEvent.minute
+                        )
+                    )
+                )
             }
 
             is EditTrainingEvent.OnDurationChange -> {
@@ -148,15 +180,25 @@ class TrainingEditViewModel(
                 saving = true
             )
 
-            when (val trainingDataResponse = updateTrainingUseCase.updateTraining(training)) {
+            val trainingDataResponse = when (editMode) {
+                EditMode.Add -> addTrainingUseCase.addTraining(training)
+                EditMode.Edit -> updateTrainingUseCase.updateTraining(training)
+            }
+
+            when (trainingDataResponse) {
                 is DataResponse.Success -> {
                     _screenState.value = UiState.Success(
-                        data = training,
+                        data = trainingDataResponse.data,
                         source = (_screenState.value as UiState.Success).source,
                         isChanged = false,
                         saving = false
                     )
-                    screenEventChannel.trySend(TrainingEditScreenEvent.NavigateToTrainingDetail(id = training.id))
+                    screenEventChannel.trySend(
+                        TrainingEditScreenEvent
+                            .NavigateToTrainingDetail(
+                                id = trainingDataResponse.data.id
+                            )
+                    )
                 }
 
                 is DataResponse.Error -> {
