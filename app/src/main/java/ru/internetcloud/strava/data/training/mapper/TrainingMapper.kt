@@ -81,7 +81,10 @@ class TrainingMapper {
             description = training.description,
             sportType = training.sportType,
             trainer = training.trainer,
-            commute = training.commute
+            commute = training.commute,
+            startDate = DateConverter.getDateISO8601String(training.startDate),
+            elapsedTime = training.elapsedTime,
+            distance = training.distance
         )
     }
 }

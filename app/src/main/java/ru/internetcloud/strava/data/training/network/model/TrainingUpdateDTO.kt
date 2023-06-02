@@ -27,5 +27,14 @@ data class TrainingUpdateDTO(
     val hideFromHome: Boolean = false,
 
     @Json(name = "gear_id")
-    val gearId: String = ""
+    val gearId: String = "",
+
+    @Json(name = "start_date")
+    val startDate: String,
+
+    @Json(name = "elapsed_time")
+    val elapsedTime: Int,
+
+    @Json(name = "distance")
+    val distance: Float
 )
