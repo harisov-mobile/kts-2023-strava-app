@@ -1,7 +1,9 @@
 package ru.internetcloud.strava.data.training.network.api
 
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -46,6 +48,12 @@ interface TrainingApi {
         @Body
         training: TrainingUpdateDTO
     ): Response<TrainingDTO>
+
+    @DELETE("activities/{id}")
+    suspend fun deleteTraining(
+        @Path(PATH_PARAM_ID)
+        id: Long
+    ): Response<ResponseBody>
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"
