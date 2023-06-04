@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.training.detail
 
+import android.app.Application
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -61,12 +62,13 @@ fun TrainingDetailScreen(
     trainingId: Long,
     currentBackStackEntry: NavBackStackEntry?,
     refreshKey: String,
+    app: Application,
     onBackPressed: () -> Unit,
     onBackWithRefresh: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
     val viewModel: TrainingDetailViewModel = viewModel(
-        factory = TrainingDetailViewModelFactory(id = trainingId)
+        factory = TrainingDetailViewModelFactory(id = trainingId, app = app)
     )
     val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value

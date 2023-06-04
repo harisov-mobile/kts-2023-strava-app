@@ -45,9 +45,10 @@
     <string name="training_minutes_seconds">%sm %ss</string>
     <string name="training_distance_format">%.2f km</string>
     <string name="training_speed_format">%.1f km/h</string>
-
     <string name="training_edit_app_bar_title">Edit Activity</string>
     <string name="training_add_app_bar_title">Add Activity</string>
+    <string name="training_can_not_delete_training">Can not be deleted</string>
+    <string name="training_deleted">Training deleted</string>
 
     <string name="groups_under_constraction">Under constraction</string>
 

@@ -143,6 +143,7 @@ fun MainScreen(
                     trainingId = currentTrainingId,
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
+                    app = app,
                     onBackPressed = navigationState.navHostController::popBackStack,
                     onEditTraining = navigationState::navigateToDetailEdit,
                     onBackWithRefresh = {

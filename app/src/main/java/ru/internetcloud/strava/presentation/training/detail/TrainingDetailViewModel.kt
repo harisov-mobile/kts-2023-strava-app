@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.training.detail
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import ru.internetcloud.strava.R
 import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
@@ -19,7 +21,7 @@ import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 
-class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
+class TrainingDetailViewModel(id: Long, private val app: Application, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
@@ -83,7 +85,7 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
                 )) {
                     is DataResponse.Success -> {
                         screenEventChannel.trySend(
-                            TrainingDetailScreenEvent.ShowMessage("Тренировка удалена")
+                            TrainingDetailScreenEvent.ShowMessage(app.getString(R.string.training_deleted))
                         )
                         screenEventChannel.trySend(
                             TrainingDetailScreenEvent
@@ -95,7 +97,7 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
                         screenEventChannel
                             .trySend(
                                 TrainingDetailScreenEvent.ShowMessage(
-                                    "Невозможно удалить"
+                                    app.getString(R.string.training_can_not_delete_training)
                                         .addLine(deleteDataResponse.exception.message.toString())
                                 )
                             )
@@ -104,7 +106,7 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
             } else {
                 screenEventChannel
                     .trySend(
-                        TrainingDetailScreenEvent.ShowMessage("Невозможно удалить")
+                        TrainingDetailScreenEvent.ShowMessage(app.getString(R.string.training_can_not_delete_training))
                     )
             }
         }
