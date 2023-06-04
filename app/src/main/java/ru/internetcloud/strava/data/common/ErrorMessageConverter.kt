@@ -23,17 +23,13 @@ object ErrorMessageConverter {
     }
 
     fun getMessageToHTTPCode(code: Int): String {
-        val message = if (code == 400) {
-            applicaton.getString(R.string.bad_request_error)
-        } else if (code == 401) {
-            applicaton.getString(R.string.unauthorized_error)
-        } else if (code == 403) {
-            applicaton.getString(R.string.forbidden_error)
-        } else if (code == 500) {
-            applicaton.getString(R.string.internal_server_error)
-        } else {
-            applicaton.getString(R.string.unknown_network_error)
+        val messageResId = when (code) {
+            400 -> R.string.bad_request_error
+            401 -> R.string.unauthorized_error
+            403 -> R.string.forbidden_error
+            500 -> R.string.internal_server_error
+            else -> R.string.unknown_network_error
         }
-        return message.addLine(applicaton.getString(R.string.http_error_code, code))
+        return applicaton.getString(messageResId).addLine(applicaton.getString(R.string.http_error_code, code))
     }
 }
