@@ -3,8 +3,8 @@ buildscript {
     ext {
         appAuthVersion = "0.9.1"
         coilComposeVersion = "2.1.0"
-        composeVersion = "1.4.0"
-        composeNavigationVersion = "2.5.2"
+        composeVersion = "1.4.3"
+        composeNavigationVersion = "2.5.3"
         coilComposeVersion = "2.1.0"
         dotsIndicatorVersion = "4.2"
         immutableVersion = "0.3.5"
