@@ -1,6 +1,7 @@
 package ru.internetcloud.strava.presentation.training.detail
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,7 +55,6 @@ import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
-import timber.log.Timber
 
 @Composable
 fun ShowTrainingDetailScreen(
@@ -62,6 +62,7 @@ fun ShowTrainingDetailScreen(
     currentBackStackEntry: NavBackStackEntry?,
     refreshKey: String,
     onBackPressed: () -> Unit,
+    onBackWithRefresh: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
     val viewModel: TrainingDetailViewModel = viewModel(
@@ -74,9 +75,11 @@ fun ShowTrainingDetailScreen(
     val context = LocalContext.current
 
     val shouldRefresh = currentBackStackEntry?.savedStateHandle?.remove<Boolean?>(refreshKey)
-    Timber.tag("rustam").d("shouldRefresh = $shouldRefresh")
+    // Timber.tag("rustam").d("shouldRefresh = $shouldRefresh")
     shouldRefresh?.let { refresh ->
-        viewModel.fetchTraining(trainingId)
+        if (refresh) {
+            viewModel.fetchTraining(trainingId, isChanged = true)
+        }
     }
 
     Scaffold(
@@ -86,7 +89,15 @@ fun ShowTrainingDetailScreen(
                     Text(text = stringResource(id = R.string.training_app_bar_title))
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackPressed) {
+                    IconButton(
+                        onClick = {
+                            if (currentState is UiState.Success && currentState.isChanged) {
+                                onBackWithRefresh()
+                            } else {
+                                onBackPressed()
+                            }
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null
@@ -133,7 +144,7 @@ fun ShowTrainingDetailScreen(
                                 currentState.exception.message.toString()
                             ),
                         onTryAgainClick = {
-                            viewModel.fetchTraining(id = trainingId)
+                            viewModel.fetchTraining(id = trainingId, isChanged = false)
                         }
                     )
                 }
@@ -173,6 +184,14 @@ fun ShowTrainingDetailScreen(
                     ).show()
                 }
             }
+        }
+    }
+
+    BackHandler {
+        if (currentState is UiState.Success && currentState.isChanged) {
+            onBackWithRefresh()
+        } else {
+            onBackPressed()
         }
     }
 }

@@ -174,7 +174,7 @@ fun ShowTrainingEditScreen(
                         stayHere = {
                             shouldExitHere.value = false
                         },
-                        onBackPressed = onBackPressed,
+                        onBackPressed = onBackPressed
                     )
                 }
 
@@ -193,7 +193,6 @@ fun ShowTrainingEditScreen(
                 }
 
                 is TrainingEditScreenEvent.NavigateBackWithRefresh -> {
-                    //onReturn(event.id)
                     onBackWithRefresh()
                 }
 
@@ -217,7 +216,7 @@ private fun ShowTrainingEdit(
     onEvent: (EditTrainingEvent) -> Unit,
     exitHere: () -> Unit,
     stayHere: () -> Unit,
-    onBackPressed: () -> Unit,
+    onBackPressed: () -> Unit
 ) {
     val showDurationDialog = remember { mutableStateOf(false) }
 

@@ -39,10 +39,10 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
         get() = screenEventChannel.receiveAsFlow()
 
     init {
-        fetchTraining(id)
+        fetchTraining(id, isChanged = false)
     }
 
-    fun fetchTraining(id: Long) {
+    fun fetchTraining(id: Long, isChanged: Boolean) {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
 
@@ -57,7 +57,8 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
                             )
                             _screenState.value = UiState.Success(
                                 data = profileWithTraining,
-                                source = trainingDataResponse.source
+                                source = trainingDataResponse.source,
+                                isChanged = isChanged
                             )
                         }
 

@@ -29,10 +29,10 @@ class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val screenState = _screenState.asStateFlow()
 
     init {
-        fetchStravaActivities()
+        fetchTrainings()
     }
 
-    fun fetchStravaActivities() {
+    fun fetchTrainings() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
 

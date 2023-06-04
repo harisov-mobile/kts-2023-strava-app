@@ -132,6 +132,8 @@ fun MainScreen(
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
                 ShowTrainingListScreen(
+                    currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
+                    refreshKey = KEY_REFRESH,
                     onTrainingClickListener = navigationState::navigateToDetail,
                     onFABClickListener = navigationState::navigateToDetailAdd
                 )
@@ -142,7 +144,13 @@ fun MainScreen(
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
                     onBackPressed = navigationState.navHostController::popBackStack,
-                    onEditTraining = navigationState::navigateToDetailEdit
+                    onEditTraining = navigationState::navigateToDetailEdit,
+                    onBackWithRefresh = {
+                        navigationState.navigateBackWithRefresh(
+                            refreshKey = KEY_REFRESH,
+                            refresh = true
+                        )
+                    }
                 )
             },
             trainingDetailEditScreenContent = { currentTrainingId ->
@@ -157,11 +165,6 @@ fun MainScreen(
                             refresh = true
                         )
                     }
-                    //{
-//                        navigationState.navHostController
-//                            .previousBackStackEntry?.savedStateHandle?.set("key_refresh", true)
-//                        navigationState.navHostController.popBackStack()
-                    //}
                 )
             },
 
@@ -171,7 +174,12 @@ fun MainScreen(
                     editMode = EditMode.Add,
                     onReturn = navigationState::navigateToDetailWithPopBackStack,
                     onBackPressed = navigationState.navHostController::popBackStack,
-                    onBackWithRefresh = {}
+                    onBackWithRefresh = {
+                        navigationState.navigateBackWithRefresh(
+                            refreshKey = KEY_REFRESH,
+                            refresh = true
+                        )
+                    }
                 )
             },
 

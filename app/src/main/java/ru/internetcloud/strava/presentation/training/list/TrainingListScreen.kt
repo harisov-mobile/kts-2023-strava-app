@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTrainingList
@@ -33,12 +34,22 @@ import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
 fun ShowTrainingListScreen(
+    currentBackStackEntry: NavBackStackEntry?,
+    refreshKey: String,
     onTrainingClickListener: (id: Long) -> Unit,
     onFABClickListener: () -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
     val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
     val currentState = screenState.value
+
+    val shouldRefresh = currentBackStackEntry?.savedStateHandle?.remove<Boolean?>(refreshKey)
+    // Timber.tag("rustam").d("ShowTrainingListScreen shouldRefresh = $shouldRefresh")
+    shouldRefresh?.let { refresh ->
+        if (refresh) {
+            viewModel.fetchTrainings()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -63,7 +74,7 @@ fun ShowTrainingListScreen(
                                 currentState.exception.message.toString()
                             ),
                         onTryAgainClick = {
-                            viewModel.fetchStravaActivities()
+                            viewModel.fetchTrainings()
                         }
                     )
                 }
