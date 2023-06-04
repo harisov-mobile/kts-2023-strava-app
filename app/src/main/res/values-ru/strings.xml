@@ -72,8 +72,8 @@
 
     <string name="source_description">Отображаются данные из локального хранилища</string>
 
-    <string name="menu_edit">Edit Activity</string>
-    <string name="menu_delete">Delete</string>
+    <string name="menu_edit">Изменить</string>
+    <string name="menu_delete">Удалить</string>
 
     <string name="duration_confirm_button">OK</string>
     <string name="duration_dismiss_button">Отмена</string>
