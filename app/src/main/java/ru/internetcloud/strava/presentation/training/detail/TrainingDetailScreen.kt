@@ -75,7 +75,6 @@ fun ShowTrainingDetailScreen(
     val context = LocalContext.current
 
     val shouldRefresh = currentBackStackEntry?.savedStateHandle?.remove<Boolean?>(refreshKey)
-    // Timber.tag("rustam").d("shouldRefresh = $shouldRefresh")
     shouldRefresh?.let { refresh ->
         if (refresh) {
             viewModel.fetchTraining(trainingId, isChanged = true)

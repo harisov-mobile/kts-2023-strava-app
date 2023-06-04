@@ -97,7 +97,6 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
                 training = trainingUpdateDTO
             )
             if (networkResponse.isSuccessful) {
-                // Timber.tag("rustam").d("networkResponse = $networkResponse")
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
                     DataResponse.Success(

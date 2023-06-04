@@ -188,10 +188,6 @@ fun ShowTrainingEditScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.screenEventFlow.collect { event ->
             when (event) {
-                is TrainingEditScreenEvent.NavigateToTrainingDetail -> {
-                    onReturn(event.id)
-                }
-
                 is TrainingEditScreenEvent.NavigateBackWithRefresh -> {
                     onBackWithRefresh()
                 }
