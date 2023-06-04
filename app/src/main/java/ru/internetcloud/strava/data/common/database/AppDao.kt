@@ -35,7 +35,8 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTraining(trainingDbModel: TrainingDbModel)
 
-    @Query("SELECT * FROM ${TrainingListItemContract.TABLE_NAME}")
+    @Query("SELECT * FROM ${TrainingListItemContract.TABLE_NAME}" +
+            " ORDER BY ${TrainingListItemContract.Columns.START_DATE} DESC")
     suspend fun getTrainingListItems(): List<TrainingListItemDbModel>
 
     @Query("SELECT * FROM ${TrainingContract.TABLE_NAME} WHERE ${TrainingContract.Columns.ID} = :id LIMIT 1")
