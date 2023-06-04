@@ -40,7 +40,7 @@ fun ShowTrainingListScreen(
     onFABClickListener: () -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     val shouldRefresh = currentBackStackEntry?.savedStateHandle?.remove<Boolean?>(refreshKey)

@@ -82,7 +82,7 @@ fun TrainingEditScreen(
     val viewModel: TrainingEditViewModel = viewModel(
         factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
     )
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     val topAppBarTitle = when (editMode) {

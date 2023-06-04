@@ -70,7 +70,7 @@ fun TrainingDetailScreen(
     val viewModel: TrainingDetailViewModel = viewModel(
         factory = TrainingDetailViewModelFactory(id = trainingId, app = app)
     )
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle(initialValue = UiState.Loading)
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
 
     val showDropdownMenu = remember { mutableStateOf(false) }
