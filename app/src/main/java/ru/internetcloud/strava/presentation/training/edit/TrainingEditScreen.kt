@@ -70,13 +70,14 @@ import ru.internetcloud.strava.presentation.util.addLine
 @Composable
 fun ShowTrainingEditScreen(
     trainingId: Long,
+    editMode: EditMode,
     onReturn: (id: Long) -> Unit,
     onBackPressed: () -> Unit,
-    editMode: EditMode
+    onBackWithRefresh: () -> Unit
 ) {
     val context = LocalContext.current
 
-    val comeOutHere = remember { mutableStateOf(false) }
+    val shouldExitHere = remember { mutableStateOf(false) }
 
     val viewModel: TrainingEditViewModel = viewModel(
         factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
@@ -100,7 +101,7 @@ fun ShowTrainingEditScreen(
                         onClick = remember(currentState) {
                             {
                                 if (currentState is UiState.Success) {
-                                    comeOutHere.value = true
+                                    shouldExitHere.value = true
                                 } else {
                                     when (editMode) {
                                         EditMode.Add -> onBackPressed()
@@ -131,7 +132,9 @@ fun ShowTrainingEditScreen(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                    viewModel.saveTraining()
+                                    if (!currentState.saving) {
+                                        viewModel.saveTraining()
+                                    }
                                 }
                         )
                     }
@@ -164,17 +167,14 @@ fun ShowTrainingEditScreen(
                         training = currentState.data,
                         onEvent = viewModel::handleEvent,
                         isChanged = currentState.isChanged,
-                        exit = (comeOutHere.value),
+                        shouldExitHere = (shouldExitHere.value),
                         exitHere = {
-                            comeOutHere.value = true
+                            shouldExitHere.value = true
                         },
                         stayHere = {
-                            comeOutHere.value = false
+                            shouldExitHere.value = false
                         },
-                        trainingId = trainingId,
-                        onReturn = onReturn,
                         onBackPressed = onBackPressed,
-                        editMode = editMode
                     )
                 }
 
@@ -192,6 +192,11 @@ fun ShowTrainingEditScreen(
                     onReturn(event.id)
                 }
 
+                is TrainingEditScreenEvent.NavigateBackWithRefresh -> {
+                    //onReturn(event.id)
+                    onBackWithRefresh()
+                }
+
                 is TrainingEditScreenEvent.ShowMessage -> {
                     Toast.makeText(
                         context,
@@ -207,15 +212,12 @@ fun ShowTrainingEditScreen(
 @Composable
 private fun ShowTrainingEdit(
     training: Training,
-    onEvent: (EditTrainingEvent) -> Unit,
     isChanged: Boolean,
-    exit: Boolean,
+    shouldExitHere: Boolean,
+    onEvent: (EditTrainingEvent) -> Unit,
     exitHere: () -> Unit,
     stayHere: () -> Unit,
-    trainingId: Long,
-    onReturn: (id: Long) -> Unit,
     onBackPressed: () -> Unit,
-    editMode: EditMode
 ) {
     val showDurationDialog = remember { mutableStateOf(false) }
 
@@ -433,12 +435,12 @@ private fun ShowTrainingEdit(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
 
-        // Button
+        // Button - Discard changes
         Button(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            onClick = exitHere
+            onClick = exitHere // выйти с экрана или показать AlertDialog с вопросом
         ) {
             Text(
                 text = stringResource(id = R.string.training_edit_discard_button)
@@ -446,16 +448,14 @@ private fun ShowTrainingEdit(
         }
     }
 
-    if (exit) {
+    if (shouldExitHere) {
         if (isChanged) {
             AlertDialog(
                 onDismissRequest = stayHere,
                 confirmButton = {
                     TextButton(onClick = {
-                        when (editMode) {
-                            EditMode.Add -> onBackPressed()
-                            EditMode.Edit -> onReturn(trainingId)
-                        }
+                        // ничего не менялось, выйти без сохранения на предыдущий экран:
+                        onBackPressed()
                     }) {
                         Text(text = stringResource(id = R.string.training_edit_discard_dialog_confirm_button))
                     }
@@ -469,21 +469,17 @@ private fun ShowTrainingEdit(
                 text = { Text(text = stringResource(id = R.string.training_edit_discard_question)) }
             )
         } else {
-            when (editMode) {
-                EditMode.Add -> onBackPressed()
-                EditMode.Edit -> onReturn(trainingId)
-            }
+            // ничего не менялось, выйти без сохранения на предыдущий экран:
+            onBackPressed()
         }
     }
 
     BackHandler {
         if (isChanged) {
-            exitHere()
+            exitHere() // выйти с экрана или показать AlertDialog с вопросом
         } else {
-            when (editMode) {
-                EditMode.Add -> onBackPressed()
-                EditMode.Edit -> onReturn(trainingId)
-            }
+            // ничего не менялось, выйти без сохранения на предыдущий экран:
+            onBackPressed()
         }
     }
 }

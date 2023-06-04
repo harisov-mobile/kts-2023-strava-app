@@ -193,12 +193,20 @@ class TrainingEditViewModel(
                         isChanged = false,
                         saving = false
                     )
-                    screenEventChannel.trySend(
-                        TrainingEditScreenEvent
-                            .NavigateToTrainingDetail(
-                                id = trainingDataResponse.data.id
+
+                    when (editMode) {
+                        EditMode.Add -> {
+                            screenEventChannel.trySend(
+                                TrainingEditScreenEvent
+                                    .NavigateToTrainingDetail(
+                                        id = trainingDataResponse.data.id
+                                    )
                             )
-                    )
+                        }
+                        EditMode.Edit -> {
+                            screenEventChannel.trySend(TrainingEditScreenEvent.NavigateBackWithRefresh)
+                        }
+                    }
                 }
 
                 is DataResponse.Error -> {

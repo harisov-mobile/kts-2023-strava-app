@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
@@ -53,11 +54,14 @@ import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
+import timber.log.Timber
 
 @Composable
 fun ShowTrainingDetailScreen(
-    onBackPressed: () -> Unit,
     trainingId: Long,
+    currentBackStackEntry: NavBackStackEntry?,
+    refreshKey: String,
+    onBackPressed: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
     val viewModel: TrainingDetailViewModel = viewModel(
@@ -68,6 +72,12 @@ fun ShowTrainingDetailScreen(
 
     val showDropdownMenu = remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+    val shouldRefresh = currentBackStackEntry?.savedStateHandle?.remove<Boolean?>(refreshKey)
+    Timber.tag("rustam").d("shouldRefresh = $shouldRefresh")
+    shouldRefresh?.let { refresh ->
+        viewModel.fetchTraining(trainingId)
+    }
 
     Scaffold(
         topBar = {

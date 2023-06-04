@@ -23,7 +23,7 @@ class NavigationState(val navHostController: NavHostController) {
     }
 
     fun navigateToDetailEdit(id: Long) {
-        navHostController.popBackStack()
+        // navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
     }
 
@@ -31,9 +31,14 @@ class NavigationState(val navHostController: NavHostController) {
         navHostController.navigate(Screen.TrainingDetailAdd.route)
     }
 
-    fun navigateToDetailWithPopUp(id: Long) {
+    fun navigateToDetailWithPopBackStack(id: Long) {
         navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
+    }
+
+    fun navigateBackWithRefresh(refreshKey: String, refresh: Boolean) {
+        navHostController.previousBackStackEntry?.savedStateHandle?.set(refreshKey, refresh)
+        navHostController.popBackStack()
     }
 
     fun navigateToRoute(route: String, popUpTo: Boolean, popUpToInclusive: Boolean) {

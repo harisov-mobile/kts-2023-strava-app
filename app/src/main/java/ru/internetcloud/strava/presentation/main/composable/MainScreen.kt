@@ -47,6 +47,8 @@ private val navItemList = listOf(
     NavigationItem.You
 )
 
+private const val KEY_REFRESH = "key_refresh"
+
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MainScreen(
@@ -108,6 +110,7 @@ fun MainScreen(
             true -> {
                 snackbarHostState.currentSnackbarData?.dismiss()
             }
+
             false -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(
@@ -136,6 +139,8 @@ fun MainScreen(
             trainingDetailScreenContent = { currentTrainingId ->
                 ShowTrainingDetailScreen(
                     trainingId = currentTrainingId,
+                    currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
+                    refreshKey = KEY_REFRESH,
                     onBackPressed = navigationState.navHostController::popBackStack,
                     onEditTraining = navigationState::navigateToDetailEdit
                 )
@@ -143,18 +148,30 @@ fun MainScreen(
             trainingDetailEditScreenContent = { currentTrainingId ->
                 ShowTrainingEditScreen(
                     trainingId = currentTrainingId,
-                    onReturn = navigationState::navigateToDetailWithPopUp,
+                    editMode = EditMode.Edit,
+                    onReturn = navigationState::navigateToDetailWithPopBackStack,
                     onBackPressed = navigationState.navHostController::popBackStack,
-                    editMode = EditMode.Edit
+                    onBackWithRefresh = {
+                        navigationState.navigateBackWithRefresh(
+                            refreshKey = KEY_REFRESH,
+                            refresh = true
+                        )
+                    }
+                    //{
+//                        navigationState.navHostController
+//                            .previousBackStackEntry?.savedStateHandle?.set("key_refresh", true)
+//                        navigationState.navHostController.popBackStack()
+                    //}
                 )
             },
 
             trainingDetailAddScreenContent = {
                 ShowTrainingEditScreen(
                     trainingId = 0,
-                    onReturn = navigationState::navigateToDetailWithPopUp,
+                    editMode = EditMode.Add,
+                    onReturn = navigationState::navigateToDetailWithPopBackStack,
                     onBackPressed = navigationState.navHostController::popBackStack,
-                    editMode = EditMode.Add
+                    onBackWithRefresh = {}
                 )
             },
 
@@ -173,6 +190,7 @@ fun MainScreen(
                 is MainScreenEvent.NavigateToLogout -> {
                     onNavigate(R.id.action_mainFragment_to_authFragment, event.args)
                 }
+
                 is MainScreenEvent.ShowMessage -> {
                     Toast.makeText(context, event.messageRes, Toast.LENGTH_SHORT).show()
                 }
