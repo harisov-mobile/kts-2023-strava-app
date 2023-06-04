@@ -13,6 +13,7 @@ import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationInterc
 import ru.internetcloud.strava.data.logout.network.api.LogoutApi
 import ru.internetcloud.strava.data.profile.network.api.ProfileApi
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
+import timber.log.Timber
 
 object StravaApiFactory {
 
@@ -36,8 +37,8 @@ object StravaApiFactory {
             .addInterceptor(AuthorizationFailedInterceptor(AuthorizationService(context), TokenStorage))
             .addInterceptor(
                 HttpLoggingInterceptor {
-                    // Timber.tag("rustam").d("-------")
-                    // Timber.tag("rustam").d("HttpLoggingInterceptor BODY = $it")
+                    Timber.tag("rustam").d("-------")
+                    Timber.tag("rustam").d("HttpLoggingInterceptor BODY = $it")
                 }
                     .setLevel(HttpLoggingInterceptor.Level.BODY)
             )

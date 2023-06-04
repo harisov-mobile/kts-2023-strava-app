@@ -49,7 +49,7 @@ interface TrainingApi {
         training: TrainingUpdateDTO
     ): Response<TrainingDTO>
 
-    @DELETE("activities/{id}")
+    @DELETE("api/v3/activities/{id}")
     suspend fun deleteTraining(
         @Path(PATH_PARAM_ID)
         id: Long

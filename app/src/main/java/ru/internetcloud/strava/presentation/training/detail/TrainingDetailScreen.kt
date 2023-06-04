@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -83,27 +84,30 @@ fun ShowTrainingDetailScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { showDropdownMenu.value = !showDropdownMenu.value }) {
-                        Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
-                    }
-                    DropdownMenu(
-                        expanded = showDropdownMenu.value,
-                        onDismissRequest = { showDropdownMenu.value = false }
-                    ) {
-                        DropdownMenuItem(onClick = {
-                            onEditTraining(trainingId)
-                        }) {
-                            Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(id = R.string.menu_edit))
+                    if (currentState is UiState.Success) {
+                        IconButton(onClick = { showDropdownMenu.value = !showDropdownMenu.value }) {
+                            Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
                         }
+                        DropdownMenu(
+                            expanded = showDropdownMenu.value,
+                            onDismissRequest = { showDropdownMenu.value = false }
+                        ) {
+                            DropdownMenuItem(onClick = {
+                                onEditTraining(trainingId)
+                            }) {
+                                Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = stringResource(id = R.string.menu_edit))
+                            }
 
-                        DropdownMenuItem(onClick = {
-                            Toast.makeText(context, "Удалить", Toast.LENGTH_SHORT).show()
-                        }) {
-                            Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = stringResource(id = R.string.menu_delete))
+                            DropdownMenuItem(onClick = {
+                                // Toast.makeText(context, "Удалить", Toast.LENGTH_SHORT).show()
+                                viewModel.deleteTraining()
+                            }) {
+                                Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = stringResource(id = R.string.menu_delete))
+                            }
                         }
                     }
                 }
@@ -138,6 +142,25 @@ fun ShowTrainingDetailScreen(
 
                 is UiState.EmptyData -> {
                     ShowEmptyData(message = stringResource(id = R.string.no_data))
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.screenEventFlow.collect { event ->
+            when (event) {
+                is TrainingDetailScreenEvent.NavigateBack -> {
+                    // onReturn(event.id)
+                    onBackPressed()
+                }
+
+                is TrainingDetailScreenEvent.ShowMessage -> {
+                    Toast.makeText(
+                        context,
+                        event.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

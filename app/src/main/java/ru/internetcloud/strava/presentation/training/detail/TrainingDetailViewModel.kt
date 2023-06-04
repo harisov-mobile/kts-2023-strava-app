@@ -3,21 +3,27 @@ package ru.internetcloud.strava.presentation.training.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
+import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
+import ru.internetcloud.strava.presentation.util.addLine
 
 class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
+    private val deleteTrainingUseCase = DeleteTrainingUseCase(trainingRepository)
 
     private val profileRepository = ProfileRepositoryImpl()
     private val getProfileUseCase = GetProfileUseCase(profileRepository)
@@ -27,6 +33,10 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
 
     private val _screenState = MutableStateFlow(initialState)
     val screenState = _screenState.asStateFlow()
+
+    private val screenEventChannel = Channel<TrainingDetailScreenEvent>(Channel.BUFFERED)
+    val screenEventFlow: Flow<TrainingDetailScreenEvent>
+        get() = screenEventChannel.receiveAsFlow()
 
     init {
         fetchTraining(id)
@@ -50,14 +60,51 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
                                 source = trainingDataResponse.source
                             )
                         }
+
                         is DataResponse.Error -> {
                             _screenState.value = UiState.Error(exception = trainingDataResponse.exception)
                         }
                     }
                 }
+
                 is DataResponse.Error -> {
                     _screenState.value = UiState.Error(exception = profileDataResponse.exception)
                 }
+            }
+        }
+    }
+
+    fun deleteTraining() {
+        viewModelScope.launch {
+            if (_screenState.value is UiState.Success) {
+                when (val deleteDataResponse = deleteTrainingUseCase.deleteTraining(
+                    (_screenState.value as UiState.Success<ProfileWithTraining>).data.training.id
+                )) {
+                    is DataResponse.Success -> {
+                        screenEventChannel.trySend(
+                            TrainingDetailScreenEvent.ShowMessage("Тренировка удалена")
+                        )
+                        screenEventChannel.trySend(
+                            TrainingDetailScreenEvent
+                                .NavigateBack
+                        )
+                    }
+
+                    is DataResponse.Error -> {
+                        screenEventChannel
+                            .trySend(
+                                TrainingDetailScreenEvent.ShowMessage(
+                                    "Невозможно удалить"
+                                        .addLine(deleteDataResponse.exception.message.toString())
+                                )
+                            )
+                    }
+                }
+            } else {
+                screenEventChannel
+                    .trySend(
+                        TrainingDetailScreenEvent.ShowMessage("Невозможно удалить")
+                    )
             }
         }
     }

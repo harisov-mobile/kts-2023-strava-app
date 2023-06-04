@@ -87,7 +87,7 @@ object AppAuth {
         const val TOKEN_URI = "https://www.strava.com/oauth/token"
         const val END_SESSION_URI = "https://www.strava.com/oauth/deauthorize"
         const val RESPONSE_TYPE = ResponseTypeValues.CODE
-        const val SCOPE = "profile:read_all,profile:write,activity:read_all,activity:write"
+        const val SCOPE = "read,read_all,profile:read_all,profile:write,activity:read_all,activity:write"
 
         // чтобы не "светить" Api ключи в публичном гит-хабе,
         // создан файл keystore.properties и в этот файл помещены значения CLIENT_ID и CLIENT_SECRET
