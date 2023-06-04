@@ -36,7 +36,7 @@ import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
-import ru.internetcloud.strava.presentation.training.detail.ShowTrainingDetailScreen
+import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.ShowTrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
@@ -139,7 +139,7 @@ fun MainScreen(
                 )
             },
             trainingDetailScreenContent = { currentTrainingId ->
-                ShowTrainingDetailScreen(
+                TrainingDetailScreen(
                     trainingId = currentTrainingId,
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,

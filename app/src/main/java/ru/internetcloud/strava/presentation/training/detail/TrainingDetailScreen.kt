@@ -57,7 +57,7 @@ import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
-fun ShowTrainingDetailScreen(
+fun TrainingDetailScreen(
     trainingId: Long,
     currentBackStackEntry: NavBackStackEntry?,
     refreshKey: String,
