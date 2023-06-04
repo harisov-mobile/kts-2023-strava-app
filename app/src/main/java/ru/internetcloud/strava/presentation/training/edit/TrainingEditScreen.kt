@@ -68,7 +68,7 @@ import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 
 @Composable
-fun ShowTrainingEditScreen(
+fun TrainingEditScreen(
     trainingId: Long,
     editMode: EditMode,
     onReturn: (id: Long) -> Unit,

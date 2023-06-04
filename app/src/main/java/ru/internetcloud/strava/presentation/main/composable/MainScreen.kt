@@ -38,7 +38,7 @@ import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
-import ru.internetcloud.strava.presentation.training.edit.ShowTrainingEditScreen
+import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
 
 private val navItemList = listOf(
@@ -154,7 +154,7 @@ fun MainScreen(
                 )
             },
             trainingDetailEditScreenContent = { currentTrainingId ->
-                ShowTrainingEditScreen(
+                TrainingEditScreen(
                     trainingId = currentTrainingId,
                     editMode = EditMode.Edit,
                     onReturn = navigationState::navigateToDetailWithPopBackStack,
@@ -169,7 +169,7 @@ fun MainScreen(
             },
 
             trainingDetailAddScreenContent = {
-                ShowTrainingEditScreen(
+                TrainingEditScreen(
                     trainingId = 0,
                     editMode = EditMode.Add,
                     onReturn = navigationState::navigateToDetailWithPopBackStack,
