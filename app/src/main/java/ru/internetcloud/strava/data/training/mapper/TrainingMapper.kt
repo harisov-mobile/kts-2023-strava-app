@@ -1,6 +1,6 @@
 package ru.internetcloud.strava.data.training.mapper
 
-import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
+import ru.internetcloud.strava.data.training.cache.model.LocalTraining
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -26,8 +26,8 @@ class TrainingMapper {
         )
     }
 
-    fun fromDomainToDbModel(training: Training): TrainingDbModel {
-        return TrainingDbModel(
+    fun fromDomainToDbModel(training: Training): LocalTraining {
+        return LocalTraining(
             id = training.id,
             name = training.name,
             distance = training.distance,
@@ -42,19 +42,19 @@ class TrainingMapper {
         )
     }
 
-    fun fromDbModelToDomain(trainingDbModel: TrainingDbModel): Training {
+    fun fromDbModelToDomain(localTraining: LocalTraining): Training {
         return Training(
-            id = trainingDbModel.id,
-            name = trainingDbModel.name,
-            distance = trainingDbModel.distance,
-            movingTime = trainingDbModel.movingTime,
-            elapsedTime = trainingDbModel.elapsedTime,
-            type = trainingDbModel.type,
-            sportType = trainingDbModel.sportType,
-            startDate = trainingDbModel.startDate,
-            description = trainingDbModel.description,
-            trainer = trainingDbModel.trainer,
-            commute = trainingDbModel.commute
+            id = localTraining.id,
+            name = localTraining.name,
+            distance = localTraining.distance,
+            movingTime = localTraining.movingTime,
+            elapsedTime = localTraining.elapsedTime,
+            type = localTraining.type,
+            sportType = localTraining.sportType,
+            startDate = localTraining.startDate,
+            description = localTraining.description,
+            trainer = localTraining.trainer,
+            commute = localTraining.commute
         )
     }
 

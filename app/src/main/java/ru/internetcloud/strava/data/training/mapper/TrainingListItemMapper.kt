@@ -1,6 +1,6 @@
 package ru.internetcloud.strava.data.training.mapper
 
-import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
+import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 import ru.internetcloud.strava.data.training.network.model.TrainingListItemDTO
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
@@ -22,8 +22,8 @@ class TrainingListItemMapper {
         return listDTO.map { fromDtoToDomain(it) }
     }
 
-    private fun fromDomainToDbModel(trainingListItem: TrainingListItem): TrainingListItemDbModel {
-        return TrainingListItemDbModel(
+    private fun fromDomainToDbModel(trainingListItem: TrainingListItem): LocalTrainingListItem {
+        return LocalTrainingListItem(
             id = trainingListItem.id,
             name = trainingListItem.name,
             distance = trainingListItem.distance,
@@ -33,22 +33,22 @@ class TrainingListItemMapper {
         )
     }
 
-    private fun fromDbModelToDomain(trainingListItemDbModel: TrainingListItemDbModel): TrainingListItem {
+    private fun fromDbModelToDomain(localTrainingListItem: LocalTrainingListItem): TrainingListItem {
         return TrainingListItem(
-            id = trainingListItemDbModel.id,
-            name = trainingListItemDbModel.name,
-            distance = trainingListItemDbModel.distance,
-            movingTime = trainingListItemDbModel.movingTime,
-            type = trainingListItemDbModel.type,
-            startDate = trainingListItemDbModel.startDate
+            id = localTrainingListItem.id,
+            name = localTrainingListItem.name,
+            distance = localTrainingListItem.distance,
+            movingTime = localTrainingListItem.movingTime,
+            type = localTrainingListItem.type,
+            startDate = localTrainingListItem.startDate
         )
     }
 
-    fun fromListDomainToListDbModel(list: List<TrainingListItem>): List<TrainingListItemDbModel> {
+    fun fromListDomainToListDbModel(list: List<TrainingListItem>): List<LocalTrainingListItem> {
         return list.map { fromDomainToDbModel(it) }
     }
 
-    fun fromListDbModelToListDomain(list: List<TrainingListItemDbModel>): List<TrainingListItem> {
+    fun fromListDbModelToListDomain(list: List<LocalTrainingListItem>): List<TrainingListItem> {
         return list.map { fromDbModelToDomain(it) }
     }
 }

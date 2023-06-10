@@ -20,9 +20,9 @@ class ProfileRepositoryImpl : ProfileRepository {
         if (result is DataResponse.Success) {
             profileLocalDataSource.insertProfile(profileMapper.fromDomainToDbModel(result.data))
         } else {
-            profileLocalDataSource.getProfile()?.let { profileDbModel ->
+            profileLocalDataSource.getProfile()?.let { localProfile ->
                 result = DataResponse.Success(
-                    data = profileMapper.fromDbModelToDomain(profileDbModel),
+                    data = profileMapper.fromDbModelToDomain(localProfile),
                     source = Source.LocalCache
                 )
             }

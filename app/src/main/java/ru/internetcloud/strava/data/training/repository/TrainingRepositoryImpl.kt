@@ -52,9 +52,9 @@ class TrainingRepositoryImpl : TrainingRepository {
                 )
             )
         } else {
-            trainingLocalDataSource.getTraining(id)?.let { trainingDbModel ->
+            trainingLocalDataSource.getTraining(id)?.let { localTraining ->
                 result = DataResponse.Success(
-                    data = trainingMapper.fromDbModelToDomain(trainingDbModel),
+                    data = trainingMapper.fromDbModelToDomain(localTraining),
                     source = Source.LocalCache
                 )
             }

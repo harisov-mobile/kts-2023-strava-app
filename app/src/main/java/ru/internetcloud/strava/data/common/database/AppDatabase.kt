@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
-import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
-import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
+import ru.internetcloud.strava.data.profile.cache.model.LocalProfile
+import ru.internetcloud.strava.data.training.cache.model.LocalTraining
+import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 
 @Database(
-    entities = [ProfileDbModel::class, TrainingListItemDbModel::class, TrainingDbModel::class],
+    entities = [LocalProfile::class, LocalTrainingListItem::class, LocalTraining::class],
     version = 1,
     exportSchema = true
 )

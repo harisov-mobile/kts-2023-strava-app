@@ -4,21 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import ru.internetcloud.strava.data.profile.cache.model.LocalProfile
 import ru.internetcloud.strava.data.profile.cache.model.ProfileContract
-import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
+import ru.internetcloud.strava.data.training.cache.model.LocalTraining
+import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 import ru.internetcloud.strava.data.training.cache.model.TrainingContract
-import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
 import ru.internetcloud.strava.data.training.cache.model.TrainingListItemContract
-import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
 
 @Dao
 interface AppDao {
 
     @Query("SELECT * FROM ${ProfileContract.TABLE_NAME} LIMIT 1")
-    suspend fun getProfile(): ProfileDbModel? // будет только одна запись с профилем (или ни одной)
+    suspend fun getProfile(): LocalProfile? // будет только одна запись с профилем (или ни одной)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProfile(profileDbModel: ProfileDbModel)
+    suspend fun insertProfile(localProfile: LocalProfile)
 
     @Query("DELETE FROM ${ProfileContract.TABLE_NAME}")
     suspend fun deleteProfile()
@@ -30,15 +30,15 @@ interface AppDao {
     suspend fun deleteAllTrainings()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTrainingListItems(list: List<TrainingListItemDbModel>)
+    suspend fun insertTrainingListItems(list: List<LocalTrainingListItem>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTraining(trainingDbModel: TrainingDbModel)
+    suspend fun insertTraining(localTraining: LocalTraining)
 
     @Query("SELECT * FROM ${TrainingListItemContract.TABLE_NAME}" +
             " ORDER BY ${TrainingListItemContract.Columns.START_DATE} DESC")
-    suspend fun getTrainingListItems(): List<TrainingListItemDbModel>
+    suspend fun getTrainingListItems(): List<LocalTrainingListItem>
 
     @Query("SELECT * FROM ${TrainingContract.TABLE_NAME} WHERE ${TrainingContract.Columns.ID} = :id LIMIT 1")
-    suspend fun getTraining(id: Long): TrainingDbModel?
+    suspend fun getTraining(id: Long): LocalTraining?
 }

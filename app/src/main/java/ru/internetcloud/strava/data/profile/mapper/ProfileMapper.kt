@@ -1,6 +1,6 @@
 package ru.internetcloud.strava.data.profile.mapper
 
-import ru.internetcloud.strava.data.profile.cache.model.ProfileDbModel
+import ru.internetcloud.strava.data.profile.cache.model.LocalProfile
 import ru.internetcloud.strava.data.profile.network.model.ProfileDTO
 import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.profile.model.Profile
@@ -23,24 +23,24 @@ class ProfileMapper {
         )
     }
 
-    fun fromDbModelToDomain(profileDbModel: ProfileDbModel): Profile {
+    fun fromDbModelToDomain(localProfile: LocalProfile): Profile {
         return Profile(
-            id = profileDbModel.id,
-            firstName = profileDbModel.firstName,
-            lastName = profileDbModel.lastName,
-            city = profileDbModel.city,
-            state = profileDbModel.state,
-            country = profileDbModel.country,
-            sex = profileDbModel.sex,
-            imageUrlMedium = profileDbModel.imageUrlMedium,
-            imageUrl = profileDbModel.imageUrl,
-            friendCount = profileDbModel.friendCount,
-            followerCount = profileDbModel.followerCount
+            id = localProfile.id,
+            firstName = localProfile.firstName,
+            lastName = localProfile.lastName,
+            city = localProfile.city,
+            state = localProfile.state,
+            country = localProfile.country,
+            sex = localProfile.sex,
+            imageUrlMedium = localProfile.imageUrlMedium,
+            imageUrl = localProfile.imageUrl,
+            friendCount = localProfile.friendCount,
+            followerCount = localProfile.followerCount
         )
     }
 
-    fun fromDomainToDbModel(profile: Profile): ProfileDbModel {
-        return ProfileDbModel(
+    fun fromDomainToDbModel(profile: Profile): LocalProfile {
+        return LocalProfile(
             id = profile.id,
             firstName = profile.firstName,
             lastName = profile.lastName,

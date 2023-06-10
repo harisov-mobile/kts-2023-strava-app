@@ -1,19 +1,19 @@
 package ru.internetcloud.strava.data.training.cache.datasource
 
-import ru.internetcloud.strava.data.training.cache.model.TrainingDbModel
-import ru.internetcloud.strava.data.training.cache.model.TrainingListItemDbModel
+import ru.internetcloud.strava.data.training.cache.model.LocalTraining
+import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 
 interface TrainingLocalDataSource {
 
-    suspend fun getTrainingListItems(): List<TrainingListItemDbModel>
+    suspend fun getTrainingListItems(): List<LocalTrainingListItem>
 
-    suspend fun insertTrainingListItems(list: List<TrainingListItemDbModel>)
+    suspend fun insertTrainingListItems(list: List<LocalTrainingListItem>)
 
     suspend fun deleteAllTrainingListItems()
 
-    suspend fun getTraining(id: Long): TrainingDbModel?
+    suspend fun getTraining(id: Long): LocalTraining?
 
-    suspend fun insertTraining(trainingDbModel: TrainingDbModel)
+    suspend fun insertTraining(localTraining: LocalTraining)
 
     suspend fun deleteAllTrainings()
 }

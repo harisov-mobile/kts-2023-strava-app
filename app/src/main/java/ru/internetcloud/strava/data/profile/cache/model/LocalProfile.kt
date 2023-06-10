@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = ProfileContract.TABLE_NAME)
-data class ProfileDbModel(
+data class LocalProfile(
     @PrimaryKey
     @ColumnInfo(name = ProfileContract.Columns.ID)
     val id: Long,

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.Date
 
 @Entity(tableName = TrainingListItemContract.TABLE_NAME)
-data class TrainingListItemDbModel(
+data class LocalTrainingListItem(
     @PrimaryKey
     @ColumnInfo(name = TrainingListItemContract.Columns.ID)
     val id: Long,
