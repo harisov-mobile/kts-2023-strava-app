@@ -18,6 +18,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         var result = profileRemoteApiDataSource.getProfile()
 
         if (result is DataResponse.Success) {
+            profileLocalDataSource.deleteProfile()
             profileLocalDataSource.insertProfile(profileMapper.fromDomainToDbModel(result.data))
         } else {
             profileLocalDataSource.getProfile()?.let { localProfile ->

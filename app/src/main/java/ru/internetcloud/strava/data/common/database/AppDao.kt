@@ -14,7 +14,7 @@ import ru.internetcloud.strava.data.training.cache.model.TrainingListItemContrac
 @Dao
 interface AppDao {
 
-    @Query("SELECT * FROM ${ProfileContract.TABLE_NAME} LIMIT 1")
+    @Query("SELECT * FROM ${ProfileContract.TABLE_NAME}")
     suspend fun getProfile(): LocalProfile? // будет только одна запись с профилем (или ни одной)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -39,6 +39,6 @@ interface AppDao {
             " ORDER BY ${TrainingListItemContract.Columns.START_DATE} DESC")
     suspend fun getTrainingListItems(): List<LocalTrainingListItem>
 
-    @Query("SELECT * FROM ${TrainingContract.TABLE_NAME} WHERE ${TrainingContract.Columns.ID} = :id LIMIT 1")
+    @Query("SELECT * FROM ${TrainingContract.TABLE_NAME} WHERE ${TrainingContract.Columns.ID} = :id")
     suspend fun getTraining(id: Long): LocalTraining?
 }
