@@ -36,10 +36,8 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun updateUI() {
-        args.message?.let { messageText ->
-            binding.message.setText(messageText)
-            binding.message.visibility = View.VISIBLE
-        }
+        binding.message.setText(getString(args.messageResId))
+        binding.message.visibility = View.VISIBLE
     }
 
     private fun bindViewModel() {
@@ -88,5 +86,9 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
             // авторизация прошла успешно, меняем код на токен
             tokenExchangeRequest != null -> viewModel.onAuthCodeReceived(tokenExchangeRequest)
         }
+    }
+
+    companion object {
+        const val KEY_MESSAGE = "messageResId"
     }
 }

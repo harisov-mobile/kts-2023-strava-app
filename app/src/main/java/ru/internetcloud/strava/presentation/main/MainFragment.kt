@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import ru.internetcloud.strava.presentation.auth.AuthFragment
 import ru.internetcloud.strava.presentation.common.compose.StravaTheme
 import ru.internetcloud.strava.presentation.main.composable.MainScreen
 
@@ -19,7 +20,7 @@ class MainFragment : Fragment() {
         setContent {
             StravaTheme {
                 MainScreen(
-                    app = requireActivity().application,
+                    keyMessage = AuthFragment.KEY_MESSAGE,
                     onNavigate = { dest: Int, args: Bundle? -> findNavController().navigate(dest, args) }
                 )
             }

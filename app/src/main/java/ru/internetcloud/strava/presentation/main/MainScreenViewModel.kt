@@ -19,7 +19,10 @@ import ru.internetcloud.strava.domain.logout.usecase.LogoutUseCase
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 import ru.internetcloud.strava.presentation.logout.LogoutClickHelper
 
-class MainScreenViewModel(private val app: Application) : ViewModel() {
+class MainScreenViewModel(
+    private val app: Application,
+    private val keyMessage: String
+) : ViewModel() {
 
     private val internetStatusRepository = InternetStatusRepositoryImpl()
     private val getInternetStatusUseCase = GetInternetStatusUseCase(internetStatusRepository)
@@ -66,15 +69,15 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
 
         viewModelScope.launch {
             val args = Bundle().apply {
-                putString("message", app.getString(R.string.auth_after_logout))
+                putInt(keyMessage, R.string.auth_after_logout)
             }
 
             when (val logoutDataResponse = logoutUseCase.logout()) {
                 is DataResponse.Success -> {
                     screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
                 }
+
                 is DataResponse.Error -> {
-                    // screenEventChannel.trySend(MainScreenEvent.ShowMessage(R.string.logout_error))
                     screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
                 }
             }
@@ -87,7 +90,7 @@ class MainScreenViewModel(private val app: Application) : ViewModel() {
 
     fun onUnauthorized() {
         val args = Bundle().apply {
-            putString("message", app.getString(R.string.auth_try_again))
+            putInt(keyMessage, R.string.auth_try_again)
         }
         screenEventChannel.trySend(MainScreenEvent.NavigateToLogout(args = args))
     }

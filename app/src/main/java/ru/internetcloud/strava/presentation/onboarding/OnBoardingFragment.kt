@@ -32,7 +32,7 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
         findNavController()
             .navigate(
                 OnBoardingFragmentDirections.actionOnBoardingFragmentToAuthFragment(
-                    message = getString(R.string.auth_standart_message)
+                    messageResId = R.string.auth_standart_message
                 )
             )
     }

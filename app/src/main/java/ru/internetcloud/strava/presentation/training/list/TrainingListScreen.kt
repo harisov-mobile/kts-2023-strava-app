@@ -143,8 +143,10 @@ private fun ShowTrainings(
                     TrainingItemView(
                         profile = profileWithTrainings.profile,
                         training = training,
-                        onTrainingClickListener = {
-                            onTrainingClickListener(training.id)
+                        onTrainingClickListener = remember {
+                            {
+                                onTrainingClickListener(training.id)
+                            }
                         }
                     )
                 }

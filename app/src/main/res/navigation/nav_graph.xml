@@ -38,9 +38,8 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
         <argument
-            android:name="message"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="messageResId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"

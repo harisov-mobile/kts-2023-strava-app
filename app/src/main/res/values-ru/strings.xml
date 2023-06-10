@@ -49,6 +49,7 @@
     <string name="training_edit_app_bar_title">Изменить</string>
     <string name="training_add_app_bar_title">Добавить</string>
     <string name="training_can_not_delete_training">Невозможно удалить</string>
+    <string name="training_can_not_delete_training_with_arg">Невозможно удалить \n%s</string>
     <string name="training_deleted">Тренировка удалена</string>
 
     <string name="groups_under_constraction">В разработке</string>

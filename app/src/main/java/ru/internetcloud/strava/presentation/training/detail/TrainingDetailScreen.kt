@@ -1,6 +1,5 @@
 package ru.internetcloud.strava.presentation.training.detail
 
-import android.app.Application
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -56,19 +55,19 @@ import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
 import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
+import ru.internetcloud.strava.presentation.util.parseStringVs
 
 @Composable
 fun TrainingDetailScreen(
     trainingId: Long,
     currentBackStackEntry: NavBackStackEntry?,
     refreshKey: String,
-    app: Application,
     onBackPressed: () -> Unit,
     onBackWithRefresh: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
     val viewModel: TrainingDetailViewModel = viewModel(
-        factory = TrainingDetailViewModelFactory(id = trainingId, app = app)
+        factory = TrainingDetailViewModelFactory(id = trainingId)
     )
     val screenState = viewModel.screenState.collectAsStateWithLifecycle()
     val currentState = screenState.value
@@ -123,7 +122,6 @@ fun TrainingDetailScreen(
                             }
 
                             DropdownMenuItem(onClick = {
-                                // Toast.makeText(context, "Удалить", Toast.LENGTH_SHORT).show()
                                 viewModel.deleteTraining()
                             }) {
                                 Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
@@ -173,14 +171,13 @@ fun TrainingDetailScreen(
         viewModel.screenEventFlow.collect { event ->
             when (event) {
                 is TrainingDetailScreenEvent.NavigateBack -> {
-                    // onReturn(event.id)
                     onBackPressed()
                 }
 
                 is TrainingDetailScreenEvent.ShowMessage -> {
                     Toast.makeText(
                         context,
-                        event.message,
+                        context.parseStringVs(event.stringVs),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

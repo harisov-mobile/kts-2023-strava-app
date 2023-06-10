@@ -1,6 +1,5 @@
 package ru.internetcloud.strava.presentation.training.detail
 
-import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,9 +18,9 @@ import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
-import ru.internetcloud.strava.presentation.util.addLine
+import ru.internetcloud.strava.presentation.util.toStringVs
 
-class TrainingDetailViewModel(id: Long, private val app: Application, savedStateHandle: SavedStateHandle) : ViewModel() {
+class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val trainingRepository = TrainingRepositoryImpl()
     private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
@@ -85,7 +84,7 @@ class TrainingDetailViewModel(id: Long, private val app: Application, savedState
                 )) {
                     is DataResponse.Success -> {
                         screenEventChannel.trySend(
-                            TrainingDetailScreenEvent.ShowMessage(app.getString(R.string.training_deleted))
+                            TrainingDetailScreenEvent.ShowMessage(R.string.training_deleted.toStringVs())
                         )
                         screenEventChannel.trySend(
                             TrainingDetailScreenEvent
@@ -97,8 +96,8 @@ class TrainingDetailViewModel(id: Long, private val app: Application, savedState
                         screenEventChannel
                             .trySend(
                                 TrainingDetailScreenEvent.ShowMessage(
-                                    app.getString(R.string.training_can_not_delete_training)
-                                        .addLine(deleteDataResponse.exception.message.toString())
+                                    (R.string.training_can_not_delete_training_with_arg
+                                        .toStringVs(deleteDataResponse.exception.message.toString()))
                                 )
                             )
                     }
@@ -106,7 +105,9 @@ class TrainingDetailViewModel(id: Long, private val app: Application, savedState
             } else {
                 screenEventChannel
                     .trySend(
-                        TrainingDetailScreenEvent.ShowMessage(app.getString(R.string.training_can_not_delete_training))
+                        TrainingDetailScreenEvent.ShowMessage(
+                            R.string.training_can_not_delete_training.toStringVs()
+                        )
                     )
             }
         }

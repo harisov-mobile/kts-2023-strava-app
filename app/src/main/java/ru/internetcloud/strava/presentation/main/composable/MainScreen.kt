@@ -52,7 +52,7 @@ private const val KEY_REFRESH = "key_refresh"
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MainScreen(
-    app: Application,
+    keyMessage: String,
     onNavigate: (Int, Bundle?) -> Unit
 ) {
     val navigationState = rememberNavigationState()
@@ -60,7 +60,12 @@ fun MainScreen(
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
 
-    val viewModel: MainScreenViewModel = viewModel(factory = MainScreenViewModelFactory(app))
+    val viewModel: MainScreenViewModel = viewModel(
+        factory = MainScreenViewModelFactory(
+            app = LocalContext.current.applicationContext as Application,
+            keyMessage = keyMessage
+        )
+    )
 
     val internetConnectionAvailable = viewModel.internetConnectionAvailable.collectAsStateWithLifecycle(
         initialValue = true
@@ -143,7 +148,6 @@ fun MainScreen(
                     trainingId = currentTrainingId,
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
-                    app = app,
                     onBackPressed = navigationState.navHostController::popBackStack,
                     onEditTraining = navigationState::navigateToDetailEdit,
                     onBackWithRefresh = {
