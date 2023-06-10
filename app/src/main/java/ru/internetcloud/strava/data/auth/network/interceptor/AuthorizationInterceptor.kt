@@ -3,7 +3,7 @@ package ru.internetcloud.strava.data.auth.network.interceptor
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import ru.internetcloud.strava.data.auth.network.TokenStorage
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
 
 class AuthorizationInterceptor : Interceptor {
 
@@ -18,7 +18,7 @@ class AuthorizationInterceptor : Interceptor {
     private fun Request.addTokenHeader(): Request {
         return newBuilder()
             .apply {
-                val token = TokenStorage.accessToken
+                val token = TokenSharedPreferencesStorage.getTokenData().accessToken
                 if (token != null) {
                     header(AUTH_HEADER_NAME, token.withBearer())
                 }

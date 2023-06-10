@@ -31,4 +31,14 @@ object TokenSharedPreferencesStorage {
         tokenSharedPrefs.edit().putString(KEY_REFRESH_TOKEN, tokensModel.refreshToken).apply()
         tokenSharedPrefs.edit().putString(KEY_ID_TOKEN, tokensModel.idToken).apply()
     }
+
+    fun clearTokenData() {
+        tokenSharedPrefs.edit().putString(KEY_ACCESS_TOKEN, null).apply()
+        tokenSharedPrefs.edit().putString(KEY_REFRESH_TOKEN, null).apply()
+        tokenSharedPrefs.edit().putString(KEY_ID_TOKEN, null).apply()
+    }
+
+    fun isAuthorized(): Boolean {
+        return !getTokenData().accessToken.isNullOrEmpty()
+    }
 }

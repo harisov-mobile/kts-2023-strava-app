@@ -1,9 +1,9 @@
 package ru.internetcloud.strava.data.logout.repository
 
-import ru.internetcloud.strava.data.auth.network.TokenStorage
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.logout.mapper.LogoutMapper
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.logout.LogoutRepository
@@ -33,10 +33,6 @@ class LogoutRepositoryImpl : LogoutRepository {
     }
 
     private fun clearToken() {
-        TokenStorage.accessToken = null
-        TokenStorage.refreshToken = null
-        TokenStorage.idToken = null
-
-        TokenStorage.saveTokenToPrefs()
+        TokenSharedPreferencesStorage.clearTokenData()
     }
 }

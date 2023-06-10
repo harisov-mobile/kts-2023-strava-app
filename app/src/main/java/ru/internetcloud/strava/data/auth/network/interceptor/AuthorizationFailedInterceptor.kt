@@ -6,12 +6,11 @@ import net.openid.appauth.AuthorizationService
 import okhttp3.Interceptor
 import okhttp3.Response
 import ru.internetcloud.strava.data.auth.network.AppAuth
-import ru.internetcloud.strava.data.auth.network.TokenStorage
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 
 class AuthorizationFailedInterceptor(
-    private val authorizationService: AuthorizationService,
-    private val tokenStorage: TokenStorage
+    private val authorizationService: AuthorizationService
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -37,15 +36,14 @@ class AuthorizationFailedInterceptor(
     private fun refreshToken(): Boolean {
         val tokenRefreshed = runBlocking {
             runCatching {
-                val refreshRequest = AppAuth.getRefreshTokenRequest(tokenStorage.refreshToken.orEmpty())
+                val refreshRequest = AppAuth.getRefreshTokenRequest(
+                    TokenSharedPreferencesStorage.getTokenData().refreshToken.orEmpty()
+                )
                 AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
             }
                 .getOrNull()
                 ?.let { tokens ->
-                    TokenStorage.accessToken = tokens.accessToken
-                    TokenStorage.refreshToken = tokens.refreshToken
-                    TokenStorage.idToken = tokens.idToken
-                    TokenStorage.saveTokenToPrefs()
+                    TokenSharedPreferencesStorage.saveTokenData(tokens)
                     true
                 } ?: false
         }

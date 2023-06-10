@@ -7,7 +7,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import ru.internetcloud.strava.data.auth.network.TokenStorage
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationFailedInterceptor
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationInterceptor
 import ru.internetcloud.strava.data.logout.network.api.LogoutApi
@@ -33,7 +32,7 @@ object StravaApiFactory {
     fun init(context: Context) {
         okHttpClient = OkHttpClient.Builder()
             .addInterceptor(AuthorizationInterceptor())
-            .addInterceptor(AuthorizationFailedInterceptor(AuthorizationService(context), TokenStorage))
+            .addInterceptor(AuthorizationFailedInterceptor(AuthorizationService(context)))
             .addInterceptor(
                 HttpLoggingInterceptor {
                     // Timber.tag("rustam").d("-------")

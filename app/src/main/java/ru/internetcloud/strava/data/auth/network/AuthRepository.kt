@@ -4,6 +4,8 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.TokenRequest
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.domain.token.model.TokensModel
 
 class AuthRepository {
 
@@ -17,24 +19,20 @@ class AuthRepository {
     ) {
         val tokens = AppAuth.performTokenRequestSuspend(authService, tokenRequest)
         // обмен кода на токен произошел успешно, сохраняем токены и завершаем авторизацию
-        TokenStorage.accessToken = tokens.accessToken
-        TokenStorage.refreshToken = tokens.refreshToken
-        TokenStorage.idToken = tokens.idToken
-
-        TokenStorage.saveTokenToPrefs()
+        TokenSharedPreferencesStorage.saveTokenData(
+            TokensModel(
+                accessToken = tokens.accessToken,
+                refreshToken = tokens.refreshToken,
+                idToken = tokens.idToken
+            )
+        )
     }
 
     fun getEndSessionRequest(): EndSessionRequest {
         return AppAuth.getEndSessionRequest()
     }
 
-    fun corruptAccessToken() {
-        TokenStorage.accessToken = "fake token"
-    }
-
     fun logout() {
-        TokenStorage.accessToken = null
-        TokenStorage.refreshToken = null
-        TokenStorage.idToken = null
+        TokenSharedPreferencesStorage.clearTokenData()
     }
 }
