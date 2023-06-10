@@ -39,6 +39,7 @@ import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -82,8 +83,7 @@ fun TrainingEditScreen(
     val viewModel: TrainingEditViewModel = viewModel(
         factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
     )
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
-    val currentState = screenState.value
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     val topAppBarTitle = when (editMode) {
         EditMode.Add -> stringResource(id = R.string.training_add_app_bar_title)
@@ -98,9 +98,9 @@ fun TrainingEditScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = remember(currentState) {
+                        onClick = remember(screenState) {
                             {
-                                if (currentState is UiState.Success) {
+                                if (screenState is UiState.Success) {
                                     shouldExitHere.value = true
                                 } else {
                                     when (editMode) {
@@ -118,8 +118,8 @@ fun TrainingEditScreen(
                     }
                 },
                 actions = {
-                    if (currentState is UiState.Success) {
-                        if (currentState.saving) {
+                    if (screenState is UiState.Success) {
+                        if ((screenState as UiState.Success<Training>).saving) {
                             CircularProgressIndicator(
                                 color = MaterialTheme.colors.surface,
                                 modifier = Modifier.padding(end = 16.dp)
@@ -132,7 +132,7 @@ fun TrainingEditScreen(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                    if (!currentState.saving) {
+                                    if (!(screenState as UiState.Success<Training>).saving) {
                                         viewModel.saveTraining()
                                     }
                                 }
@@ -143,12 +143,12 @@ fun TrainingEditScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (currentState) {
+            when (screenState) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
-                                currentState.exception.message.toString()
+                                (screenState as UiState.Error).exception.message.toString()
                             ),
                         onTryAgainClick = remember {
                             {
@@ -164,9 +164,9 @@ fun TrainingEditScreen(
 
                 is UiState.Success -> {
                     ShowTrainingEdit(
-                        training = currentState.data,
+                        training = (screenState as UiState.Success<Training>).data,
                         onEvent = viewModel::handleEvent,
-                        isChanged = currentState.isChanged,
+                        isChanged = (screenState as UiState.Success<Training>).isChanged,
                         shouldExitHere = (shouldExitHere.value),
                         exitHere = {
                             shouldExitHere.value = true

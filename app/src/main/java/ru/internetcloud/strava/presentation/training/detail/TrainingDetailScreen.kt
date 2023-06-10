@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -45,6 +46,7 @@ import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
+import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.util.TrainingConverter
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
@@ -69,8 +71,7 @@ fun TrainingDetailScreen(
     val viewModel: TrainingDetailViewModel = viewModel(
         factory = TrainingDetailViewModelFactory(id = trainingId)
     )
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
-    val currentState = screenState.value
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     val showDropdownMenu = remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -91,7 +92,9 @@ fun TrainingDetailScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (currentState is UiState.Success && currentState.isChanged) {
+                            if (screenState is UiState.Success
+                                && (screenState as UiState.Success<ProfileWithTraining>).isChanged
+                            ) {
                                 onBackWithRefresh()
                             } else {
                                 onBackPressed()
@@ -105,7 +108,7 @@ fun TrainingDetailScreen(
                     }
                 },
                 actions = {
-                    if (currentState is UiState.Success) {
+                    if (screenState is UiState.Success) {
                         IconButton(onClick = { showDropdownMenu.value = !showDropdownMenu.value }) {
                             Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
                         }
@@ -135,12 +138,12 @@ fun TrainingDetailScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (currentState) {
+            when (screenState) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
-                                currentState.exception.message.toString()
+                                (screenState as UiState.Error).exception.message.toString()
                             ),
                         onTryAgainClick = {
                             viewModel.fetchTraining(id = trainingId, isChanged = false)
@@ -154,9 +157,9 @@ fun TrainingDetailScreen(
 
                 is UiState.Success -> {
                     ShowTraining(
-                        profile = currentState.data.profile,
-                        training = currentState.data.training,
-                        source = currentState.source
+                        profile = (screenState as UiState.Success<ProfileWithTraining>).data.profile,
+                        training = (screenState as UiState.Success<ProfileWithTraining>).data.training,
+                        source = (screenState as UiState.Success<ProfileWithTraining>).source
                     )
                 }
 
@@ -186,7 +189,7 @@ fun TrainingDetailScreen(
     }
 
     BackHandler {
-        if (currentState is UiState.Success && currentState.isChanged) {
+        if (screenState is UiState.Success && (screenState as UiState.Success<ProfileWithTraining>).isChanged) {
             onBackWithRefresh()
         } else {
             onBackPressed()

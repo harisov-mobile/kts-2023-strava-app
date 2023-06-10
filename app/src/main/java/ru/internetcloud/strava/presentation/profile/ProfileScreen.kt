@@ -14,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -39,8 +40,7 @@ import ru.internetcloud.strava.presentation.util.addPartWithComma
 @Composable
 fun ShowProfileScreen() {
     val viewModel: ProfileViewModel = viewModel()
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
-    val currentState = screenState.value
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -48,11 +48,11 @@ fun ShowProfileScreen() {
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (currentState) {
+            when (screenState) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
-                            .addLine(currentState.exception.message.toString()),
+                            .addLine((screenState as UiState.Error).exception.message.toString()),
                         onTryAgainClick = viewModel::fetchProfile
                     )
                 }
@@ -61,8 +61,8 @@ fun ShowProfileScreen() {
                 }
                 is UiState.Success -> {
                     ShowProfile(
-                        profile = currentState.data,
-                        source = currentState.source
+                        profile = (screenState as UiState.Success<Profile>).data,
+                        source = (screenState as UiState.Success<Profile>).source
                     )
                 }
                 UiState.EmptyData -> {

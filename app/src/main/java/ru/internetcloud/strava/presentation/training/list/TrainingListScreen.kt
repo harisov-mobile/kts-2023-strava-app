@@ -48,8 +48,7 @@ fun ShowTrainingListScreen(
     onFABClickListener: () -> Unit
 ) {
     val viewModel: TrainingListViewModel = viewModel()
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
-    val currentState = screenState.value
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
 
@@ -77,12 +76,12 @@ fun ShowTrainingListScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (currentState) {
+            when (screenState) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
-                                currentState.exception.message.toString()
+                                (screenState as UiState.Error).exception.message.toString()
                             ),
                         onTryAgainClick = {
                             viewModel.fetchTrainings()
@@ -96,8 +95,8 @@ fun ShowTrainingListScreen(
 
                 is UiState.Success -> {
                     ShowTrainings(
-                        profileWithTrainings = currentState.data,
-                        source = currentState.source,
+                        profileWithTrainings = (screenState as UiState.Success<ProfileWithTrainingList>).data,
+                        source = (screenState as UiState.Success<ProfileWithTrainingList>).source,
                         onTrainingClickListener = onTrainingClickListener,
                         isRefreshing = isRefreshing,
                         pullRefreshState = pullRefreshState
