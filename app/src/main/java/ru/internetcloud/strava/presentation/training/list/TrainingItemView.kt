@@ -22,10 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.util.Calculator
-import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.Formatter
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -62,7 +62,7 @@ fun TrainingItemView(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = DateConverter.getDateTimeStringWithGMT(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

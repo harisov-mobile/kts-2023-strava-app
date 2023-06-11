@@ -7,37 +7,53 @@ import java.util.Date
 
 object DateConverter {
 
+    private const val ERROR_DATE = "0001-01-01T00:00:00Z"
+    private const val OUTPUT_DATE_TIME_FORMAT_WITH_GMT = "dd.MM.yyyy HH:mm:ss aaa z"
+    private const val EMPTY_STRING_VALUE = ""
+
     private const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
     private const val DATE_TIME_FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     private const val DATE_FORMAT = "dd.MM.yyyy"
     private const val TIME_FORMAT = "HH : mm"
 
     @SuppressLint("SimpleDateFormat")
+    private val dateTimeSdf = SimpleDateFormat(DATE_TIME_FORMAT)
+
+    @SuppressLint("SimpleDateFormat")
+    private val dateTimeIso8601Sdf = SimpleDateFormat(DATE_TIME_FORMAT_ISO8601)
+
+    @SuppressLint("SimpleDateFormat")
+    private val dateSdf = SimpleDateFormat(DATE_FORMAT)
+
+    @SuppressLint("SimpleDateFormat")
+    private val timeSdf = SimpleDateFormat(TIME_FORMAT)
+
+    @SuppressLint("SimpleDateFormat")
+    private val dateTimeWithGmtSdf = SimpleDateFormat(OUTPUT_DATE_TIME_FORMAT_WITH_GMT)
+
+    private val cal: Calendar = Calendar.getInstance()
+
+    @SuppressLint("SimpleDateFormat")
     fun fromStringToDate(dateString: String): Date? {
-        return SimpleDateFormat(DATE_TIME_FORMAT).parse(dateString)
+        return dateTimeSdf.parse(dateString)
     }
 
     @SuppressLint("SimpleDateFormat")
     fun getDateISO8601String(date: Date?): String {
-        val sdf = SimpleDateFormat(DATE_TIME_FORMAT_ISO8601)
-        val ddd = date?.let { sdf.format(date) } ?: ""
-        return ddd
+        return date?.let { dateTimeIso8601Sdf.format(date) } ?: ""
     }
 
     @SuppressLint("SimpleDateFormat")
     fun getDateString(date: Date?): String {
-        val sdf = SimpleDateFormat(DATE_FORMAT)
-        return date?.let { sdf.format(date) } ?: ""
+        return date?.let { dateSdf.format(date) } ?: ""
     }
 
     @SuppressLint("SimpleDateFormat")
     fun getTimeString(date: Date?): String {
-        val sdf = SimpleDateFormat(TIME_FORMAT)
-        return date?.let { sdf.format(date) } ?: ""
+        return date?.let { timeSdf.format(date) } ?: ""
     }
 
     fun getDate(year: Int, month: Int, day: Int, hour: Int, minute: Int): Date {
-        val cal: Calendar = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, month)
         cal.set(Calendar.DAY_OF_MONTH, day)
@@ -46,5 +62,19 @@ object DateConverter {
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
         return cal.time
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun fromStringInIso8601ToDate(dateString: String): Date {
+        return try {
+            dateTimeIso8601Sdf.parse(dateString) as Date
+        } catch (e: Exception) {
+            dateTimeIso8601Sdf.parse(ERROR_DATE) as Date
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getDateTimeStringWithGMT(date: Date?): String {
+        return date?.let { dateTimeWithGmtSdf.format(date) } ?: EMPTY_STRING_VALUE
     }
 }

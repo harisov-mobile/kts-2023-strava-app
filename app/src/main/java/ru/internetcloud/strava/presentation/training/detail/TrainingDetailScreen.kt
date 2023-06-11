@@ -45,6 +45,7 @@ import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.training.model.Training
@@ -54,7 +55,6 @@ import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
-import ru.internetcloud.strava.presentation.util.DateTimeConverter
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 import ru.internetcloud.strava.presentation.util.parseStringVs
@@ -229,7 +229,7 @@ private fun ShowTraining(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = DateTimeConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = DateConverter.getDateTimeStringWithGMT(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

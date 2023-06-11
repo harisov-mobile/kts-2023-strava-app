@@ -6,7 +6,6 @@ import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.training.model.Training
-import ru.internetcloud.strava.presentation.util.DateTimeConverter
 
 class TrainingMapper {
 
@@ -19,7 +18,7 @@ class TrainingMapper {
             elapsedTime = trainingDTO.elapsedTime,
             type = trainingDTO.type,
             sportType = trainingDTO.sportType,
-            startDate = DateTimeConverter.fromStringToDate(trainingDTO.startDate),
+            startDate = DateConverter.fromStringInIso8601ToDate(trainingDTO.startDate),
             description = trainingDTO.description.orEmpty(),
             trainer = trainingDTO.trainer.orDefault(),
             commute = trainingDTO.commute.orDefault()

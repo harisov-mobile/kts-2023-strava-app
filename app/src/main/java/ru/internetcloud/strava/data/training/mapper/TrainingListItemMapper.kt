@@ -2,8 +2,8 @@ package ru.internetcloud.strava.data.training.mapper
 
 import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 import ru.internetcloud.strava.data.training.network.model.TrainingListItemDTO
+import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
-import ru.internetcloud.strava.presentation.util.DateTimeConverter
 
 class TrainingListItemMapper {
 
@@ -14,7 +14,7 @@ class TrainingListItemMapper {
             distance = trainingDTO.distance,
             movingTime = trainingDTO.movingTime,
             type = trainingDTO.type,
-            startDate = DateTimeConverter.fromStringToDate(trainingDTO.startDate)
+            startDate = DateConverter.fromStringInIso8601ToDate(trainingDTO.startDate)
         )
     }
 
