@@ -17,10 +17,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import ru.internetcloud.strava.R
+
+private const val MAX_HOUR = 23
+private const val MAX_MINUTE = 59
+private const val MAX_SECOND = 59
 
 @Composable
 fun DurationPickerDialog(
@@ -32,15 +38,15 @@ fun DurationPickerDialog(
     second: Int
 ) {
     if (show) {
-        val hours = remember { (0..23).map { it.toString() } }
+        val hours = remember { (0..MAX_HOUR).map { it.toString() } }
         val hoursPickerState = rememberPickerState()
         val startIndexOfHours = hours.indexOf(hour.toString())
 
-        val minutes = remember { (0..59).map { it.toString() } }
+        val minutes = remember { (0..MAX_MINUTE).map { it.toString() } }
         val minutesPickerState = rememberPickerState()
         val startIndexOfMinutes = minutes.indexOf(minute.toString())
 
-        val seconds = remember { (0..59).map { it.toString() } }
+        val seconds = remember { (0..MAX_SECOND).map { it.toString() } }
         val secondsPickerState = rememberPickerState()
         val startIndexOfSeconds = seconds.indexOf(second.toString())
 
@@ -60,9 +66,18 @@ fun DurationPickerDialog(
                         Column {
                             Row {
                                 Spacer(modifier = Modifier.width(48.dp))
-                                Text(text = "ч.", modifier = Modifier.weight(0.3f))
-                                Text(text = "мин.", modifier = Modifier.weight(0.3f))
-                                Text(text = "сек.", modifier = Modifier.weight(0.2f))
+                                Text(
+                                    text = stringResource(id = R.string.duration_hour),
+                                    modifier = Modifier.weight(0.3f)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.duration_minute),
+                                    modifier = Modifier.weight(0.3f)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.duration_second),
+                                    modifier = Modifier.weight(0.2f)
+                                )
                             }
                             Row(modifier = Modifier.fillMaxWidth()) {
                                 CustomPicker(
@@ -110,7 +125,7 @@ fun DurationPickerDialog(
                                 }
                             ) {
                                 Text(
-                                    text = "OK"
+                                    text = stringResource(id = R.string.duration_confirm_button)
                                 )
                             }
                         }

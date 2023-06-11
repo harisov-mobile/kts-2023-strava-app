@@ -76,7 +76,9 @@
     <string name="menu_delete">Delete</string>
 
     <string name="duration_confirm_button">OK</string>
-    <string name="duration_dismiss_button">Cancel</string>
+    <string name="duration_hour">h.</string>
+    <string name="duration_minute">min.</string>
+    <string name="duration_second">sec.</string>
 
     <string name="training_edit_save_button">Save</string>
     <string name="training_edit_discard_button">Discard unsaved changes</string>
