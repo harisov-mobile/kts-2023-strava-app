@@ -35,11 +35,11 @@ class StartViewModel : ViewModel() {
                     StartFragmentDirections.actionStartFragmentToOnBoardingFragment()
                 } else {
                     if (authUseCase.isAuthorized()) {
+                        StartFragmentDirections.actionStartFragmentToMainFragment()
+                    } else {
                         StartFragmentDirections.actionStartFragmentToAuthFragment(
                             messageResId = R.string.auth_standart_message
                         )
-                    } else {
-                        StartFragmentDirections.actionStartFragmentToMainFragment()
                     }
                 }
             )
