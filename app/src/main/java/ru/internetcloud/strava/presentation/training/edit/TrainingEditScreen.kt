@@ -53,8 +53,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.Calendar
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.SportTypeKeeper
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -80,9 +81,9 @@ fun TrainingEditScreen(
 
     val shouldExitHere = remember { mutableStateOf(false) }
 
-    val viewModel: TrainingEditViewModel = viewModel(
-        factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
-    )
+    val viewModel: TrainingEditViewModel by viewModel {
+        parametersOf(trainingId, editMode)
+    }
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 

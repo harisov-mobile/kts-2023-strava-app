@@ -3,21 +3,23 @@ package ru.internetcloud.strava.data.logout.repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
-import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.logout.mapper.LogoutMapper
-import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.data.logout.network.api.LogoutApi
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.logout.LogoutRepository
 import ru.internetcloud.strava.domain.logout.model.LogoutAnswer
+import ru.internetcloud.strava.domain.token.TokenRepository
 
-class LogoutRepositoryImpl : LogoutRepository {
-
-    private val logoutMapper = LogoutMapper()
+class LogoutRepositoryImpl(
+    private val logoutApi: LogoutApi,
+    private val logoutMapper: LogoutMapper,
+    private val tokenRepository: TokenRepository
+) : LogoutRepository {
 
     override suspend fun logout(): DataResponse<LogoutAnswer> {
         return try {
-            val networkResponse = StravaApiFactory.logoutApi.logout()
+            val networkResponse = logoutApi.logout()
             withContext(Dispatchers.IO) {
                 clearToken() // в любом случае надо удалить в SharedPrefs информацию о токене!
             }
@@ -37,6 +39,6 @@ class LogoutRepositoryImpl : LogoutRepository {
     }
 
     private suspend fun clearToken() {
-        TokenSharedPreferencesStorage.clearTokenData()
+        tokenRepository.clearTokenData()
     }
 }

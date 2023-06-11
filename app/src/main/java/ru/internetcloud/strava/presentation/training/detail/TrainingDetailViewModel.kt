@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
-import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
@@ -20,14 +18,13 @@ import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.toStringVs
 
-class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : ViewModel() {
-
-    private val trainingRepository = TrainingRepositoryImpl()
-    private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
-    private val deleteTrainingUseCase = DeleteTrainingUseCase(trainingRepository)
-
-    private val profileRepository = ProfileRepositoryImpl()
-    private val getProfileUseCase = GetProfileUseCase(profileRepository)
+class TrainingDetailViewModel(
+    id: Long,
+    private val getTrainingUseCase: GetTrainingUseCase,
+    private val deleteTrainingUseCase: DeleteTrainingUseCase,
+    private val getProfileUseCase: GetProfileUseCase,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val initialState =
         savedStateHandle.get<UiState<ProfileWithTraining>>(KEY_TRAINING_DETAIL_STATE) ?: UiState.Loading

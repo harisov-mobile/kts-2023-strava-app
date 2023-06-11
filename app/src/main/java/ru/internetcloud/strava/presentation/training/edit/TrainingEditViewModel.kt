@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -24,13 +23,11 @@ import ru.internetcloud.strava.presentation.util.UiState
 class TrainingEditViewModel(
     id: Long,
     private val editMode: EditMode,
+    private val getTrainingUseCase: GetTrainingUseCase,
+    private val updateTrainingUseCase: UpdateTrainingUseCase,
+    private val addTrainingUseCase: AddTrainingUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val trainingRepository = TrainingRepositoryImpl()
-    private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
-    private val updateTrainingUseCase = UpdateTrainingUseCase(trainingRepository)
-    private val addTrainingUseCase = AddTrainingUseCase(trainingRepository)
 
     private val initialState =
         savedStateHandle.get<UiState<Training>>(KEY_TRAINING_EDIT_STATE) ?: UiState.Loading

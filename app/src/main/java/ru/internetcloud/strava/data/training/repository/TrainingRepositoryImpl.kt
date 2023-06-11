@@ -1,22 +1,21 @@
 package ru.internetcloud.strava.data.training.repository
 
-import ru.internetcloud.strava.data.training.cache.datasource.TrainingLocalDataSourceImpl
+import ru.internetcloud.strava.data.training.cache.datasource.TrainingLocalDataSource
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
-import ru.internetcloud.strava.data.training.network.datasource.TrainingRemoteApiDataSourceImpl
+import ru.internetcloud.strava.data.training.network.datasource.TrainingRemoteApiDataSource
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.training.TrainingRepository
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 
-class TrainingRepositoryImpl : TrainingRepository {
-
-    private val trainingRemoteApiDataSource = TrainingRemoteApiDataSourceImpl()
-    private val trainingLocalDataSource = TrainingLocalDataSourceImpl()
-
-    private val trainingMapper = TrainingMapper()
-    private val trainingListItemMapper = TrainingListItemMapper()
+class TrainingRepositoryImpl(
+    private val trainingRemoteApiDataSource: TrainingRemoteApiDataSource,
+    private val trainingLocalDataSource: TrainingLocalDataSource,
+    private val trainingMapper: TrainingMapper,
+    private val trainingListItemMapper: TrainingListItemMapper
+) : TrainingRepository {
 
     override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
         var result = trainingRemoteApiDataSource.getTrainings(page)

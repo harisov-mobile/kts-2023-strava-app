@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTrainingList
@@ -47,7 +47,7 @@ fun ShowTrainingListScreen(
     onTrainingClickListener: (id: Long) -> Unit,
     onFABClickListener: () -> Unit
 ) {
-    val viewModel: TrainingListViewModel = viewModel()
+    val viewModel: TrainingListViewModel by viewModel()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 

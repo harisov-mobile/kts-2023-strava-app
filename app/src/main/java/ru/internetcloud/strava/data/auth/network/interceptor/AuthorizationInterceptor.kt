@@ -6,9 +6,11 @@ import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.domain.token.TokenRepository
 
-class AuthorizationInterceptor : Interceptor {
+class AuthorizationInterceptor(
+    private val tokenRepository: TokenRepository
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         return runBlocking {
@@ -24,7 +26,7 @@ class AuthorizationInterceptor : Interceptor {
         return newBuilder()
             .apply {
                 withContext(Dispatchers.IO) {
-                    val token = TokenSharedPreferencesStorage.getTokenData().accessToken
+                    val token = tokenRepository.getTokenData().accessToken
                     if (token != null) {
                         header(AUTH_HEADER_NAME, token.withBearer())
                     }

@@ -1,16 +1,16 @@
 package ru.internetcloud.strava.data.profile.network.datasource
 
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
-import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.profile.mapper.ProfileMapper
+import ru.internetcloud.strava.data.profile.network.api.ProfileApi
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
 
-class ProfileRemoteApiDataSourceImpl : ProfileRemoteApiDataSource {
-
-    private val profileMapper = ProfileMapper()
-    private val profileApi = StravaApiFactory.profileApi
+class ProfileRemoteApiDataSourceImpl(
+    private val profileApi: ProfileApi,
+    private val profileMapper: ProfileMapper
+) : ProfileRemoteApiDataSource {
 
     override suspend fun getProfile(): DataResponse<Profile> {
         return try {

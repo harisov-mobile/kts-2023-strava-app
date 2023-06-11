@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
@@ -39,7 +39,7 @@ import ru.internetcloud.strava.presentation.util.addPartWithComma
 
 @Composable
 fun ShowProfileScreen() {
-    val viewModel: ProfileViewModel = viewModel()
+    val viewModel: ProfileViewModel by viewModel()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 

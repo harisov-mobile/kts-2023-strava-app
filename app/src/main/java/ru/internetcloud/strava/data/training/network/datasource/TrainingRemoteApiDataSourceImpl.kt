@@ -1,9 +1,9 @@
 package ru.internetcloud.strava.data.training.network.datasource
 
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
-import ru.internetcloud.strava.data.common.StravaApiFactory
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
+import ru.internetcloud.strava.data.training.network.api.TrainingApi
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.orDefault
@@ -11,14 +11,15 @@ import ru.internetcloud.strava.domain.common.util.toInt
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 
-class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
-
-    private val trainingMapper = TrainingMapper()
-    private val trainingListItemMapper = TrainingListItemMapper()
+class TrainingRemoteApiDataSourceImpl(
+    private val trainingApi: TrainingApi,
+    private val trainingMapper: TrainingMapper,
+    private val trainingListItemMapper: TrainingListItemMapper
+) : TrainingRemoteApiDataSource {
 
     override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
         return try {
-            val networkResponse = StravaApiFactory.trainingApi.getTrainings(page = page)
+            val networkResponse = trainingApi.getTrainings(page = page)
             if (networkResponse.isSuccessful) {
                 val listDTO = networkResponse.body()
                 listDTO?.let { currentListDTO ->
@@ -37,7 +38,7 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
 
     override suspend fun getTraining(id: Long): DataResponse<Training> {
         return try {
-            val networkResponse = StravaApiFactory.trainingApi.getTraining(id = id)
+            val networkResponse = trainingApi.getTraining(id = id)
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
@@ -59,7 +60,7 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
     override suspend fun addTraining(training: Training): DataResponse<Training> {
         return try {
             val newTrainingDTO = trainingMapper.fromDomainToDto(training)
-            val networkResponse = StravaApiFactory.trainingApi.addTraining(
+            val networkResponse = trainingApi.addTraining(
                 name = newTrainingDTO.name,
                 type = newTrainingDTO.type,
                 sportType = newTrainingDTO.sportType,
@@ -92,7 +93,7 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
         return try {
             val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training)
 
-            val networkResponse = StravaApiFactory.trainingApi.updateTraining(
+            val networkResponse = trainingApi.updateTraining(
                 id = trainingUpdateDTO.id,
                 training = trainingUpdateDTO
             )
@@ -116,7 +117,7 @@ class TrainingRemoteApiDataSourceImpl : TrainingRemoteApiDataSource {
 
     override suspend fun deleteTraining(id: Long): DataResponse<Long> {
         return try {
-            val networkResponse = StravaApiFactory.trainingApi.deleteTraining(id = id)
+            val networkResponse = trainingApi.deleteTraining(id = id)
             if (networkResponse.isSuccessful) {
                 DataResponse.Success(
                     data = id,

@@ -9,6 +9,7 @@ buildscript {
         dotsIndicatorVersion = "4.2"
         immutableVersion = "0.3.5"
         fakeDataVersion = "1.0.2"
+        koinVersion = "3.1.5"
         lifecycleComposeVersion = "2.6.1"
         moshiVersion = "1.14.0"
         navVersion = "2.5.3"

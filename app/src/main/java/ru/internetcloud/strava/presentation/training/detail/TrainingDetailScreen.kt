@@ -40,9 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -68,9 +69,10 @@ fun TrainingDetailScreen(
     onBackWithRefresh: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
-    val viewModel: TrainingDetailViewModel = viewModel(
-        factory = TrainingDetailViewModelFactory(id = trainingId)
-    )
+    val viewModel: TrainingDetailViewModel by viewModel {
+        parametersOf(trainingId)
+    }
+
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 

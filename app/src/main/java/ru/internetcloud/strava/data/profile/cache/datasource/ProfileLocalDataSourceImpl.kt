@@ -1,11 +1,11 @@
 package ru.internetcloud.strava.data.profile.cache.datasource
 
-import ru.internetcloud.strava.data.common.database.AppDatabaseHolder
+import ru.internetcloud.strava.data.common.database.AppDao
 import ru.internetcloud.strava.data.profile.cache.model.LocalProfile
 
-class ProfileLocalDataSourceImpl : ProfileLocalDataSource {
-
-    private val appDao = AppDatabaseHolder.appDao // потом будет dependecy injecton вместо этой переменной
+class ProfileLocalDataSourceImpl(
+    private val appDao: AppDao
+) : ProfileLocalDataSource {
 
     override suspend fun getProfile(): LocalProfile? {
         return appDao.getProfile()

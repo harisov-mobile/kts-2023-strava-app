@@ -6,16 +6,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 
-class ProfileViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-
-    private val profileRepository = ProfileRepositoryImpl()
-    private val getProfileUseCase = GetProfileUseCase(profileRepository)
+class ProfileViewModel(
+    private val getProfileUseCase: GetProfileUseCase,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val initialState = savedStateHandle.get<UiState<Profile>>(KEY_PROFILE_STATE) ?: UiState.Loading
 

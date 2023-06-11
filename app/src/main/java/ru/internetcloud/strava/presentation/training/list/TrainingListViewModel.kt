@@ -6,21 +6,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.profile.repository.ProfileRepositoryImpl
-import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTrainingList
 import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingsUseCase
 import ru.internetcloud.strava.presentation.util.UiState
 
-class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-
-    private val trainingRepository = TrainingRepositoryImpl()
-    private val getTrainingsUseCase = GetTrainingsUseCase(trainingRepository)
-
-    private val profileRepository = ProfileRepositoryImpl()
-    private val getProfileUseCase = GetProfileUseCase(profileRepository)
+class TrainingListViewModel(
+    private val getTrainingsUseCase: GetTrainingsUseCase,
+    private val getProfileUseCase: GetProfileUseCase,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val initialState =
         savedStateHandle.get<UiState<ProfileWithTrainingList>>(KEY_TRAINING_LIST_STATE) ?: UiState.Loading

@@ -130,4 +130,9 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+
+    // Koin
+    implementation "io.insert-koin:koin-core:$koinVersion"
+    implementation "io.insert-koin:koin-android:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
 }
