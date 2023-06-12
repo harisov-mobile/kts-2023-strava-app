@@ -13,11 +13,15 @@ val mapperModule = module {
     }
 
     factory {
-        TrainingMapper()
+        TrainingMapper(
+            dateConverter = get()
+        )
     }
 
     factory {
-        TrainingListItemMapper()
+        TrainingListItemMapper(
+            dateConverter = get()
+        )
     }
 
     factory {

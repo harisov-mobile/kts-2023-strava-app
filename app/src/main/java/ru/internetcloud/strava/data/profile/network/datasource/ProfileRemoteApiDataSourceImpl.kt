@@ -9,7 +9,8 @@ import ru.internetcloud.strava.domain.profile.model.Profile
 
 class ProfileRemoteApiDataSourceImpl(
     private val profileApi: ProfileApi,
-    private val profileMapper: ProfileMapper
+    private val profileMapper: ProfileMapper,
+    private val errorMessageConverter: ErrorMessageConverter
 ) : ProfileRemoteApiDataSource {
 
     override suspend fun getProfile(): DataResponse<Profile> {
@@ -24,10 +25,10 @@ class ProfileRemoteApiDataSourceImpl(
                     DataResponse.Error(exception = IllegalStateException("No profile found"))
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 }

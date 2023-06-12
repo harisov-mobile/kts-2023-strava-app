@@ -14,7 +14,8 @@ import ru.internetcloud.strava.domain.token.TokenRepository
 class LogoutRepositoryImpl(
     private val logoutApi: LogoutApi,
     private val logoutMapper: LogoutMapper,
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val errorMessageConverter: ErrorMessageConverter
 ) : LogoutRepository {
 
     override suspend fun logout(): DataResponse<LogoutAnswer> {
@@ -31,10 +32,10 @@ class LogoutRepositoryImpl(
                     DataResponse.Error(exception = IllegalStateException("No logout answer found"))
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 

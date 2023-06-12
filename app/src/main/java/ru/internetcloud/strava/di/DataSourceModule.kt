@@ -17,7 +17,11 @@ val dataSourceModule = module {
     }
 
     single<ProfileRemoteApiDataSource> {
-        ProfileRemoteApiDataSourceImpl(profileApi = get(), profileMapper = get())
+        ProfileRemoteApiDataSourceImpl(
+            profileApi = get(),
+            profileMapper = get(),
+            errorMessageConverter = get()
+        )
     }
 
     single<TrainingLocalDataSource> {
@@ -28,7 +32,8 @@ val dataSourceModule = module {
         TrainingRemoteApiDataSourceImpl(
             trainingApi = get(),
             trainingMapper = get(),
-            trainingListItemMapper = get()
+            trainingListItemMapper = get(),
+            errorMessageConverter = get()
         )
     }
 }

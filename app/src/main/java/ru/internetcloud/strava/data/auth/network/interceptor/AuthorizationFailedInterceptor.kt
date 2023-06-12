@@ -13,7 +13,9 @@ import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 
 class AuthorizationFailedInterceptor(
     private val authorizationService: AuthorizationService,
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val appAuth: AppAuth,
+    private val unauthorizedHandler: UnauthorizedHandler
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -40,10 +42,10 @@ class AuthorizationFailedInterceptor(
         val tokenRefreshed = runBlocking {
             runCatching {
                 withContext(Dispatchers.IO) {
-                    val refreshRequest = AppAuth.getRefreshTokenRequest(
+                    val refreshRequest = appAuth.getRefreshTokenRequest(
                         tokenRepository.getTokenData().refreshToken.orEmpty()
                     )
-                    AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                    appAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
                 }
             }
                 .getOrNull()
@@ -58,7 +60,7 @@ class AuthorizationFailedInterceptor(
         if (!tokenRefreshed) {
             // не удалось обновить токен, произвести логаут
             runBlocking {
-                UnauthorizedHandler.onUnauthorized()
+                unauthorizedHandler.onUnauthorized()
             }
         }
         return tokenRefreshed

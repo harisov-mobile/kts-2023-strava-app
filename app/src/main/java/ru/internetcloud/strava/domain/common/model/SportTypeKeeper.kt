@@ -1,6 +1,6 @@
 package ru.internetcloud.strava.domain.common.model
 
-object SportTypeKeeper {
+class SportTypeKeeper {
     fun getSportTypes(): List<String> {
         return listOf(
             "AlpineSki", "BackcountrySki", "Badminton", "Canoeing", "Crossfit", "EBikeRide",

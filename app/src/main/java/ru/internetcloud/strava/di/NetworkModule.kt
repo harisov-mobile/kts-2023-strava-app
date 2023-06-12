@@ -8,12 +8,14 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import ru.internetcloud.strava.data.auth.network.AppAuth
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationFailedInterceptor
 import ru.internetcloud.strava.data.auth.network.interceptor.AuthorizationInterceptor
 import ru.internetcloud.strava.data.logout.network.api.LogoutApi
 import ru.internetcloud.strava.data.profile.network.api.ProfileApi
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
 import ru.internetcloud.strava.domain.token.TokenRepository
+import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 
 val networkModule = module {
 
@@ -21,14 +23,18 @@ val networkModule = module {
 
     fun provideHttpClient(
         authorizationService: AuthorizationService,
-        tokenRepository: TokenRepository
+        tokenRepository: TokenRepository,
+        appAuth: AppAuth,
+        unauthorizedHandler: UnauthorizedHandler
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
             .addInterceptor(AuthorizationInterceptor(tokenRepository = tokenRepository))
             .addInterceptor(
                 AuthorizationFailedInterceptor(
                     authorizationService = authorizationService,
-                    tokenRepository = tokenRepository
+                    tokenRepository = tokenRepository,
+                    appAuth = appAuth,
+                    unauthorizedHandler = unauthorizedHandler
                 )
             )
 
@@ -69,7 +75,9 @@ val networkModule = module {
     single {
         provideHttpClient(
             authorizationService = get(),
-            tokenRepository = get()
+            tokenRepository = get(),
+            appAuth = get(),
+            unauthorizedHandler = get()
         )
     }
 

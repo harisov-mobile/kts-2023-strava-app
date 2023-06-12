@@ -7,18 +7,19 @@ import ru.internetcloud.strava.domain.token.TokenRepository
 import ru.internetcloud.strava.domain.token.model.TokensModel
 
 class AuthRepositoryImpl(
-    private val tokenRepository: TokenRepository
+    private val tokenRepository: TokenRepository,
+    private val appAuth: AppAuth
 ) : AuthRepository {
 
     override fun getAuthRequest(): AuthorizationRequest {
-        return AppAuth.getAuthRequest()
+        return appAuth.getAuthRequest()
     }
 
     override suspend fun performTokenRequest(
         authService: AuthorizationService,
         tokenRequest: TokenRequest
     ) {
-        val tokens = AppAuth.performTokenRequestSuspend(authService, tokenRequest)
+        val tokens = appAuth.performTokenRequestSuspend(authService, tokenRequest)
         // обмен кода на токен произошел успешно, сохраняем токены и завершаем авторизацию
         tokenRepository.saveTokenData(
             TokensModel(

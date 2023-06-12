@@ -27,6 +27,7 @@ val viewModelModule = module {
             getTrainingUseCase = get(),
             updateTrainingUseCase = get(),
             addTrainingUseCase = get(),
+            dateConverter = get(),
             savedStateHandle = get()
         )
     }
@@ -61,7 +62,9 @@ val viewModelModule = module {
             app = get(),
             keyMessage = params.get(),
             getInternetStatusUseCase = get(),
-            logoutUseCase = get()
+            logoutUseCase = get(),
+            unauthorizedHandler = get(),
+            logoutClickHelper = get()
         )
     }
 

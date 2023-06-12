@@ -26,6 +26,7 @@ class TrainingEditViewModel(
     private val getTrainingUseCase: GetTrainingUseCase,
     private val updateTrainingUseCase: UpdateTrainingUseCase,
     private val addTrainingUseCase: AddTrainingUseCase,
+    private val dateConverter: DateConverter,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -115,7 +116,7 @@ class TrainingEditViewModel(
                     val minute = calendar[Calendar.MINUTE]
                     setScreenState(
                         oldTraining.copy(
-                            startDate = DateConverter.getDate(
+                            startDate = dateConverter.getDate(
                                 editTrainingEvent.year,
                                 editTrainingEvent.month,
                                 editTrainingEvent.day,
@@ -134,7 +135,7 @@ class TrainingEditViewModel(
                     val day = calendar[Calendar.DAY_OF_MONTH]
                     setScreenState(
                         oldTraining.copy(
-                            startDate = DateConverter.getDate(
+                            startDate = dateConverter.getDate(
                                 year,
                                 month,
                                 day,

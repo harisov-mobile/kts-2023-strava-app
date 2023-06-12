@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.inject
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
@@ -207,6 +208,8 @@ private fun ShowTraining(
     training: Training,
     source: Source
 ) {
+    val dateConverter: DateConverter by inject()
+
     Column {
         ShowSource(source)
         Column(
@@ -233,7 +236,7 @@ private fun ShowTraining(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = DateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

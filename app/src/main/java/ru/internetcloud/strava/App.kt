@@ -3,7 +3,6 @@ package ru.internetcloud.strava
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.di.commonModule
 import ru.internetcloud.strava.di.dataSourceModule
 import ru.internetcloud.strava.di.databaseModule
@@ -18,8 +17,6 @@ import timber.log.Timber
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-
-        ErrorMessageConverter.init(this)
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

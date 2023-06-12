@@ -5,16 +5,16 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-object DateConverter {
+class DateConverter {
 
-    private const val ERROR_DATE = "0001-01-01T00:00:00Z"
-    private const val OUTPUT_DATE_TIME_FORMAT_WITH_GMT = "dd.MM.yyyy HH:mm:ss aaa z"
-    private const val EMPTY_STRING_VALUE = ""
+    private val ERROR_DATE = "0001-01-01T00:00:00Z"
+    private val OUTPUT_DATE_TIME_FORMAT_WITH_GMT = "dd.MM.yyyy HH:mm:ss aaa z"
+    private val EMPTY_STRING_VALUE = ""
 
-    private const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
-    private const val DATE_TIME_FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    private const val DATE_FORMAT = "dd.MM.yyyy"
-    private const val TIME_FORMAT = "HH : mm"
+    private val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    private val DATE_TIME_FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    private val DATE_FORMAT = "dd.MM.yyyy"
+    private val TIME_FORMAT = "HH : mm"
 
     @SuppressLint("SimpleDateFormat")
     private val dateTimeSdf = SimpleDateFormat(DATE_TIME_FORMAT)

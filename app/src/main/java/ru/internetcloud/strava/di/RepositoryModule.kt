@@ -55,13 +55,15 @@ val repositoryModule = module {
         LogoutRepositoryImpl(
             logoutApi = get(),
             logoutMapper = get(),
-            tokenRepository = get()
+            tokenRepository = get(),
+            errorMessageConverter = get()
         )
     }
 
     single<AuthRepository> {
         AuthRepositoryImpl(
-            tokenRepository = get()
+            tokenRepository = get(),
+            appAuth = get()
         )
     }
 }

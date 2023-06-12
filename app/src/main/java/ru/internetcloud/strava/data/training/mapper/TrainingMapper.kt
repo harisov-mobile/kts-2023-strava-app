@@ -7,8 +7,9 @@ import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.orDefault
 import ru.internetcloud.strava.domain.training.model.Training
 
-class TrainingMapper {
-
+class TrainingMapper(
+    private val dateConverter: DateConverter
+) {
     fun fromDtoToDomain(trainingDTO: TrainingDTO): Training {
         return Training(
             id = trainingDTO.id,
@@ -18,7 +19,7 @@ class TrainingMapper {
             elapsedTime = trainingDTO.elapsedTime,
             type = trainingDTO.type,
             sportType = trainingDTO.sportType,
-            startDate = DateConverter.fromStringInIso8601ToDate(trainingDTO.startDate),
+            startDate = dateConverter.fromStringInIso8601ToDate(trainingDTO.startDate),
             description = trainingDTO.description.orEmpty(),
             trainer = trainingDTO.trainer.orDefault(),
             commute = trainingDTO.commute.orDefault()
@@ -64,7 +65,7 @@ class TrainingMapper {
             distance = training.distance,
             movingTime = training.movingTime,
             type = training.type,
-            startDate = DateConverter.getDateISO8601String(training.startDate),
+            startDate = dateConverter.getDateISO8601String(training.startDate),
             description = training.description,
             elapsedTime = training.elapsedTime,
             sportType = training.sportType,
@@ -81,7 +82,7 @@ class TrainingMapper {
             sportType = training.sportType,
             trainer = training.trainer,
             commute = training.commute,
-            startDate = DateConverter.getDateISO8601String(training.startDate),
+            startDate = dateConverter.getDateISO8601String(training.startDate),
             elapsedTime = training.elapsedTime,
             distance = training.distance
         )

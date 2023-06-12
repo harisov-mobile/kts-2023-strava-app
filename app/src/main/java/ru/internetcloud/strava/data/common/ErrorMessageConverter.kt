@@ -6,14 +6,9 @@ import java.net.UnknownHostException
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.presentation.util.addLine
 
-object ErrorMessageConverter {
-
-    private lateinit var applicaton: Application
-
-    fun init(applicaton: Application) {
-        this.applicaton = applicaton
-    }
-
+class ErrorMessageConverter(
+    private var applicaton: Application
+) {
     fun getMessageToException(exception: Exception): String {
         return if (exception is SocketTimeoutException || exception is UnknownHostException) {
             applicaton.getString(R.string.no_internet_connection).addLine(exception.message.toString())

@@ -21,14 +21,16 @@ class MainScreenViewModel(
     private val app: Application,
     private val keyMessage: String,
     private val getInternetStatusUseCase: GetInternetStatusUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
+    private val unauthorizedHandler: UnauthorizedHandler,
+    private val logoutClickHelper: LogoutClickHelper
 ) : ViewModel() {
 
     val internetConnectionAvailable: Flow<Boolean>
         get() = fetchInternetChange()
 
     private val onLogoutClickFlow: Flow<Unit>
-        get() = LogoutClickHelper.logoutClickEventChannel.receiveAsFlow()
+        get() = logoutClickHelper.logoutClickEventChannel.receiveAsFlow()
 
     private val _showLogoutDialog = MutableStateFlow(false)
     val showLogoutDialog = _showLogoutDialog.asStateFlow()
@@ -38,7 +40,7 @@ class MainScreenViewModel(
         get() = screenEventChannel.receiveAsFlow()
 
     private val onUnauthorizedEventFlow: Flow<Unit>
-        get() = UnauthorizedHandler.unauthorizedEventChannel.receiveAsFlow()
+        get() = unauthorizedHandler.unauthorizedEventChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {

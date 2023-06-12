@@ -8,14 +8,13 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
-import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
 import ru.internetcloud.strava.BuildConfig
 import ru.internetcloud.strava.domain.token.model.TokensModel
 
-object AppAuth {
+class AppAuth {
 
     private val serviceConfiguration = AuthorizationServiceConfiguration(
         Uri.parse(AuthConfig.AUTH_URI),
@@ -74,12 +73,6 @@ object AppAuth {
 
     private fun getClientAuthentication(): ClientAuthentication {
         return ClientSecretPost(BuildConfig.CLIENT_SECRET)
-    }
-
-    fun getEndSessionRequest(): EndSessionRequest {
-        return EndSessionRequest.Builder(serviceConfiguration)
-            .setPostLogoutRedirectUri(AuthConfig.LOGOUT_CALLBACK_URL.toUri())
-            .build()
     }
 
     private object AuthConfig {

@@ -14,7 +14,8 @@ import ru.internetcloud.strava.domain.training.model.TrainingListItem
 class TrainingRemoteApiDataSourceImpl(
     private val trainingApi: TrainingApi,
     private val trainingMapper: TrainingMapper,
-    private val trainingListItemMapper: TrainingListItemMapper
+    private val trainingListItemMapper: TrainingListItemMapper,
+    private val errorMessageConverter: ErrorMessageConverter
 ) : TrainingRemoteApiDataSource {
 
     override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
@@ -29,10 +30,10 @@ class TrainingRemoteApiDataSourceImpl(
                     DataResponse.Success(emptyList(), source = Source.RemoteApi)
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 
@@ -50,10 +51,10 @@ class TrainingRemoteApiDataSourceImpl(
                     DataResponse.Error(exception = IllegalStateException("No training found with id = $id"))
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 
@@ -82,10 +83,10 @@ class TrainingRemoteApiDataSourceImpl(
                     DataResponse.Error(exception = IllegalStateException("An error occurred while adding a training."))
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 
@@ -108,10 +109,10 @@ class TrainingRemoteApiDataSourceImpl(
                     DataResponse.Error(exception = IllegalStateException("An error occurred while adding a training."))
                 }
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 
@@ -124,10 +125,10 @@ class TrainingRemoteApiDataSourceImpl(
                     source = Source.RemoteApi
                 )
             } else {
-                DataResponse.Error(Exception(ErrorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
             }
         } catch (e: Exception) {
-            DataResponse.Error(Exception(ErrorMessageConverter.getMessageToException(e)))
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
 }
