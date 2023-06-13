@@ -57,17 +57,23 @@ fun ShowProfileScreen() {
                         onTryAgainClick = viewModel::fetchProfile
                     )
                 }
+
                 UiState.Loading -> {
                     ShowLoadingData()
                 }
+
                 is UiState.Success -> {
                     ShowProfile(
                         profile = state.data,
                         source = state.source
                     )
                 }
+
                 UiState.EmptyData -> {
-                    ShowEmptyData(message = stringResource(id = R.string.no_data))
+                    ShowEmptyData(
+                        message = stringResource(id = R.string.no_data),
+                        onRefreshClick = viewModel::fetchProfile
+                    )
                 }
             }
         }

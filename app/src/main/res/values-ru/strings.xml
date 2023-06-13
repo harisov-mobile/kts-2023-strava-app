@@ -34,6 +34,7 @@
     <string name="try_again_button">Повторить попытку</string>
     <string name="training_list_is_empty">Нет ни одной тренировки</string>
     <string name="no_data">Нет данных</string>
+    <string name="refresh_button">Обновить</string>
 
     <string name="profile_following">Подписки</string>
     <string name="profile_followers">Подписчики</string>

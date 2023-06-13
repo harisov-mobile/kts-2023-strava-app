@@ -84,9 +84,7 @@ fun ShowTrainingListScreen(
                             .addLine(
                                 state.exception.message.toString()
                             ),
-                        onTryAgainClick = {
-                            viewModel.fetchTrainings()
-                        }
+                        onTryAgainClick = viewModel::fetchTrainings
                     )
                 }
 
@@ -105,7 +103,10 @@ fun ShowTrainingListScreen(
                 }
 
                 UiState.EmptyData -> {
-                    ShowEmptyData(message = stringResource(id = R.string.training_list_is_empty))
+                    ShowEmptyData(
+                        message = stringResource(id = R.string.training_list_is_empty),
+                        onRefreshClick = viewModel::fetchTrainings
+                    )
                 }
             }
         }

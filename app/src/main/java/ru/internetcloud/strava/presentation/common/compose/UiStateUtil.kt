@@ -8,6 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -44,7 +45,7 @@ fun ShowError(
     ) {
         Text(text = message)
         Button(
-            onClick = { onTryAgainClick() }
+            onClick = remember {{ onTryAgainClick() }}
         ) {
             Text(text = stringResource(id = R.string.try_again_button))
         }
@@ -54,7 +55,8 @@ fun ShowError(
 @Composable
 fun ShowEmptyData(
     modifier: Modifier = Modifier,
-    message: String
+    message: String,
+    onRefreshClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -64,5 +66,10 @@ fun ShowEmptyData(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = message)
+        Button(
+            onClick = remember {{ onRefreshClick() }}
+        ) {
+            Text(text = stringResource(id = R.string.refresh_button))
+        }
     }
 }

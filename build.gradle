@@ -11,6 +11,7 @@ buildscript {
         fakeDataVersion = "1.0.2"
         koinVersion = "3.1.5"
         lifecycleComposeVersion = "2.6.1"
+        mviVersion = "3.0.2"
         moshiVersion = "1.14.0"
         navVersion = "2.5.3"
         okhttpVersion = "4.9.3"

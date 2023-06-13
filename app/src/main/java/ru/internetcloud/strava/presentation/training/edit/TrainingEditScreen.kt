@@ -182,7 +182,14 @@ fun TrainingEditScreen(
                 }
 
                 is UiState.EmptyData -> {
-                    ShowEmptyData(message = stringResource(id = R.string.no_data))
+                    ShowEmptyData(
+                        message = stringResource(id = R.string.no_data),
+                        onRefreshClick = remember {
+                            {
+                                viewModel.fetchTraining(id = trainingId)
+                            }
+                        }
+                    )
                 }
             }
         }

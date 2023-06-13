@@ -33,6 +33,7 @@
     <string name="try_again_button">Try again</string>
     <string name="training_list_is_empty">There are no activities yet</string>
     <string name="no_data">No data</string>
+    <string name="refresh_button">Refresh</string>
 
     <string name="profile_following">Following</string>
     <string name="profile_followers">Followers</string>
