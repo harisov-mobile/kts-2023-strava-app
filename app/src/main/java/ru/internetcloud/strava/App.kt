@@ -10,6 +10,7 @@ import ru.internetcloud.strava.di.mapperModule
 import ru.internetcloud.strava.di.networkModule
 import ru.internetcloud.strava.di.repositoryModule
 import ru.internetcloud.strava.di.storageModule
+import ru.internetcloud.strava.di.storeModule
 import ru.internetcloud.strava.di.useCaseModule
 import ru.internetcloud.strava.di.viewModelModule
 import timber.log.Timber
@@ -36,6 +37,7 @@ class App : Application() {
                 dataSourceModule,
                 repositoryModule,
                 useCaseModule,
+                storeModule,
                 viewModelModule,
                 commonModule
             )

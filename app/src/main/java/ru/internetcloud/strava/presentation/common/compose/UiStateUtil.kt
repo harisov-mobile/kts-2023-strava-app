@@ -45,7 +45,7 @@ fun ShowError(
     ) {
         Text(text = message)
         Button(
-            onClick = remember {{ onTryAgainClick() }}
+            onClick = remember { { onTryAgainClick() } }
         ) {
             Text(text = stringResource(id = R.string.try_again_button))
         }
@@ -67,7 +67,7 @@ fun ShowEmptyData(
     ) {
         Text(text = message)
         Button(
-            onClick = remember {{ onRefreshClick() }}
+            onClick = remember { { onRefreshClick() } }
         ) {
             Text(text = stringResource(id = R.string.refresh_button))
         }

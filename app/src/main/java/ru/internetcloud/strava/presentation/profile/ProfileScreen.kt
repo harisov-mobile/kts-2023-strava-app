@@ -28,17 +28,16 @@ import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.model.Profile
-import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
-import ru.internetcloud.strava.presentation.util.UiState
+import ru.internetcloud.strava.presentation.profile.model.UiProfileState
 import ru.internetcloud.strava.presentation.util.addLine
 import ru.internetcloud.strava.presentation.util.addPartWithComma
 
 @Composable
-fun ShowProfileScreen() {
+fun ProfileScreen() {
     val viewModel: ProfileViewModel by viewModel()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
@@ -50,7 +49,7 @@ fun ShowProfileScreen() {
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
             when (state) {
-                is UiState.Error -> {
+                is UiProfileState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(state.exception.message.toString()),
@@ -58,21 +57,14 @@ fun ShowProfileScreen() {
                     )
                 }
 
-                UiState.Loading -> {
+                UiProfileState.Loading -> {
                     ShowLoadingData()
                 }
 
-                is UiState.Success -> {
+                is UiProfileState.Success -> {
                     ShowProfile(
-                        profile = state.data,
+                        profile = state.profile,
                         source = state.source
-                    )
-                }
-
-                UiState.EmptyData -> {
-                    ShowEmptyData(
-                        message = stringResource(id = R.string.no_data),
-                        onRefreshClick = viewModel::fetchProfile
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package ru.internetcloud.strava.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import ru.internetcloud.strava.presentation.auth.AuthViewModel
 import ru.internetcloud.strava.presentation.main.MainScreenViewModel
@@ -52,12 +53,13 @@ val viewModelModule = module {
 
     viewModel {
         ProfileViewModel(
-            getProfileUseCase = get(),
+            store = get(),
+            stateMapper = get(named("UiProfileStateMapper")),
             savedStateHandle = get()
         )
     }
 
-    viewModel {params ->
+    viewModel { params ->
         MainScreenViewModel(
             app = get(),
             keyMessage = params.get(),

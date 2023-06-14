@@ -34,7 +34,7 @@ import ru.internetcloud.strava.presentation.main.MainScreenViewModel
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
-import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
+import ru.internetcloud.strava.presentation.profile.ProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
@@ -187,7 +187,7 @@ fun MainScreen(
                 ShowGroupsScreen()
             },
             youScreenContent = {
-                ShowProfileScreen()
+                ProfileScreen()
             }
         )
     }

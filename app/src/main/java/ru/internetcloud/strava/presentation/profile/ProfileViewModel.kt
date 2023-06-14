@@ -2,42 +2,47 @@ package ru.internetcloud.strava.presentation.profile
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.arkivanov.mvikotlin.core.binder.Binder
+import com.arkivanov.mvikotlin.extensions.coroutines.bind
+import com.arkivanov.mvikotlin.extensions.coroutines.states
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import ru.internetcloud.strava.domain.common.model.DataResponse
-import ru.internetcloud.strava.domain.profile.model.Profile
-import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
-import ru.internetcloud.strava.presentation.util.UiState
+import kotlinx.coroutines.flow.map
+import ru.internetcloud.strava.domain.common.mapper.Mapper
+import ru.internetcloud.strava.domain.profile.mvi.api.ProfileStore
+import ru.internetcloud.strava.presentation.profile.model.UiProfileState
 
 class ProfileViewModel(
-    private val getProfileUseCase: GetProfileUseCase,
+    private val store: ProfileStore,
+    private val stateMapper: Mapper<ProfileStore.State, UiProfileState>,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val initialState = savedStateHandle.get<UiState<Profile>>(KEY_PROFILE_STATE) ?: UiState.Loading
+    private val initialState = savedStateHandle.get<UiProfileState>(KEY_PROFILE_STATE) ?: UiProfileState.Loading
 
     private val _screenState = MutableStateFlow(initialState)
     val screenState = _screenState.asStateFlow()
 
+    private val binder: Binder
     init {
+        binder = bind(Dispatchers.Main.immediate) {
+            store.states.map(stateMapper::map) bindTo (::acceptState)
+        }
+        binder.start()
         fetchProfile()
     }
 
-    fun fetchProfile() {
-        viewModelScope.launch {
-            _screenState.value = UiState.Loading
+    fun fetchProfile() = store.accept(ProfileStore.Intent.Load)
 
-            when (val dataResponse = getProfileUseCase.getProfile()) {
-                is DataResponse.Success -> {
-                    _screenState.value = UiState.Success(data = dataResponse.data, source = dataResponse.source)
-                }
-                is DataResponse.Error -> {
-                    _screenState.value = UiState.Error(exception = dataResponse.exception)
-                }
-            }
-        }
+    private fun acceptState(state: UiProfileState) {
+        _screenState.value = state
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        binder.stop()
+        store.dispose()
     }
 
     companion object {
