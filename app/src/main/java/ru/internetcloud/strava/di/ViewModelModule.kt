@@ -36,9 +36,9 @@ val viewModelModule = module {
     viewModel { params ->
         TrainingDetailViewModel(
             id = params.get(),
-            getTrainingUseCase = get(),
-            deleteTrainingUseCase = get(),
-            getProfileUseCase = get(),
+            store = get(),
+            stateMapper = get(named("UiTrainingDetailStateMapper")),
+            eventMapper = get(named("UiTrainingDetailEventMapper")),
             savedStateHandle = get()
         )
     }

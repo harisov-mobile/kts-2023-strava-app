@@ -8,6 +8,8 @@ import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import org.koin.dsl.module
 import ru.internetcloud.strava.domain.profile.mvi.api.ProfileStore
 import ru.internetcloud.strava.domain.profile.mvi.impl.ProfileStoreFactory
+import ru.internetcloud.strava.domain.training.mvi.api.TrainingDetailStore
+import ru.internetcloud.strava.domain.training.mvi.impl.TrainingDetailStoreFactory
 
 val storeModule = module {
 
@@ -24,6 +26,15 @@ val storeModule = module {
         ProfileStoreFactory(
             storeFactory = get(),
             getProfileUseCase = get()
+        ).create()
+    }
+
+    factory<TrainingDetailStore> {
+        TrainingDetailStoreFactory(
+            storeFactory = get(),
+            getProfileUseCase = get(),
+            getTrainingUseCase = get(),
+            deleteTrainingUseCase = get()
         ).create()
     }
 }
