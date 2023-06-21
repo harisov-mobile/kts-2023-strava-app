@@ -18,7 +18,7 @@ object TokenSharedPreferencesStorage {
         tokenSharedPrefs = applicaton.getSharedPreferences(TOKEN_SHARED_PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    fun getTokenData(): TokensModel {
+    suspend fun getTokenData(): TokensModel {
         return TokensModel(
             accessToken = tokenSharedPrefs.getString(KEY_ACCESS_TOKEN, null),
             refreshToken = tokenSharedPrefs.getString(KEY_REFRESH_TOKEN, null),
@@ -26,19 +26,19 @@ object TokenSharedPreferencesStorage {
         )
     }
 
-    fun saveTokenData(tokensModel: TokensModel) {
+    suspend fun saveTokenData(tokensModel: TokensModel) {
         tokenSharedPrefs.edit().putString(KEY_ACCESS_TOKEN, tokensModel.accessToken).apply()
         tokenSharedPrefs.edit().putString(KEY_REFRESH_TOKEN, tokensModel.refreshToken).apply()
         tokenSharedPrefs.edit().putString(KEY_ID_TOKEN, tokensModel.idToken).apply()
     }
 
-    fun clearTokenData() {
+    suspend fun clearTokenData() {
         tokenSharedPrefs.edit().putString(KEY_ACCESS_TOKEN, null).apply()
         tokenSharedPrefs.edit().putString(KEY_REFRESH_TOKEN, null).apply()
         tokenSharedPrefs.edit().putString(KEY_ID_TOKEN, null).apply()
     }
 
-    fun isAuthorized(): Boolean {
+    suspend fun isAuthorized(): Boolean {
         return !getTokenData().accessToken.isNullOrEmpty()
     }
 }

@@ -5,11 +5,11 @@ import ru.internetcloud.strava.domain.firstlaunch.FirstLaunchRepository
 
 class FirstLaunchRepositoryImpl : FirstLaunchRepository {
 
-    override fun isFirstLaunch(): Boolean {
+    override suspend fun isFirstLaunch(): Boolean {
         return FirstLaunchSharedPreferencesStorage.isFirstLaunch()
     }
 
-    override fun setFirstLaunchToFalse() {
+    override suspend fun setFirstLaunchToFalse() {
         FirstLaunchSharedPreferencesStorage.setFirstLaunchToFalse()
     }
 }

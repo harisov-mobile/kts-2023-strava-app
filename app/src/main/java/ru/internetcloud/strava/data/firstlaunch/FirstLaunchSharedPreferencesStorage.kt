@@ -15,9 +15,9 @@ object FirstLaunchSharedPreferencesStorage {
         firstLaunchSharedPrefs = applicaton.getSharedPreferences(FIRST_LAUNCH_SHARED_PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    fun isFirstLaunch(): Boolean = firstLaunchSharedPrefs.getBoolean(KEY_FIRST_LAUNCH, true)
+    suspend fun isFirstLaunch(): Boolean = firstLaunchSharedPrefs.getBoolean(KEY_FIRST_LAUNCH, true)
 
-    fun setFirstLaunchToFalse() {
+    suspend fun setFirstLaunchToFalse() {
         firstLaunchSharedPrefs.edit().putBoolean(KEY_FIRST_LAUNCH, false).apply()
     }
 }

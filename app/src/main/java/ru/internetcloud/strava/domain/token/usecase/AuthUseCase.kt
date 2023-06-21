@@ -4,7 +4,7 @@ import ru.internetcloud.strava.domain.token.TokenRepository
 
 class AuthUseCase(private val tokenRepository: TokenRepository) {
 
-    fun isAuthorized(): Boolean {
+    suspend fun isAuthorized(): Boolean {
         return tokenRepository.isAuthorized()
     }
 }

@@ -4,7 +4,7 @@ import ru.internetcloud.strava.domain.firstlaunch.FirstLaunchRepository
 
 class SetFirstLaunchUseCase(private val firstLaunchRepository: FirstLaunchRepository) {
 
-    fun setFirstLaunchToFalse() {
+    suspend fun setFirstLaunchToFalse() {
         return firstLaunchRepository.setFirstLaunchToFalse()
     }
 }

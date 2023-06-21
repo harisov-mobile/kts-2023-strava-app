@@ -2,5 +2,5 @@ package ru.internetcloud.strava.domain.token
 
 interface TokenRepository {
 
-    fun isAuthorized(): Boolean
+    suspend fun isAuthorized(): Boolean
 }

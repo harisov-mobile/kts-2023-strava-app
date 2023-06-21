@@ -1,7 +1,9 @@
 package ru.internetcloud.strava.data.auth.network.interceptor
 
 import java.net.HttpURLConnection
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.openid.appauth.AuthorizationService
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -36,14 +38,18 @@ class AuthorizationFailedInterceptor(
     private fun refreshToken(): Boolean {
         val tokenRefreshed = runBlocking {
             runCatching {
-                val refreshRequest = AppAuth.getRefreshTokenRequest(
-                    TokenSharedPreferencesStorage.getTokenData().refreshToken.orEmpty()
-                )
-                AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                withContext(Dispatchers.IO) {
+                    val refreshRequest = AppAuth.getRefreshTokenRequest(
+                        TokenSharedPreferencesStorage.getTokenData().refreshToken.orEmpty()
+                    )
+                    AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                }
             }
                 .getOrNull()
                 ?.let { tokens ->
-                    TokenSharedPreferencesStorage.saveTokenData(tokens)
+                    withContext(Dispatchers.IO) {
+                        TokenSharedPreferencesStorage.saveTokenData(tokens)
+                    }
                     true
                 } ?: false
         }

@@ -5,7 +5,7 @@ import ru.internetcloud.strava.domain.token.TokenRepository
 
 class TokenRepositoryImpl : TokenRepository {
 
-    override fun isAuthorized(): Boolean {
+    override suspend fun isAuthorized(): Boolean {
         return TokenSharedPreferencesStorage.isAuthorized()
     }
 }

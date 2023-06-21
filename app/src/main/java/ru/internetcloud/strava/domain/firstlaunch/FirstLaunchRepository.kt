@@ -2,7 +2,7 @@ package ru.internetcloud.strava.domain.firstlaunch
 
 interface FirstLaunchRepository {
 
-    fun isFirstLaunch(): Boolean
+    suspend fun isFirstLaunch(): Boolean
 
-    fun setFirstLaunchToFalse()
+    suspend fun setFirstLaunchToFalse()
 }

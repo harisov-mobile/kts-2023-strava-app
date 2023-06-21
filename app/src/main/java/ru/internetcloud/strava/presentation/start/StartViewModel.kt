@@ -3,10 +3,12 @@ package ru.internetcloud.strava.presentation.start
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.data.firstlaunch.repository.FirstLaunchRepositoryImpl
 import ru.internetcloud.strava.data.token.repository.TokenRepositoryImpl
@@ -29,20 +31,22 @@ class StartViewModel : ViewModel() {
 
     fun getDirectionToNavigate() {
         viewModelScope.launch {
-            directionChannel.trySend(
-                if (getFirstLaunchUseCase.isFirstLaunch()) {
-                    setFirstLaunchUseCase.setFirstLaunchToFalse()
-                    StartFragmentDirections.actionStartFragmentToOnBoardingFragment()
-                } else {
-                    if (authUseCase.isAuthorized()) {
-                        StartFragmentDirections.actionStartFragmentToMainFragment()
+            withContext(Dispatchers.IO) {
+                directionChannel.trySend(
+                    if (getFirstLaunchUseCase.isFirstLaunch()) {
+                        setFirstLaunchUseCase.setFirstLaunchToFalse()
+                        StartFragmentDirections.actionStartFragmentToOnBoardingFragment()
                     } else {
-                        StartFragmentDirections.actionStartFragmentToAuthFragment(
-                            messageResId = R.string.auth_standart_message
-                        )
+                        if (authUseCase.isAuthorized()) {
+                            StartFragmentDirections.actionStartFragmentToMainFragment()
+                        } else {
+                            StartFragmentDirections.actionStartFragmentToAuthFragment(
+                                messageResId = R.string.auth_standart_message
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
