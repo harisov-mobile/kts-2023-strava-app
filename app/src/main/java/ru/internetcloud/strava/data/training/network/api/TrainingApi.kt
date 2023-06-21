@@ -18,7 +18,10 @@ interface TrainingApi {
     @GET("api/v3/activities")
     suspend fun getTrainings(
         @Query(QUERY_PARAM_PAGE)
-        page: Int
+        page: Int,
+
+        @Query(QUERY_PARAM_PER_PAGE)
+        perPage: Int
     ): Response<List<TrainingListItemDTO>>
 
     @GET("api/v3/activities/{id}")
@@ -57,6 +60,7 @@ interface TrainingApi {
 
     companion object {
         private const val QUERY_PARAM_PAGE = "page"
+        private const val QUERY_PARAM_PER_PAGE = "per_page"
         private const val PATH_PARAM_ID = "id"
     }
 }

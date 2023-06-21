@@ -38,7 +38,7 @@ import ru.internetcloud.strava.presentation.profile.ProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
-import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
+import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
 
 private val navItemList = listOf(
     NavigationItem.Home,
@@ -131,11 +131,12 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                ShowTrainingListScreen(
+                // ShowTrainingListScreen(
+                TrainingListScreen(
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
-                    onTrainingClickListener = navigationState::navigateToDetail,
-                    onFABClickListener = navigationState::navigateToDetailAdd
+                    onTrainingClick = navigationState::navigateToDetail,
+                    onFloatingActionButtonClick = navigationState::navigateToDetailAdd
                 )
             },
             trainingDetailScreenContent = { currentTrainingId ->

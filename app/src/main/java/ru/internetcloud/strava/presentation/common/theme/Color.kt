@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.common.compose
+package ru.internetcloud.strava.presentation.common.theme
 
 import androidx.compose.ui.graphics.Color
 

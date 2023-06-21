@@ -96,4 +96,10 @@
     <string name="training_edit_field_distance">дистанция, метры</string>
     <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
     <string name="training_edit_saving_error">Не удалось сохранить тренировку:</string>
+
+    <string name="list_state_error_data_loading">Не удалось загрузить данные</string>
+    <string name="list_state_empty_data">Нет данных</string>
+    <string name="default_error">Loading error</string>
+    <string name="empty_data_message">Нет данных</string>
+
 </resources>

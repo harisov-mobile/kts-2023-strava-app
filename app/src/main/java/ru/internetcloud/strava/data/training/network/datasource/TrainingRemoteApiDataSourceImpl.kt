@@ -4,6 +4,8 @@ import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
+import ru.internetcloud.strava.domain.common.list.mvi.model.ListLoadParams
+import ru.internetcloud.strava.domain.common.list.mvi.model.ListState
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.orDefault
@@ -18,16 +20,22 @@ class TrainingRemoteApiDataSourceImpl(
     private val errorMessageConverter: ErrorMessageConverter
 ) : TrainingRemoteApiDataSource {
 
-    override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
+    override suspend fun getTrainings(params: ListLoadParams<Unit>): DataResponse<ListState<TrainingListItem>> {
         return try {
-            val networkResponse = trainingApi.getTrainings(page = page)
+            val networkResponse = trainingApi.getTrainings(page = params.page, perPage = params.pageSize)
             if (networkResponse.isSuccessful) {
                 val listDTO = networkResponse.body()
                 listDTO?.let { currentListDTO ->
                     val list = trainingListItemMapper.fromListDtoToListDomain(currentListDTO)
-                    DataResponse.Success(list, source = Source.RemoteApi)
+                    DataResponse.Success(
+                        data = ListState(items = list, isLastPage = list.size < params.pageSize),
+                        source = Source.RemoteApi
+                    )
                 } ?: let {
-                    DataResponse.Success(emptyList(), source = Source.RemoteApi)
+                    DataResponse.Success(
+                        data = ListState(items = emptyList(), isLastPage = true),
+                        source = Source.RemoteApi
+                    )
                 }
             } else {
                 DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))

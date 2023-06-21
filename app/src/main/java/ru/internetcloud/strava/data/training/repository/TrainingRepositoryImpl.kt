@@ -4,6 +4,8 @@ import ru.internetcloud.strava.data.training.cache.datasource.TrainingLocalDataS
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
 import ru.internetcloud.strava.data.training.network.datasource.TrainingRemoteApiDataSource
+import ru.internetcloud.strava.domain.common.list.mvi.model.ListLoadParams
+import ru.internetcloud.strava.domain.common.list.mvi.model.ListState
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.training.TrainingRepository
@@ -17,22 +19,37 @@ class TrainingRepositoryImpl(
     private val trainingListItemMapper: TrainingListItemMapper
 ) : TrainingRepository {
 
-    override suspend fun getTrainings(page: Int): DataResponse<List<TrainingListItem>> {
-        var result = trainingRemoteApiDataSource.getTrainings(page)
+    override suspend fun getTrainings(params: ListLoadParams<Unit>): DataResponse<ListState<TrainingListItem>> {
+        val result = trainingRemoteApiDataSource.getTrainings(params)
 
         if (result is DataResponse.Success) {
-            trainingLocalDataSource.deleteAllTrainingListItems()
-            trainingLocalDataSource.deleteAllTrainings()
+            if (params.page == 1) {
+                // при загрузке первой страницы надо очищать полностью данные в БД,
+                // иначе удаленная тренировка зависнет в локальном кеше!
+                trainingLocalDataSource.deleteAllTrainingListItems()
+                trainingLocalDataSource.deleteAllTrainings()
+            }
             trainingLocalDataSource.insertTrainingListItems(
                 trainingListItemMapper.fromListDomainToListDbModel(
-                    result.data
+                    result.data.items
                 )
             )
-        } else {
+        }
+
+        return result
+    }
+
+    override suspend fun getTrainingsWithLocalCache(params: ListLoadParams<Unit>): DataResponse<ListState<TrainingListItem>> {
+        var result = getTrainings(params)
+
+        if (result is DataResponse.Error) {
             val listDbModel = trainingLocalDataSource.getTrainingListItems()
             if (listDbModel.isNotEmpty()) {
                 result = DataResponse.Success(
-                    data = trainingListItemMapper.fromListDbModelToListDomain(listDbModel),
+                    data = ListState(
+                        items = trainingListItemMapper.fromListDbModelToListDomain(listDbModel),
+                        isLastPage = true
+                    ),
                     source = Source.LocalCache
                 )
             }

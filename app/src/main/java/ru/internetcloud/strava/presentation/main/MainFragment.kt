@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.internetcloud.strava.presentation.auth.AuthFragment
-import ru.internetcloud.strava.presentation.common.compose.StravaTheme
+import ru.internetcloud.strava.presentation.common.theme.StravaTheme
 import ru.internetcloud.strava.presentation.main.composable.MainScreen
 
 class MainFragment : Fragment() {

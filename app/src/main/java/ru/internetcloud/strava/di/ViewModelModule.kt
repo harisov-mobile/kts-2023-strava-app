@@ -15,8 +15,9 @@ val viewModelModule = module {
 
     viewModel {
         TrainingListViewModel(
-            getTrainingsUseCase = get(),
             getProfileUseCase = get(),
+            listStore = get(named("TrainingListStore")),
+            stateMapper = get(named("UiTrainingListStateMapper")),
             savedStateHandle = get()
         )
     }
@@ -36,7 +37,7 @@ val viewModelModule = module {
     viewModel { params ->
         TrainingDetailViewModel(
             id = params.get(),
-            store = get(),
+            store = get(named("TrainingDetailStore")),
             stateMapper = get(named("UiTrainingDetailStateMapper")),
             eventMapper = get(named("UiTrainingDetailEventMapper")),
             savedStateHandle = get()
@@ -53,7 +54,7 @@ val viewModelModule = module {
 
     viewModel {
         ProfileViewModel(
-            store = get(),
+            store = get(named("ProfileStore")),
             stateMapper = get(named("UiProfileStateMapper")),
             savedStateHandle = get()
         )
