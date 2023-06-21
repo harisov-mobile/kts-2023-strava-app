@@ -84,6 +84,7 @@ fun TrainingEditScreen(
         factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
     )
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+    val state = screenState
 
     val topAppBarTitle = when (editMode) {
         EditMode.Add -> stringResource(id = R.string.training_add_app_bar_title)
@@ -118,8 +119,8 @@ fun TrainingEditScreen(
                     }
                 },
                 actions = {
-                    if (screenState is UiState.Success) {
-                        if ((screenState as UiState.Success<Training>).saving) {
+                    if (state is UiState.Success) {
+                        if (state.saving) {
                             CircularProgressIndicator(
                                 color = MaterialTheme.colors.surface,
                                 modifier = Modifier.padding(end = 16.dp)
@@ -132,7 +133,7 @@ fun TrainingEditScreen(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                    if (!(screenState as UiState.Success<Training>).saving) {
+                                    if (!state.saving) {
                                         viewModel.saveTraining()
                                     }
                                 }
@@ -143,12 +144,12 @@ fun TrainingEditScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (screenState) {
+            when (state) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
-                                (screenState as UiState.Error).exception.message.toString()
+                                state.exception.message.toString()
                             ),
                         onTryAgainClick = remember {
                             {
@@ -164,9 +165,9 @@ fun TrainingEditScreen(
 
                 is UiState.Success -> {
                     ShowTrainingEdit(
-                        training = (screenState as UiState.Success<Training>).data,
+                        training = state.data,
                         onEvent = viewModel::handleEvent,
-                        isChanged = (screenState as UiState.Success<Training>).isChanged,
+                        isChanged = state.isChanged,
                         shouldExitHere = (shouldExitHere.value),
                         exitHere = {
                             shouldExitHere.value = true

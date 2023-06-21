@@ -78,9 +78,10 @@ class TrainingDetailViewModel(id: Long, savedStateHandle: SavedStateHandle) : Vi
 
     fun deleteTraining() {
         viewModelScope.launch {
-            if (_screenState.value is UiState.Success) {
+            val state = _screenState.value
+            if (state is UiState.Success) {
                 when (val deleteDataResponse = deleteTrainingUseCase.deleteTraining(
-                    (_screenState.value as UiState.Success<ProfileWithTraining>).data.training.id
+                    state.data.training.id
                 )) {
                     is DataResponse.Success -> {
                         screenEventChannel.trySend(

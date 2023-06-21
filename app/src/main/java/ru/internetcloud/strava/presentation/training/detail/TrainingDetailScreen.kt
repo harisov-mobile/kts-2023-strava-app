@@ -47,7 +47,6 @@ import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
-import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.util.TrainingConverter
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
@@ -72,6 +71,7 @@ fun TrainingDetailScreen(
         factory = TrainingDetailViewModelFactory(id = trainingId)
     )
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+    val state = screenState
 
     val showDropdownMenu = remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -92,8 +92,8 @@ fun TrainingDetailScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (screenState is UiState.Success
-                                && (screenState as UiState.Success<ProfileWithTraining>).isChanged
+                            if (state is UiState.Success
+                                && state.isChanged
                             ) {
                                 onBackWithRefresh()
                             } else {
@@ -138,12 +138,12 @@ fun TrainingDetailScreen(
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (screenState) {
+            when (state) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
-                                (screenState as UiState.Error).exception.message.toString()
+                                state.exception.message.toString()
                             ),
                         onTryAgainClick = {
                             viewModel.fetchTraining(id = trainingId, isChanged = false)
@@ -157,9 +157,9 @@ fun TrainingDetailScreen(
 
                 is UiState.Success -> {
                     ShowTraining(
-                        profile = (screenState as UiState.Success<ProfileWithTraining>).data.profile,
-                        training = (screenState as UiState.Success<ProfileWithTraining>).data.training,
-                        source = (screenState as UiState.Success<ProfileWithTraining>).source
+                        profile = state.data.profile,
+                        training = state.data.training,
+                        source = state.source
                     )
                 }
 
@@ -189,7 +189,7 @@ fun TrainingDetailScreen(
     }
 
     BackHandler {
-        if (screenState is UiState.Success && (screenState as UiState.Success<ProfileWithTraining>).isChanged) {
+        if ((state is UiState.Success) && state.isChanged) {
             onBackWithRefresh()
         } else {
             onBackPressed()

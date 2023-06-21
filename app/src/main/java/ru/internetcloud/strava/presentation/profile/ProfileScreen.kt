@@ -41,6 +41,7 @@ import ru.internetcloud.strava.presentation.util.addPartWithComma
 fun ShowProfileScreen() {
     val viewModel: ProfileViewModel = viewModel()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+    val state = screenState
 
     Scaffold(
         topBar = {
@@ -48,11 +49,11 @@ fun ShowProfileScreen() {
         }
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
-            when (screenState) {
+            when (state) {
                 is UiState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
-                            .addLine((screenState as UiState.Error).exception.message.toString()),
+                            .addLine(state.exception.message.toString()),
                         onTryAgainClick = viewModel::fetchProfile
                     )
                 }
@@ -61,8 +62,8 @@ fun ShowProfileScreen() {
                 }
                 is UiState.Success -> {
                     ShowProfile(
-                        profile = (screenState as UiState.Success<Profile>).data,
-                        source = (screenState as UiState.Success<Profile>).source
+                        profile = state.data,
+                        source = state.source
                     )
                 }
                 UiState.EmptyData -> {

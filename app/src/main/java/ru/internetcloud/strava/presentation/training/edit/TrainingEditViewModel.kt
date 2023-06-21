@@ -94,119 +94,128 @@ class TrainingEditViewModel(
     }
 
     fun handleEvent(editTrainingEvent: EditTrainingEvent) {
-        val oldTraining = (_screenState.value as UiState.Success).data
+        val state = _screenState.value
+        if (state is UiState.Success) {
+            val oldTraining = state.data
 
-        when (editTrainingEvent) {
-            is EditTrainingEvent.OnNameChange -> {
-                setScreenState(oldTraining.copy(name = editTrainingEvent.name))
-            }
+            when (editTrainingEvent) {
+                is EditTrainingEvent.OnNameChange -> {
+                    setScreenState(oldTraining.copy(name = editTrainingEvent.name))
+                }
 
-            is EditTrainingEvent.OnDescriptionChange -> {
-                setScreenState(oldTraining.copy(description = editTrainingEvent.description))
-            }
+                is EditTrainingEvent.OnDescriptionChange -> {
+                    setScreenState(oldTraining.copy(description = editTrainingEvent.description))
+                }
 
-            is EditTrainingEvent.OnSportTypeChange -> {
-                setScreenState(oldTraining.copy(sportType = editTrainingEvent.sportType))
-            }
+                is EditTrainingEvent.OnSportTypeChange -> {
+                    setScreenState(oldTraining.copy(sportType = editTrainingEvent.sportType))
+                }
 
-            is EditTrainingEvent.OnStartDateChange -> {
-                val calendar = Calendar.getInstance()
-                calendar.time = oldTraining.startDate
-                val hour = calendar[Calendar.HOUR_OF_DAY]
-                val minute = calendar[Calendar.MINUTE]
-                setScreenState(
-                    oldTraining.copy(
-                        startDate = DateConverter.getDate(
-                            editTrainingEvent.year,
-                            editTrainingEvent.month,
-                            editTrainingEvent.day,
-                            hour,
-                            minute
+                is EditTrainingEvent.OnStartDateChange -> {
+                    val calendar = Calendar.getInstance()
+                    calendar.time = oldTraining.startDate
+                    val hour = calendar[Calendar.HOUR_OF_DAY]
+                    val minute = calendar[Calendar.MINUTE]
+                    setScreenState(
+                        oldTraining.copy(
+                            startDate = DateConverter.getDate(
+                                editTrainingEvent.year,
+                                editTrainingEvent.month,
+                                editTrainingEvent.day,
+                                hour,
+                                minute
+                            )
                         )
                     )
-                )
-            }
+                }
 
-            is EditTrainingEvent.OnStartTimeChange -> {
-                val calendar = Calendar.getInstance()
-                calendar.time = oldTraining.startDate
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                val day = calendar[Calendar.DAY_OF_MONTH]
-                setScreenState(
-                    oldTraining.copy(
-                        startDate = DateConverter.getDate(
-                            year,
-                            month,
-                            day,
-                            editTrainingEvent.hour,
-                            editTrainingEvent.minute
+                is EditTrainingEvent.OnStartTimeChange -> {
+                    val calendar = Calendar.getInstance()
+                    calendar.time = oldTraining.startDate
+                    val year = calendar[Calendar.YEAR]
+                    val month = calendar[Calendar.MONTH]
+                    val day = calendar[Calendar.DAY_OF_MONTH]
+                    setScreenState(
+                        oldTraining.copy(
+                            startDate = DateConverter.getDate(
+                                year,
+                                month,
+                                day,
+                                editTrainingEvent.hour,
+                                editTrainingEvent.minute
+                            )
                         )
                     )
-                )
-            }
+                }
 
-            is EditTrainingEvent.OnDurationChange -> {
-                setScreenState(
-                    oldTraining.copy(
-                        movingTime = editTrainingEvent.durationTime,
-                        elapsedTime = editTrainingEvent.durationTime
+                is EditTrainingEvent.OnDurationChange -> {
+                    setScreenState(
+                        oldTraining.copy(
+                            movingTime = editTrainingEvent.durationTime,
+                            elapsedTime = editTrainingEvent.durationTime
+                        )
                     )
-                )
-            }
+                }
 
-            is EditTrainingEvent.OnDistanceChange -> {
-                setScreenState(oldTraining.copy(distance = editTrainingEvent.distance))
+                is EditTrainingEvent.OnDistanceChange -> {
+                    setScreenState(oldTraining.copy(distance = editTrainingEvent.distance))
+                }
             }
         }
     }
 
     private fun setScreenState(training: Training) {
-        _screenState.value = UiState.Success(
-            data = training,
-            source = (_screenState.value as UiState.Success).source,
-            isChanged = true
-        )
+        val state = _screenState.value
+        if (state is UiState.Success) {
+            _screenState.value = UiState.Success(
+                data = training,
+                source = state.source,
+                isChanged = true
+            )
+        }
     }
 
     fun saveTraining() {
         viewModelScope.launch {
-            val training = (_screenState.value as UiState.Success).data
+            val state = _screenState.value
+            if (state is UiState.Success) {
+                val training = state.data
 
-            _screenState.value = UiState.Success(
-                data = training,
-                source = (_screenState.value as UiState.Success).source,
-                isChanged = (_screenState.value as UiState.Success).isChanged,
-                saving = true
-            )
+                _screenState.value = UiState.Success(
+                    data = training,
+                    source = state.source,
+                    isChanged = state.isChanged,
+                    saving = true
+                )
 
-            val trainingDataResponse = when (editMode) {
-                EditMode.Add -> addTrainingUseCase.addTraining(training)
-                EditMode.Edit -> updateTrainingUseCase.updateTraining(training)
-            }
-
-            when (trainingDataResponse) {
-                is DataResponse.Success -> {
-                    _screenState.value = UiState.Success(
-                        data = trainingDataResponse.data,
-                        source = (_screenState.value as UiState.Success).source,
-                        isChanged = false,
-                        saving = false
-                    )
-                    screenEventChannel.trySend(TrainingEditScreenEvent.NavigateBackWithRefresh)
+                val trainingDataResponse = when (editMode) {
+                    EditMode.Add -> addTrainingUseCase.addTraining(training)
+                    EditMode.Edit -> updateTrainingUseCase.updateTraining(training)
                 }
 
-                is DataResponse.Error -> {
-                    _screenState.value = UiState.Success(
-                        data = training,
-                        source = (_screenState.value as UiState.Success).source,
-                        isChanged = (_screenState.value as UiState.Success).isChanged,
-                        saving = false
-                    )
-                    screenEventChannel
-                        .trySend(
-                            TrainingEditScreenEvent.ShowMessage(trainingDataResponse.exception.message.toString())
+                when (trainingDataResponse) {
+                    is DataResponse.Success -> {
+                        _screenState.value = UiState.Success(
+                            data = trainingDataResponse.data,
+                            source = state.source,
+                            isChanged = false,
+                            saving = false
                         )
+                        screenEventChannel.trySend(TrainingEditScreenEvent.NavigateBackWithRefresh)
+                    }
+
+                    is DataResponse.Error -> {
+                        _screenState.value = UiState.Success(
+                            data = training,
+                            source = state.source,
+                            isChanged = state.isChanged,
+                            saving = false
+                        )
+                        screenEventChannel
+                            .trySend(
+                                TrainingEditScreenEvent.ShowMessage(trainingDataResponse.exception.message.toString())
+                            )
+                    }
                 }
             }
         }
