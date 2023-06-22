@@ -58,6 +58,7 @@ import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
 import ru.internetcloud.strava.presentation.util.parseStringVs
 
+
 @Composable
 fun TrainingDetailScreen(
     trainingId: Long,
@@ -82,6 +83,7 @@ fun TrainingDetailScreen(
             viewModel.fetchTraining(trainingId, isChanged = true)
         }
     }
+
 
     Scaffold(
         topBar = {

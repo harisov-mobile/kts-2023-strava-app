@@ -115,7 +115,6 @@ fun MainScreen(
             true -> {
                 snackbarHostState.currentSnackbarData?.dismiss()
             }
-
             false -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(
