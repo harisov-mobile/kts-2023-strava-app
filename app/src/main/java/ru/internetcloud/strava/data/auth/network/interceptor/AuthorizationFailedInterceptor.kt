@@ -1,125 +1,65 @@
 package ru.internetcloud.strava.data.auth.network.interceptor
 
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import java.net.HttpURLConnection
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.openid.appauth.AuthorizationService
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import ru.internetcloud.strava.data.auth.network.AppAuth
-import ru.internetcloud.strava.data.auth.network.TokenStorage
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 
 class AuthorizationFailedInterceptor(
-    private val authorizationService: AuthorizationService,
-    private val tokenStorage: TokenStorage
+    private val authorizationService: AuthorizationService
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequestTimestamp = System.currentTimeMillis()
-        val originalResponse = chain.proceed(chain.request())
-        return originalResponse
-            .takeIf { it.code != 401 }
-            ?: handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
-    }
+        val oldRequest = chain.request()
+        val oldResponse = chain.proceed(oldRequest)
 
-    private fun handleUnauthorizedResponse(
-        chain: Interceptor.Chain,
-        originalResponse: Response,
-        requestTimestamp: Long
-    ): Response {
-        val latch = getLatch()
-        return when {
-            latch != null && latch.count > 0 -> handleTokenIsUpdating(chain, latch, requestTimestamp)
-                ?: originalResponse
-            tokenUpdateTime > requestTimestamp -> updateTokenAndProceedChain(chain)
-            else -> handleTokenNeedRefresh(chain) ?: originalResponse
-        }
-    }
+        return if (oldResponse.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            val tokenRefreshed = refreshToken()
 
-    private fun handleTokenIsUpdating(
-        chain: Interceptor.Chain,
-        latch: CountDownLatch,
-        requestTimestamp: Long
-    ): Response? {
-        return if (latch.await(REQUEST_TIMEOUT, TimeUnit.SECONDS) &&
-            tokenUpdateTime > requestTimestamp
-        ) {
-            updateTokenAndProceedChain(chain)
+            if (tokenRefreshed) {
+                oldResponse.close() // we need to close response to be able to start new request
+                val newRequest = oldRequest.newBuilder().build() // сработает другой интерцептор,
+                // который добавит обновленный токен, поэтому здесь не надо токен добавлять
+                chain.proceed(newRequest)
+            } else {
+                oldResponse
+            }
         } else {
-            null
+            oldResponse
         }
-    }
-
-    private fun handleTokenNeedRefresh(
-        chain: Interceptor.Chain
-    ): Response? {
-        return if (refreshToken()) {
-            updateTokenAndProceedChain(chain)
-        } else {
-            null
-        }
-    }
-
-    private fun updateTokenAndProceedChain(
-        chain: Interceptor.Chain
-    ): Response {
-        val newRequest = updateOriginalCallWithNewToken(chain.request())
-        return chain.proceed(newRequest)
     }
 
     private fun refreshToken(): Boolean {
-        initLatch()
-
         val tokenRefreshed = runBlocking {
             runCatching {
-                val refreshRequest = AppAuth.getRefreshTokenRequest(tokenStorage.refreshToken.orEmpty())
-                AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                withContext(Dispatchers.IO) {
+                    val refreshRequest = AppAuth.getRefreshTokenRequest(
+                        TokenSharedPreferencesStorage.getTokenData().refreshToken.orEmpty()
+                    )
+                    AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                }
             }
                 .getOrNull()
                 ?.let { tokens ->
-                    TokenStorage.accessToken = tokens.accessToken
-                    TokenStorage.refreshToken = tokens.refreshToken
-                    TokenStorage.idToken = tokens.idToken
+                    withContext(Dispatchers.IO) {
+                        TokenSharedPreferencesStorage.saveTokenData(tokens)
+                    }
                     true
                 } ?: false
         }
 
-        if (tokenRefreshed) {
-            tokenUpdateTime = System.currentTimeMillis()
-        } else {
+        if (!tokenRefreshed) {
             // не удалось обновить токен, произвести логаут
-            //  unauthorizedHandler.onUnauthorized()
-            // Timber.d("logout after token refresh failure")
+            runBlocking {
+                UnauthorizedHandler.onUnauthorized()
+            }
         }
-        getLatch()?.countDown()
         return tokenRefreshed
-    }
-
-    private fun updateOriginalCallWithNewToken(request: Request): Request {
-        return tokenStorage.accessToken?.let { newAccessToken ->
-            request
-                .newBuilder()
-                .header("Authorization", newAccessToken)
-                .build()
-        } ?: request
-    }
-
-    companion object {
-
-        private const val REQUEST_TIMEOUT = 30L
-
-        @Volatile
-        private var tokenUpdateTime: Long = 0L
-
-        private var countDownLatch: CountDownLatch? = null
-
-        @Synchronized
-        fun initLatch() {
-            countDownLatch = CountDownLatch(1)
-        }
-
-        @Synchronized
-        fun getLatch() = countDownLatch
     }
 }

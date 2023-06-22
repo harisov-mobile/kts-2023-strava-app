@@ -1,26 +1,33 @@
 package ru.internetcloud.strava.data.auth.network.interceptor
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import ru.internetcloud.strava.data.auth.network.TokenStorage
+import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
 
 class AuthorizationInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        return chain.request()
-            .addTokenHeader()
-            .let {
-                chain.proceed(it)
-            }
+        return runBlocking {
+            chain.request()
+                .addTokenHeader()
+                .let {
+                    chain.proceed(it)
+                }
+        }
     }
 
-    private fun Request.addTokenHeader(): Request {
+    private suspend fun Request.addTokenHeader(): Request {
         return newBuilder()
             .apply {
-                val token = TokenStorage.accessToken
-                if (token != null) {
-                    header(AUTH_HEADER_NAME, token.withBearer())
+                withContext(Dispatchers.IO) {
+                    val token = TokenSharedPreferencesStorage.getTokenData().accessToken
+                    if (token != null) {
+                        header(AUTH_HEADER_NAME, token.withBearer())
+                    }
                 }
             }
             .build()

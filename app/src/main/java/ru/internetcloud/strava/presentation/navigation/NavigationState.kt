@@ -21,6 +21,36 @@ class NavigationState(val navHostController: NavHostController) {
     fun navigateToDetail(id: Long) {
         navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
     }
+
+    fun navigateToDetailEdit(id: Long) {
+        // navHostController.popBackStack()
+        navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
+    }
+
+    fun navigateToDetailAdd() {
+        navHostController.navigate(Screen.TrainingDetailAdd.route)
+    }
+
+    fun navigateToDetailWithPopBackStack(id: Long) {
+        navHostController.popBackStack()
+        navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
+    }
+
+    fun navigateBackWithRefresh(refreshKey: String, refresh: Boolean) {
+        navHostController.previousBackStackEntry?.savedStateHandle?.set(refreshKey, refresh)
+        navHostController.popBackStack()
+    }
+
+    fun navigateToRoute(route: String, popUpTo: Boolean, popUpToInclusive: Boolean) {
+        navHostController.navigate(route) {
+            if (popUpTo) {
+                popUpTo(route) {
+                    inclusive = popUpToInclusive
+                    saveState = false
+                }
+            }
+        }
+    }
 }
 
 @Composable

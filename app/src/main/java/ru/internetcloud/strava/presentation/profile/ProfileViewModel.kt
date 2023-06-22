@@ -32,7 +32,7 @@ class ProfileViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
             when (val dataResponse = getProfileUseCase.getProfile()) {
                 is DataResponse.Success -> {
-                    _screenState.value = UiState.Success(data = dataResponse.data)
+                    _screenState.value = UiState.Success(data = dataResponse.data, source = dataResponse.source)
                 }
                 is DataResponse.Error -> {
                     _screenState.value = UiState.Error(exception = dataResponse.exception)

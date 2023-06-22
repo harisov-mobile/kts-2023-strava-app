@@ -19,6 +19,9 @@
 
     <string name="auth_login_button">Login with Strava.com</string>
     <string name="auth_canceled">Authentication failed</string>
+    <string name="auth_try_again">An authentication error has occurred. You need to login with Strava.com again.</string>
+    <string name="auth_after_logout">You are logged out.\nYou must be logged in with Strava.com to continue using the app.</string>
+    <string name="auth_standart_message">You must be logged in with Strava.com to continue.</string>
 
     <string name="main_likes_amount">Amount of likes = %s</string>
 
@@ -42,6 +45,11 @@
     <string name="training_minutes_seconds">%sm %ss</string>
     <string name="training_distance_format">%.2f km</string>
     <string name="training_speed_format">%.1f km/h</string>
+    <string name="training_edit_app_bar_title">Edit Activity</string>
+    <string name="training_add_app_bar_title">Add Activity</string>
+    <string name="training_can_not_delete_training">Can not be deleted</string>
+    <string name="training_can_not_delete_training_with_arg">Can not be deleted \n%s</string>
+    <string name="training_deleted">Training deleted</string>
 
     <string name="groups_under_constraction">Under constraction</string>
 
@@ -49,10 +57,41 @@
     <string name="oldmain_text_under_image">Like if you like android</string>
 
     <string name="no_internet_connection">No Internet connection</string>
-    <string name="http_error_code">HTTP code %d</string>
+    <string name="http_error_code">HTTP error code %d</string>
     <string name="unknown_network_error">Network error</string>
     <string name="bad_request_error">Bad request</string>
     <string name="unauthorized_error">Unauthorized</string>
-    <string name="forbidden_error">Forbidden</string>
+    <string name="forbidden_error">Forbidden. Turn on the VPN.</string>
     <string name="internal_server_error">Internal server error</string>
+
+    <string name="logout_confirmation_question">Are you sure you want to log out?</string>
+    <string name="logout_confirm_button">Log out</string>
+    <string name="logout_dismiss_button">Cancel</string>
+    <string name="logout_button">Logout</string>
+    <string name="logout_error">Logout failed</string>
+
+    <string name="source_description">Displays data from local storage</string>
+
+    <string name="menu_edit">Edit Activity</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="duration_confirm_button">OK</string>
+    <string name="duration_hour">h.</string>
+    <string name="duration_minute">min.</string>
+    <string name="duration_second">sec.</string>
+
+    <string name="training_edit_save_button">Save</string>
+    <string name="training_edit_discard_button">Discard unsaved changes</string>
+    <string name="training_edit_discard_question">Discard unsaved changes to this activity?</string>
+    <string name="training_edit_discard_dialog_confirm_button">OK</string>
+    <string name="training_edit_discard_dialog_dismiss_button">Cancel</string>
+    <string name="training_edit_field_name">name</string>
+    <string name="training_edit_field_description">description</string>
+    <string name="training_edit_field_sport_type">sport_type</string>
+    <string name="training_edit_field_date">date</string>
+    <string name="training_edit_field_start_time">start time</string>
+    <string name="training_edit_field_duration">duration</string>
+    <string name="training_edit_field_distance">distance, in meters</string>
+    <string name="training_edit_chapter_activity_stats">Activity Stats</string>
+    <string name="training_edit_saving_error">Failed to save an Activity:</string>
 </resources>

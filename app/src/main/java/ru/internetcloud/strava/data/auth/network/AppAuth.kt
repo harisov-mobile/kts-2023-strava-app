@@ -8,11 +8,12 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
+import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.ResponseTypeValues
 import net.openid.appauth.TokenRequest
 import ru.internetcloud.strava.BuildConfig
-import ru.internetcloud.strava.data.auth.network.model.TokensModel
+import ru.internetcloud.strava.domain.token.model.TokensModel
 
 object AppAuth {
 
@@ -57,9 +58,9 @@ object AppAuth {
                     response != null -> {
                         // получение токена произошло успешно
                         val tokens = TokensModel(
-                            accessToken = response.accessToken.orEmpty(),
-                            refreshToken = response.refreshToken.orEmpty(),
-                            idToken = response.idToken.orEmpty()
+                            accessToken = response.accessToken,
+                            refreshToken = response.refreshToken,
+                            idToken = response.idToken
                         )
                         continuation.resumeWith(Result.success(tokens))
                     }
@@ -75,16 +76,23 @@ object AppAuth {
         return ClientSecretPost(BuildConfig.CLIENT_SECRET)
     }
 
+    fun getEndSessionRequest(): EndSessionRequest {
+        return EndSessionRequest.Builder(serviceConfiguration)
+            .setPostLogoutRedirectUri(AuthConfig.LOGOUT_CALLBACK_URL.toUri())
+            .build()
+    }
+
     private object AuthConfig {
         const val AUTH_URI = "https://www.strava.com/oauth/mobile/authorize"
         const val TOKEN_URI = "https://www.strava.com/oauth/token"
         const val END_SESSION_URI = "https://www.strava.com/oauth/deauthorize"
         const val RESPONSE_TYPE = ResponseTypeValues.CODE
-        const val SCOPE = "profile:read_all,profile:write,activity:read_all,activity:write"
+        const val SCOPE = "read,read_all,profile:read_all,profile:write,activity:read_all,activity:write"
 
         // чтобы не "светить" Api ключи в публичном гит-хабе,
         // создан файл keystore.properties и в этот файл помещены значения CLIENT_ID и CLIENT_SECRET
 
         const val CALLBACK_URL = "ru.internetcloud.strava.oauth://internetcloud.ru/callback"
+        const val LOGOUT_CALLBACK_URL = "ru.internetcloud.strava.oauth://internetcloud.ru/logout_callback"
     }
 }

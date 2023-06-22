@@ -7,7 +7,11 @@ data class Training(
     val name: String,
     val distance: Float,
     val movingTime: Int,
+    val elapsedTime: Int,
     val type: String,
+    val sportType: String,
     val startDate: Date,
-    val description: String
+    val description: String,
+    val trainer: Boolean,
+    val commute: Boolean
 )

@@ -13,6 +13,6 @@ class TrainingDetailViewModelFactory(
         if (modelClass.isAssignableFrom(TrainingDetailViewModel::class.java)) {
             return TrainingDetailViewModel(id = id, extras.createSavedStateHandle()) as T
         }
-        throw IllegalStateException("Unkown view model class - $modelClass")
+        throw IllegalStateException("Unknown view model class - $modelClass")
     }
 }

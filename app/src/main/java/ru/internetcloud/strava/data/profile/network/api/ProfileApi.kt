@@ -6,6 +6,6 @@ import ru.internetcloud.strava.data.profile.network.model.ProfileDTO
 
 interface ProfileApi {
 
-    @GET("athlete")
+    @GET("api/v3/athlete")
     suspend fun getProfile(): Response<ProfileDTO>
 }

@@ -20,6 +20,9 @@
 
     <string name="auth_login_button">Войти через Strava.com</string>
     <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="auth_try_again">Произошла ошибка аутентификации. Необходимо войти через Strava.com еще раз.</string>
+    <string name="auth_after_logout">Вы вышли из аккаунта.\nДля продолжения работы в приложении необходимо войти через Strava.com.</string>
+    <string name="auth_standart_message">Для продолжения необходимо войти через Strava.com.</string>
 
     <string name="main_likes_amount">Количество лайков = %s</string>
 
@@ -43,6 +46,11 @@
     <string name="training_minutes_seconds">%sмин. %sсек.</string>
     <string name="training_distance_format">%.2f км</string>
     <string name="training_speed_format">%.1f км/ч</string>
+    <string name="training_edit_app_bar_title">Изменить</string>
+    <string name="training_add_app_bar_title">Добавить</string>
+    <string name="training_can_not_delete_training">Невозможно удалить</string>
+    <string name="training_can_not_delete_training_with_arg">Невозможно удалить \n%s</string>
+    <string name="training_deleted">Тренировка удалена</string>
 
     <string name="groups_under_constraction">В разработке</string>
 
@@ -50,10 +58,41 @@
     <string name="oldmain_text_under_image">Ставь лайк если любишь андроид</string>
 
     <string name="no_internet_connection">Нет интернет-соединения</string>
-    <string name="http_error_code">HTTP код %d</string>
+    <string name="http_error_code">HTTP код ошибки %d</string>
     <string name="unknown_network_error">Ошибка сети</string>
     <string name="bad_request_error">Неправильный запрос от клиента к серверу</string>
     <string name="unauthorized_error">Нет аутентификации</string>
-    <string name="forbidden_error">Запрещено - нет доступа</string>
+    <string name="forbidden_error">Запрещено - нет доступа. Включите VPN.</string>
     <string name="internal_server_error">Внутренняя ошибка сервера</string>
+
+    <string name="logout_confirmation_question">Вы собираетесь выйти из аккаунта.\nПродолжить?</string>
+    <string name="logout_confirm_button">Выйти</string>
+    <string name="logout_dismiss_button">Отмена</string>
+    <string name="logout_button">Logout</string>
+    <string name="logout_error">Произошла ошибка при выходе из аккаунта.</string>
+
+    <string name="source_description">Отображаются данные из локального хранилища</string>
+
+    <string name="menu_edit">Изменить</string>
+    <string name="menu_delete">Удалить</string>
+
+    <string name="duration_confirm_button">OK</string>
+    <string name="duration_hour">ч.</string>
+    <string name="duration_minute">мин.</string>
+    <string name="duration_second">сек.</string>
+
+    <string name="training_edit_save_button">Сохранить</string>
+    <string name="training_edit_discard_button">Удалить несохраненные изменения</string>
+    <string name="training_edit_discard_question">Удалить несохраненные изменения в этой тренировке?</string>
+    <string name="training_edit_discard_dialog_confirm_button">OK</string>
+    <string name="training_edit_discard_dialog_dismiss_button">Отмена</string>
+    <string name="training_edit_field_name">название</string>
+    <string name="training_edit_field_description">описание</string>
+    <string name="training_edit_field_sport_type">тип</string>
+    <string name="training_edit_field_date">дата</string>
+    <string name="training_edit_field_start_time">время начала</string>
+    <string name="training_edit_field_duration">продолжительность</string>
+    <string name="training_edit_field_distance">дистанция, метры</string>
+    <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
+    <string name="training_edit_saving_error">Не удалось сохранить тренировку:</string>
 </resources>

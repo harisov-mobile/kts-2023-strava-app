@@ -28,11 +28,14 @@ class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val _screenState = MutableStateFlow(initialState)
     val screenState = _screenState.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
     init {
-        fetchStravaActivities()
+        fetchTrainings()
     }
 
-    fun fetchStravaActivities() {
+    fun fetchTrainings() {
         viewModelScope.launch {
             _screenState.value = UiState.Loading
 
@@ -53,7 +56,10 @@ class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                                 profileWithTrainings = profileWithTrainings.copy(
                                     trainingList = trainingsDataResponse.data.toList()
                                 )
-                                _screenState.value = UiState.Success(data = profileWithTrainings)
+                                _screenState.value = UiState.Success(
+                                    data = profileWithTrainings,
+                                    source = trainingsDataResponse.source
+                                )
                             }
                         }
                         is DataResponse.Error -> {
@@ -65,6 +71,8 @@ class TrainingListViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                     _screenState.value = UiState.Error(exception = profileDataResponse.exception)
                 }
             }
+
+            _isRefreshing.value = false
         }
     }
 

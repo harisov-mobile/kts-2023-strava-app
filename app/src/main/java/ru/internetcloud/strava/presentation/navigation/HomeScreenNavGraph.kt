@@ -6,11 +6,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import ru.internetcloud.strava.presentation.util.orDefault
+import ru.internetcloud.strava.domain.common.util.orDefault
 
 fun NavGraphBuilder.homeScreenNavGraph(
     trainingListScreenContent: @Composable () -> Unit,
-    trainingDetailScreenContent: @Composable (id: Long) -> Unit
+    trainingDetailScreenContent: @Composable (id: Long) -> Unit,
+    trainingDetailEditScreenContent: @Composable (id: Long) -> Unit,
+    trainingDetailAddScreenContent: @Composable () -> Unit
 ) {
     navigation(
         startDestination = Screen.TrainingList.route,
@@ -19,6 +21,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
         composable(Screen.TrainingList.route) {
             trainingListScreenContent()
         }
+
         composable(
             route = Screen.TrainingDetail.route,
             arguments = listOf(
@@ -29,6 +32,22 @@ fun NavGraphBuilder.homeScreenNavGraph(
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong("id").orDefault()
             trainingDetailScreenContent(id = id)
+        }
+
+        composable(
+            route = Screen.TrainingDetailEdit.route,
+            arguments = listOf(
+                navArgument(Screen.KEY_ID) {
+                    type = NavType.LongType
+                }
+            )
+        ) { navBackStackEntry ->
+            val id = navBackStackEntry.arguments?.getLong("id").orDefault()
+            trainingDetailEditScreenContent(id = id)
+        }
+
+        composable(Screen.TrainingDetailAdd.route) {
+            trainingDetailAddScreenContent()
         }
     }
 }
