@@ -36,7 +36,8 @@ internal class TrainingDetailExecutor(
                 when (val trainingDataResponse = getTrainingUseCase.getTraining(id = trainingId)) {
                     is DataResponse.Success -> {
                         val profileWithTraining = ProfileWithTraining(
-                            profile = profile, training = trainingDataResponse.data
+                            profile = profile,
+                            training = trainingDataResponse.data
                         )
                         dispatch(
                             TrainingDetailStoreFactory.Message.SetSuccess(
@@ -80,8 +81,8 @@ internal class TrainingDetailExecutor(
                     publish(
                         TrainingDetailStore.Event.ShowMessage(
                             R.string.training_can_not_delete_training_with_arg.toStringVs(
-                                    deleteDataResponse.exception.message.toString()
-                                )
+                                deleteDataResponse.exception.message.toString()
+                            )
                         )
                     )
                 }

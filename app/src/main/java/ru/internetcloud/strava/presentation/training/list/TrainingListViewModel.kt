@@ -33,9 +33,6 @@ class TrainingListViewModel(
     private val _screenState = MutableStateFlow(initialState)
     val screenState = _screenState.asStateFlow()
 
-//    private val _isRefreshing = MutableStateFlow(false)
-//    val isRefreshing = _isRefreshing.asStateFlow()
-
     private val binder: Binder
 
     private var profile: Profile? = null

@@ -27,10 +27,12 @@ fun <T : Any> BaseUiListState<T>.itemsWithState(
 
     items.isNotEmpty() && isPageError() -> items.asAny().toMutableList()
         .apply {
-            add(errorPage.copy(
-                message = errorPage.message,
-                throwable = (this@itemsWithState.loadState as LoadState.PageError).throwable
-            ))
+            add(
+                errorPage.copy(
+                    message = errorPage.message,
+                    throwable = (this@itemsWithState.loadState as LoadState.PageError).throwable
+                )
+            )
         }.toList()
 
     items.isEmpty() && isRefreshError() ->
