@@ -42,6 +42,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -80,7 +81,7 @@ fun TrainingEditScreen(
 ) {
     val context = LocalContext.current
 
-    val shouldExitHere = remember { mutableStateOf(false) }
+    val shouldExitHere = rememberSaveable { mutableStateOf(false) }
 
     val viewModel: TrainingEditViewModel by viewModel {
         parametersOf(trainingId, editMode)
