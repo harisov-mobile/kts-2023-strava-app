@@ -63,25 +63,6 @@ android {
     }
 }
 
-detekt {
-    toolVersion = "1.23.0"
-    disableDefaultRuleSets = true
-    buildUponDefaultConfig = true
-    autoCorrect = false
-    input = files(
-            "$rootDir/app/src/main/java",
-            "$rootDir/buildSrc/src/main/kotlin"
-    )
-
-    config.setFrom(files("$rootDir/linters/detekt/config.yml"))
-
-    reports {
-        html.enabled = true
-        xml.enabled = false
-        txt.enabled = false
-    }
-}
-
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
