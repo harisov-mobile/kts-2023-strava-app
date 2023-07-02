@@ -4,11 +4,17 @@ import net.openid.appauth.AuthorizationService
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import ru.internetcloud.strava.data.auth.network.AppAuth
+import ru.internetcloud.strava.data.auth.network.AppAuthImpl
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
+import ru.internetcloud.strava.data.common.ErrorMessageConverterImpl
 import ru.internetcloud.strava.domain.common.model.SportTypeKeeper
+import ru.internetcloud.strava.domain.common.model.SportTypeKeeperImpl
 import ru.internetcloud.strava.domain.common.util.DateConverter
+import ru.internetcloud.strava.domain.common.util.DateConverterImpl
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
+import ru.internetcloud.strava.domain.token.UnauthorizedHandlerImpl
 import ru.internetcloud.strava.presentation.logout.LogoutClickHelper
+import ru.internetcloud.strava.presentation.logout.LogoutClickHelperImpl
 
 val commonModule = module {
 
@@ -16,27 +22,27 @@ val commonModule = module {
         AuthorizationService(androidApplication())
     }
 
-    single {
-        ErrorMessageConverter(androidApplication())
+    single<ErrorMessageConverter> {
+        ErrorMessageConverterImpl(androidApplication())
     }
 
-    single {
-        AppAuth()
+    single<AppAuth> {
+        AppAuthImpl()
     }
 
-    single {
-        UnauthorizedHandler()
+    single<UnauthorizedHandler> {
+        UnauthorizedHandlerImpl()
     }
 
-    single {
-        LogoutClickHelper()
+    single<LogoutClickHelper> {
+        LogoutClickHelperImpl()
     }
 
-    single {
-        DateConverter()
+    single<DateConverter> {
+        DateConverterImpl()
     }
 
-    single {
-        SportTypeKeeper()
+    single<SportTypeKeeper> {
+        SportTypeKeeperImpl()
     }
 }

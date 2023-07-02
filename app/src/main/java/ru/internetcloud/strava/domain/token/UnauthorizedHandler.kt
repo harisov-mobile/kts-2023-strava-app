@@ -2,11 +2,8 @@ package ru.internetcloud.strava.domain.token
 
 import kotlinx.coroutines.channels.Channel
 
-class UnauthorizedHandler {
+interface UnauthorizedHandler {
 
-    val unauthorizedEventChannel = Channel<Unit>(Channel.BUFFERED)
-
-    suspend fun onUnauthorized() {
-        unauthorizedEventChannel.send(Unit)
-    }
+    fun getUnauthorizedEventChannel(): Channel<Unit>
+    suspend fun onUnauthorized()
 }

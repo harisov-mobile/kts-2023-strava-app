@@ -30,7 +30,7 @@ class MainScreenViewModel(
         get() = fetchInternetChange()
 
     private val onLogoutClickFlow: Flow<Unit>
-        get() = logoutClickHelper.logoutClickEventChannel.receiveAsFlow()
+        get() = logoutClickHelper.getLogoutClickEventChannel().receiveAsFlow()
 
     private val _showLogoutDialog = MutableStateFlow(false)
     val showLogoutDialog = _showLogoutDialog.asStateFlow()
@@ -40,7 +40,7 @@ class MainScreenViewModel(
         get() = screenEventChannel.receiveAsFlow()
 
     private val onUnauthorizedEventFlow: Flow<Unit>
-        get() = unauthorizedHandler.unauthorizedEventChannel.receiveAsFlow()
+        get() = unauthorizedHandler.getUnauthorizedEventChannel().receiveAsFlow()
 
     init {
         viewModelScope.launch {

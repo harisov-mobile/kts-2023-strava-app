@@ -2,11 +2,8 @@ package ru.internetcloud.strava.presentation.logout
 
 import kotlinx.coroutines.channels.Channel
 
-class LogoutClickHelper {
+interface LogoutClickHelper {
+    fun getLogoutClickEventChannel(): Channel<Unit>
 
-    val logoutClickEventChannel = Channel<Unit>(Channel.BUFFERED)
-
-    suspend fun onLogoutClick() {
-        logoutClickEventChannel.send(Unit)
-    }
+    suspend fun onLogoutClick()
 }
