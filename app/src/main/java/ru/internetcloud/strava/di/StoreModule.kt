@@ -14,9 +14,9 @@ import ru.internetcloud.strava.domain.common.list.mvi.model.LoadState
 import ru.internetcloud.strava.domain.common.list.mvi.model.PagingState
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.mvi.impl.ProfileStoreFactory
+import ru.internetcloud.strava.domain.training.TrainingRepository
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.domain.training.mvi.impl.TrainingDetailStoreFactory
-import ru.internetcloud.strava.domain.training.usecase.GetTrainingsUseCase
 import timber.log.Timber
 
 val storeModule = module {
@@ -60,8 +60,8 @@ val storeModule = module {
             ),
             mainContext = Dispatchers.Main,
             ioContext = Dispatchers.IO,
-            remoteSource = PagingSourceImpl(loadData = get<GetTrainingsUseCase>()::getTrainings),
-            cachedSource = PagingSourceImpl(loadData = get<GetTrainingsUseCase>()::getTrainingsWithLocalCache)
+            remoteSource = PagingSourceImpl(loadData = get<TrainingRepository>()::getTrainings),
+            cachedSource = PagingSourceImpl(loadData = get<TrainingRepository>()::getTrainingsWithLocalCache)
         ).create()
     }
 }

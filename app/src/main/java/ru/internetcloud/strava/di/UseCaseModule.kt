@@ -12,14 +12,9 @@ import ru.internetcloud.strava.domain.training.usecase.AddTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingUseCase
 import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingsInLocalCacheUseCase
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
-import ru.internetcloud.strava.domain.training.usecase.GetTrainingsUseCase
 import ru.internetcloud.strava.domain.training.usecase.UpdateTrainingUseCase
 
 val useCaseModule = module {
-
-    factory {
-        GetTrainingsUseCase(trainingRepository = get())
-    }
 
     factory {
         GetTrainingUseCase(trainingRepository = get())
