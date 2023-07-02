@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.util.toStringVs
+import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
 import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 import ru.internetcloud.strava.domain.training.mvi.api.TrainingDetailStore
@@ -33,34 +34,38 @@ internal class TrainingDetailExecutor(
         when (val profileDataResponse = getProfileUseCase.getProfile()) {
             is DataResponse.Success -> {
                 val profile = profileDataResponse.data
-                when (val trainingDataResponse = getTrainingUseCase.getTraining(id = trainingId)) {
-                    is DataResponse.Success -> {
-                        val profileWithTraining = ProfileWithTraining(
-                            profile = profile,
-                            training = trainingDataResponse.data
-                        )
-                        dispatch(
-                            TrainingDetailStoreFactory.Message.SetSuccess(
-                                profileWithTraining = profileWithTraining,
-                                source = trainingDataResponse.source
-                            )
-                        )
-                    }
-
-                    is DataResponse.Error -> {
-                        dispatch(
-                            TrainingDetailStoreFactory.Message.SetError(
-                                error = trainingDataResponse.exception
-                            )
-                        )
-                    }
-                }
+                loadProfileWithTraining(profile = profile, trainingId = trainingId)
             }
 
             is DataResponse.Error -> {
                 dispatch(
                     TrainingDetailStoreFactory.Message.SetError(
                         error = profileDataResponse.exception
+                    )
+                )
+            }
+        }
+    }
+
+    private suspend fun loadProfileWithTraining(profile: Profile, trainingId: Long) {
+        when (val trainingDataResponse = getTrainingUseCase.getTraining(id = trainingId)) {
+            is DataResponse.Success -> {
+                val profileWithTraining = ProfileWithTraining(
+                    profile = profile,
+                    training = trainingDataResponse.data
+                )
+                dispatch(
+                    TrainingDetailStoreFactory.Message.SetSuccess(
+                        profileWithTraining = profileWithTraining,
+                        source = trainingDataResponse.source
+                    )
+                )
+            }
+
+            is DataResponse.Error -> {
+                dispatch(
+                    TrainingDetailStoreFactory.Message.SetError(
+                        error = trainingDataResponse.exception
                     )
                 )
             }
