@@ -26,6 +26,7 @@ import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.common.compose.ListProgressIndicator
+import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
 import ru.internetcloud.strava.presentation.common.list.SwipeRefresh
@@ -100,19 +101,26 @@ fun TrainingListScreen(
                             ListProgressIndicator()
                         }
                     ) { index, training ->
-                        TrainingItemView(
-                            profile = screenState.profile ?: throw IllegalStateException("profile is null"),
-                            training = training,
-                            onTrainingClickListener = remember {
-                                {
-                                    onTrainingClick(training.id)
+                        screenState.profile?.let { profile ->
+                            TrainingItemView(
+                                profile = profile,
+                                training = training,
+                                onTrainingClickListener = remember {
+                                    {
+                                        onTrainingClick(training.id)
+                                    }
                                 }
-                            }
-                        )
+                            )
 
-                        screenState.loadNextPage(
-                            index = index,
-                            onLoadNextPage = viewModel::onLoadNextPage
+                            screenState.loadNextPage(
+                                index = index,
+                                onLoadNextPage = viewModel::onLoadNextPage
+                            )
+                        } ?: ShowError(
+                            message = stringResource(id = R.string.strava_server_unavailable),
+                            onTryAgainClick = {
+                                viewModel.onReboot()
+                            }
                         )
                     }
                 }
