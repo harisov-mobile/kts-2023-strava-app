@@ -17,13 +17,14 @@ import ru.internetcloud.strava.domain.profile.mvi.impl.ProfileStoreFactory
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.domain.training.mvi.impl.TrainingDetailStoreFactory
 import ru.internetcloud.strava.domain.training.usecase.GetTrainingsUseCase
+import timber.log.Timber
 
 val storeModule = module {
 
     factory<StoreFactory> {
         val logger = object : Logger {
             override fun log(text: String) {
-                // Log.d("MVI", text)
+                Timber.tag("MVI").d(text)
             }
         }
         LoggingStoreFactory(DefaultStoreFactory(), logger = logger)
