@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="sports_pilates_normal_large"
+    android:height="48dp"
+    android:width="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path android:name="bezier" android:fillColor="#ff000000" android:pathData="M 42.05,20.27 L 41.2,21.4 C 40.82,21.9 40.38,22.46 39.89,23.03 L 38.16,20.43 L 37.3,21.29 C 37.23,21.36 30.16,28.32 23.01,28.94 L 23.01,21 L 7,21 L 7,29 L 2,29 L 2,40 L 5.57,40 L 8.57,35 L 43,35 L 43,40 L 45,40 L 45,24.7 L 42.05,20.27 ZM 4,31 L 43,31 L 43,33 L 4,33 L 4,31 ZM 39,29 L 36.61,29 C 37.45,28.37 38.26,27.65 39,26.92 L 39,29 ZM 37.82,23.54 L 38.5,24.57 C 36.32,26.87 33.72,29.01 31.99,29.01 L 29.77,29.01 C 33.41,27.26 36.39,24.82 37.81,23.55 L 37.82,23.54 ZM 9,23 L 21,23 L 21,29 L 9,29 L 9,23 ZM 4.43,38 L 4,38 L 4,35 L 6.23,35 L 4.43,38 ZM 41,29 L 41,24.8 C 41.35,24.4 41.67,24.02 41.93,23.7 L 43,25.3 L 43,29 L 41,29 Z"/>
+</vector>

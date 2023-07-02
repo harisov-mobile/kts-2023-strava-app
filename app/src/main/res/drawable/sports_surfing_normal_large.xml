@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="sports_surfing_normal_large"
+    android:height="48dp"
+    android:width="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path android:name="bezier" android:fillColor="#ff000000" android:pathData="M 35.4,1.06 C 32.24,1.62 24.08,4.41 16.69,18.31 C 9.47,31.88 8.12,40.49 8.06,40.85 L 7.89,42 L 14.43,42 L 18.09,47.43 L 18.95,46.64 C 19.22,46.39 25.6,40.46 32.81,26.88 C 40.2,12.98 37.96,4.66 36.61,1.65 L 36.21,0.89 L 35.4,1.06 ZM 14.36,40 L 10.26,40 C 10.87,37.25 12.88,29.72 18.45,19.25 C 24.16,8.51 30.31,4.85 33.72,3.6 L 14.36,40 ZM 31.05,25.94 C 25.49,36.39 20.36,42.29 18.42,44.33 L 16.13,40.93 L 35.48,4.53 C 36.35,8.05 36.76,15.2 31.05,25.94 Z"/>
+</vector>

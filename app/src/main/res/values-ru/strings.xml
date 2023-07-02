@@ -89,7 +89,7 @@
     <string name="training_edit_discard_dialog_dismiss_button">Отмена</string>
     <string name="training_edit_field_name">название</string>
     <string name="training_edit_field_description">описание</string>
-    <string name="training_edit_field_sport_type">тип</string>
+    <string name="training_edit_field_sport">тип</string>
     <string name="training_edit_field_date">дата</string>
     <string name="training_edit_field_start_time">время начала</string>
     <string name="training_edit_field_duration">продолжительность</string>

@@ -96,4 +96,69 @@
     <string name="training_edit_chapter_activity_stats">Activity Stats</string>
     <string name="training_edit_saving_error">Failed to save an Activity:</string>
 
+    <string name="list_state_error_data_loading">Не удалось загрузить данные</string>
+    <string name="list_state_empty_data">Нет данных</string>
+    <string name="default_error">Loading error</string>
+    <string name="empty_data_message">Нет данных</string>
+
+    <string name="sport_type_foot_sports">Foot Sports</string>
+    <string name="sport_type_cycle_sports">Cycle Sports</string>
+    <string name="sport_type_water_sports">Water Sports</string>
+    <string name="sport_type_winter_sports">Winter Sports</string>
+    <string name="sport_type_other_sports">Other Sports</string>
+
+    <string name="sport_run">Run</string>
+    <string name="sport_trail_run">Trail Run</string>
+    <string name="sport_walk">Walk</string>
+    <string name="sport_hike">Hike</string>
+    <string name="sport_wheelchair">Wheelchair</string>
+
+    <string name="sport_ride">Ride</string>
+    <string name="sport_mountain_bike_ride">Mountain Bike Ride</string>
+    <string name="sport_gravel_ride">Gravel Ride</string>
+    <string name="sport_e_bike_ride">E-Bike Ride</string>
+    <string name="sport_e_mountain_bike_ride">E-Mountain Bike Ride</string>
+    <string name="sport_handcycle">Handcycle</string>
+    <string name="sport_velomobile">Velomobile</string>
+
+    <string name="sport_swim">Swim</string>
+    <string name="sport_surfing">Surfing</string>
+    <string name="sport_stand_up_paddling">Stand Up Paddling</string>
+    <string name="sport_windsurf">Windsurf</string>
+    <string name="sport_kitesurf">Kitesurf</string>
+    <string name="sport_kayaking">Kayaking</string>
+    <string name="sport_rowing">Rowing</string>
+    <string name="sport_canoeing">Canoeing</string>
+    <string name="sport_sail">Sail</string>
+
+    <string name="sport_ice_skate">Ice Skate</string>
+    <string name="sport_alpine_ski">Alpine Ski</string>
+    <string name="sport_nordic_ski">Nordic Ski</string>
+    <string name="sport_backcountry_ski">Backcountry Ski</string>
+    <string name="sport_snowboard">Snowboard</string>
+    <string name="sport_snowshoe">Snowshoe</string>
+
+    <string name="sport_inline_skate">Inline Skate</string>
+    <string name="sport_roller_ski">Roller Ski</string>
+    <string name="sport_workout">Workout</string>
+    <string name="sport_rock_climbing">Rock Climbing</string>
+    <string name="sport_weight_training">Weight Training</string>
+    <string name="sport_elliptical">Elliptical</string>
+    <string name="sport_stair_stepper">Stair Stepper</string>
+    <string name="sport_crossfit">Crossfit</string>
+    <string name="sport_yoga">Yoga</string>
+    <string name="sport_skateboard">Skateboard</string>
+    <string name="sport_soccer">Football (Soccer)</string>
+    <string name="sport_golf">Golf</string>
+    <string name="sport_tennis">Tennis</string>
+    <string name="sport_pickleball">Pickleball</string>
+    <string name="sport_racquetball">Racquetball</string>
+    <string name="sport_squash">Squash</string>
+    <string name="sport_badminton">Badminton</string>
+    <string name="sport_table_tennis">Table Tennis</string>
+    <string name="sport_hiit">HIIT</string>
+    <string name="sport_pilates">Pilates</string>
+
+
+
 </resources>
