@@ -1,13 +1,11 @@
 package ru.internetcloud.strava.presentation.training.list
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -19,7 +17,6 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +25,7 @@ import androidx.navigation.NavBackStackEntry
 import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
+import ru.internetcloud.strava.presentation.common.compose.ListProgressIndicator
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
 import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
 import ru.internetcloud.strava.presentation.common.list.SwipeRefresh
@@ -98,14 +96,8 @@ fun TrainingListScreen(
                         onErrorRetry = viewModel::onReboot,
                         onErrorRetryPage = viewModel::onRetry,
                         onEmptyRetry = viewModel::onReboot,
-                        loadListContent = { index ->
-                            Box(
-                                modifier = Modifier
-                                    .fillParentMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator()
-                            }
+                        loadListContent = {
+                            ListProgressIndicator()
                         }
                     ) { index, training ->
                         TrainingItemView(
@@ -128,3 +120,4 @@ fun TrainingListScreen(
         }
     }
 }
+
