@@ -26,8 +26,8 @@ data class LocalTraining(
     @ColumnInfo(name = TrainingContract.Columns.TYPE)
     val type: String,
 
-    @ColumnInfo(name = TrainingContract.Columns.SPORT_TYPE)
-    val sportType: String,
+    @ColumnInfo(name = TrainingContract.Columns.SPORT)
+    val sport: String,
 
     @ColumnInfo(name = TrainingContract.Columns.START_DATE)
     val startDate: Date,

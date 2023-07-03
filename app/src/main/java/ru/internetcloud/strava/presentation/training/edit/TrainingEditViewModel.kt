@@ -55,7 +55,7 @@ class TrainingEditViewModel(
             movingTime = 0,
             elapsedTime = 0,
             type = INITIAL_SPORT_TYPE,
-            sportType = INITIAL_SPORT_TYPE,
+            sport = INITIAL_SPORT_TYPE,
             startDate = Date(),
             description = "",
             trainer = false,
@@ -106,7 +106,7 @@ class TrainingEditViewModel(
                 }
 
                 is EditTrainingEvent.OnSportTypeChange -> {
-                    setScreenState(oldTraining.copy(sportType = editTrainingEvent.sportType))
+                    setScreenState(oldTraining.copy(sport = editTrainingEvent.sport))
                 }
 
                 is EditTrainingEvent.OnStartDateChange -> {

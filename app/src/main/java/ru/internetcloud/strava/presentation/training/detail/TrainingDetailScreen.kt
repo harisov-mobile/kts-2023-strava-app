@@ -266,7 +266,7 @@ private fun ShowTraining(
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = training.sportType,
+                text = training.sport,
                 fontWeight = FontWeight.Bold
             )
         }

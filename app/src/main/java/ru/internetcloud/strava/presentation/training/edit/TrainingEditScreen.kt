@@ -279,7 +279,7 @@ private fun ShowTrainingEdit(
         gesturesEnabled = gesturesEnabled.value,
         drawerContent = {
             SportPicker(
-                currentSport = getSportByName(training.sportType),
+                currentSport = getSportByName(training.sport),
                 onSportSelect = { sport ->
                     coroutineScope.launch {
                         gesturesEnabled.value = false
@@ -320,7 +320,7 @@ private fun ShowTrainingEdit(
                 // Sport Type
                 OutlinedTextField(
                     readOnly = true,
-                    value = stringResource(id = getSportByName(training.sportType).label),
+                    value = stringResource(id = getSportByName(training.sport).label),
                     onValueChange = {},
                     modifier = Modifier
                         .fillMaxWidth(),

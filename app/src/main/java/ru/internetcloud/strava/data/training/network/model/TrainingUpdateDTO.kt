@@ -12,7 +12,7 @@ data class TrainingUpdateDTO(
     val name: String,
 
     @Json(name = "sport_type")
-    val sportType: String,
+    val sport: String,
 
     @Json(name = "description")
     val description: String,

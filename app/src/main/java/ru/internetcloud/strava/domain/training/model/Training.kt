@@ -9,7 +9,7 @@ data class Training(
     val movingTime: Int,
     val elapsedTime: Int,
     val type: String,
-    val sportType: String,
+    val sport: String,
     val startDate: Date,
     val description: String,
     val trainer: Boolean,

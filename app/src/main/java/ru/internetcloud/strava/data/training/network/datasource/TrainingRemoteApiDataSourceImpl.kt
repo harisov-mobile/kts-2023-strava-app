@@ -72,7 +72,7 @@ class TrainingRemoteApiDataSourceImpl(
             val networkResponse = trainingApi.addTraining(
                 name = newTrainingDTO.name,
                 type = newTrainingDTO.type,
-                sportType = newTrainingDTO.sportType,
+                sport = newTrainingDTO.sport,
                 startDate = newTrainingDTO.startDate,
                 elapsedTime = newTrainingDTO.elapsedTime,
                 description = newTrainingDTO.description.orEmpty(),
