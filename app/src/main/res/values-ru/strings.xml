@@ -97,4 +97,67 @@
     <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
     <string name="training_edit_saving_error">Не удалось сохранить тренировку:</string>
 
+    <string name="list_state_error_data_loading">Не удалось загрузить данные</string>
+    <string name="list_state_empty_data">Нет данных</string>
+    <string name="default_error">Loading error</string>
+    <string name="empty_data_message">Нет данных</string>
+
+    <string name="sport_type_foot_sports">Бег и ходьба</string>
+    <string name="sport_type_cycle_sports">Велосипедный спорт</string>
+    <string name="sport_type_water_sports">Водные виды спорта</string>
+    <string name="sport_type_winter_sports">Зимние виды спорта</string>
+    <string name="sport_type_other_sports">Другие виды спорта</string>
+
+    <string name="sport_run">Забег</string>
+    <string name="sport_trail_run">Трейлраннинг</string>
+    <string name="sport_walk">Ходьба</string>
+    <string name="sport_hike">Хайкинг</string>
+    <string name="sport_wheelchair">Кресло-коляска</string>
+
+    <string name="sport_ride">Заезд</string>
+    <string name="sport_mountain_bike_ride">Горный велозаезд</string>
+    <string name="sport_gravel_ride">Гравийный велозаезд</string>
+    <string name="sport_e_bike_ride">Заезд на электровелосипеде</string>
+    <string name="sport_e_mountain_bike_ride">Заезд на горном электровелосипеде</string>
+    <string name="sport_handcycle">Ручной велосипед</string>
+    <string name="sport_velomobile">Веломобиль</string>
+
+    <string name="sport_swim">Заплыв</string>
+    <string name="sport_surfing">Серфинг</string>
+    <string name="sport_stand_up_paddling">Гребля на доске стоя</string>
+    <string name="sport_windsurf">Виндсерфинг</string>
+    <string name="sport_kitesurf">Кайтсерфинг</string>
+    <string name="sport_kayaking">Каякинг</string>
+    <string name="sport_rowing">Гребля</string>
+    <string name="sport_canoeing">Каноэ</string>
+    <string name="sport_sail">Парусный спорт</string>
+
+    <string name="sport_ice_skate">Коньки</string>
+    <string name="sport_alpine_ski">Горные лыжи</string>
+    <string name="sport_nordic_ski">Лыжи</string>
+    <string name="sport_backcountry_ski">Бэккантри</string>
+    <string name="sport_snowboard">Сноуборд</string>
+    <string name="sport_snowshoe">Снегоступы</string>
+
+    <string name="sport_inline_skate">Роликовые коньки</string>
+    <string name="sport_roller_ski">Роликовые лыжи</string>
+    <string name="sport_workout">Тренировка</string>
+    <string name="sport_rock_climbing">Скалолазание</string>
+    <string name="sport_weight_training">Силовая тренировка</string>
+    <string name="sport_elliptical">Эллиптический тренажер</string>
+    <string name="sport_stair_stepper">Тренажер-степпер</string>
+    <string name="sport_crossfit">Кроссфит</string>
+    <string name="sport_yoga">Йога</string>
+    <string name="sport_skateboard">Скейтбординг</string>
+    <string name="sport_soccer">Футбол</string>
+    <string name="sport_golf">Гольф</string>
+    <string name="sport_tennis">Теннис</string>
+    <string name="sport_pickleball">Пиклбол</string>
+    <string name="sport_racquetball">Ракетбол</string>
+    <string name="sport_squash">Сквош</string>
+    <string name="sport_badminton">Бадминтон</string>
+    <string name="sport_table_tennis">Настольный теннис</string>
+    <string name="sport_hiit">ВИИТ</string>
+    <string name="sport_pilates">Пилатес</string>
+
 </resources>
