@@ -7,8 +7,6 @@ import ru.internetcloud.strava.data.auth.network.AppAuth
 import ru.internetcloud.strava.data.auth.network.AppAuthImpl
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.common.ErrorMessageConverterImpl
-import ru.internetcloud.strava.domain.common.model.SportTypeKeeper
-import ru.internetcloud.strava.domain.common.model.SportTypeKeeperImpl
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.DateConverterImpl
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
@@ -40,9 +38,5 @@ val commonModule = module {
 
     single<DateConverter> {
         DateConverterImpl()
-    }
-
-    single<SportTypeKeeper> {
-        SportTypeKeeperImpl()
     }
 }

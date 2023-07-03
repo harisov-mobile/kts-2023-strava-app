@@ -47,7 +47,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -61,7 +60,6 @@ import org.koin.androidx.compose.inject
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.domain.common.model.SportTypeKeeper
 import ru.internetcloud.strava.domain.common.model.getSportByName
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.toFloatOrDefault
@@ -231,14 +229,7 @@ private fun ShowTrainingEdit(
     onBackPressed: () -> Unit
 ) {
     val dateConverter: DateConverter by inject()
-    val sportTypeKeeper: SportTypeKeeper by inject()
-
     val showDurationDialog = remember { mutableStateOf(false) }
-
-    val expandedSportType = remember { mutableStateOf(false) }
-    val suggestions = remember { sportTypeKeeper.getSportTypes() }
-    val textfieldSize = remember { mutableStateOf(Size.Zero) }
-
     val context = LocalContext.current
 
     val calendar = Calendar.getInstance()
@@ -280,7 +271,8 @@ private fun ShowTrainingEdit(
                     gesturesEnabled.value = false
                 }
             }
-            true })
+            true
+        })
 
     BottomDrawer(
         drawerState = sportBottomDrawerState,
@@ -328,23 +320,16 @@ private fun ShowTrainingEdit(
                 // Sport Type
                 OutlinedTextField(
                     readOnly = true,
-                    value = training.sportType,
-                    onValueChange = {}, //remember { { onEvent(EditTrainingEvent.OnSportTypeChange(it)) } },
+                    value = stringResource(id = getSportByName(training.sportType).label),
+                    onValueChange = {},
                     modifier = Modifier
-                        .fillMaxWidth()
-//                        .onGloballyPositioned { coordinates ->
-//                            // This value is used to assign to the DropDown the same width
-//                            textfieldSize.value = coordinates.size.toSize()
-//                        }
-                    ,
+                        .fillMaxWidth(),
                     label = { Text(text = stringResource(id = R.string.training_edit_field_sport)) },
                     trailingIcon = {
                         Icon(
                             imageVector = Icons.Filled.KeyboardArrowDown,
                             contentDescription = null,
-                            Modifier.clickable {
-                                // expandedSportType.value = !expandedSportType.value
-
+                            modifier = Modifier.clickable {
                                 coroutineScope.launch {
                                     gesturesEnabled.value = true
                                     sportBottomDrawerState.open()

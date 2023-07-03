@@ -48,7 +48,7 @@ fun SportPicker(
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
 
-    var currentItemIndex = getCurrentSportIndex(sportsWithSportType, currentSport)
+    val currentItemIndex = getCurrentSportIndex(sportsWithSportType, currentSport)
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Divider(
@@ -89,7 +89,7 @@ fun SportPicker(
             }
         }
 
-        LaunchedEffect(key1 = Unit) {
+        LaunchedEffect(key1 = currentItemIndex) {
             coroutineScope.launch {
                 listState.scrollToItem(index = currentItemIndex)
             }
