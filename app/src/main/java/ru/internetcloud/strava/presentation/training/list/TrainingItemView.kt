@@ -69,7 +69,7 @@ fun TrainingItemView(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeString(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

@@ -26,7 +26,7 @@ data class TrainingDTO(
     @Json(name = "sport_type")
     val sport: String,
 
-    @Json(name = "start_date")
+    @Json(name = "start_date_local")
     val startDate: String,
 
     @Json(name = "description")

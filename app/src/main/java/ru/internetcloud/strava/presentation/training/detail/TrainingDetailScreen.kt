@@ -245,7 +245,7 @@ private fun ShowTraining(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeString(training.startDate),
                         style = MaterialTheme.typography.caption
                     )
                 }

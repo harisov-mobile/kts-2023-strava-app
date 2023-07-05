@@ -11,7 +11,7 @@ class DateConverterImpl : DateConverter {
     private val OUTPUT_DATE_TIME_FORMAT_WITH_GMT = "dd.MM.yyyy HH:mm:ss aaa z"
     private val EMPTY_STRING_VALUE = ""
 
-    private val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    private val DATE_TIME_FORMAT = "yyyy-MM-dd  HH:mm"
     private val DATE_TIME_FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     private val DATE_FORMAT = "dd.MM.yyyy"
     private val TIME_FORMAT = "HH : mm"
@@ -76,5 +76,10 @@ class DateConverterImpl : DateConverter {
     @SuppressLint("SimpleDateFormat")
     override fun getDateTimeStringWithGMT(date: Date?): String {
         return date?.let { dateTimeWithGmtSdf.format(date) } ?: EMPTY_STRING_VALUE
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    override fun getDateTimeString(date: Date?): String {
+        return date?.let { dateTimeSdf.format(date) } ?: EMPTY_STRING_VALUE
     }
 }

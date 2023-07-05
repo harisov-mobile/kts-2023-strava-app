@@ -20,6 +20,6 @@ data class TrainingListItemDTO(
     @Json(name = "type")
     val type: String,
 
-    @Json(name = "start_date")
+    @Json(name = "start_date_local")
     val startDate: String
 )
