@@ -90,7 +90,7 @@ private val LocalCustomTypography = compositionLocalOf { stravaCustomTypography 
 @Composable
 fun StravaCustomTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val colors: StravaCustomColors = if (darkTheme) {
         StravaCustomDarkColorPalette

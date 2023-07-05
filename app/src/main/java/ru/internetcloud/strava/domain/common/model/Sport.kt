@@ -55,7 +55,7 @@ enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val spor
     Badminton(R.string.sport_badminton, R.drawable.sports_badminton_normal_large, SportType.OtherSports),
     TableTennis(R.string.sport_table_tennis, R.drawable.sports_table_tennis_normal_large, SportType.OtherSports),
     HighIntensityIntervalTraining(R.string.sport_hiit, R.drawable.sports_hiit_normal_large, SportType.OtherSports),
-    Pilates(R.string.sport_pilates, R.drawable.sports_pilates_normal_large, SportType.OtherSports),
+    Pilates(R.string.sport_pilates, R.drawable.sports_pilates_normal_large, SportType.OtherSports)
 }
 
 fun getSportsByType(sportType: SportType): List<Sport> {

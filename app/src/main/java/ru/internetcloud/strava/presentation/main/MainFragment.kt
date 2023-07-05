@@ -18,7 +18,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         setContent {
-            // StravaTheme {
             StravaCustomTheme {
                 MainScreen(
                     keyMessage = AuthFragment.KEY_MESSAGE,

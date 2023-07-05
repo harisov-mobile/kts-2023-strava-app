@@ -10,4 +10,3 @@ enum class SportType(@StringRes val label: Int) {
     WinterSports(R.string.sport_type_winter_sports),
     OtherSports(R.string.sport_type_other_sports)
 }
-

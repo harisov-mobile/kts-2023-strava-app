@@ -33,16 +33,15 @@ val storeModule = module {
     factory(named("ProfileStore")) {
         ProfileStoreFactory(
             storeFactory = get(),
-            getProfileUseCase = get()
+            profileRepository = get()
         ).create()
     }
 
     factory(named("TrainingDetailStore")) {
         TrainingDetailStoreFactory(
             storeFactory = get(),
-            getProfileUseCase = get(),
-            getTrainingUseCase = get(),
-            deleteTrainingUseCase = get()
+            profileRepository = get(),
+            trainingRepository = get()
         ).create()
     }
 

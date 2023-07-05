@@ -25,7 +25,7 @@ fun ShowSource(source: Source) {
             Card(
                 shape = MaterialTheme.shapes.medium,
                 backgroundColor = MaterialTheme.colors.surface,
-                border = BorderStroke(width = 1.dp, color =  MaterialTheme.colors.error)
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.error)
             ) {
                 Text(
                     text = stringResource(id = R.string.source_description),

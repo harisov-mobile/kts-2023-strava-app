@@ -3,11 +3,11 @@ package ru.internetcloud.strava.domain.profile.mvi.impl
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.domain.common.model.DataResponse
+import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.mvi.api.ProfileStore
-import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 
 internal class ProfileExecutor(
-    private val getProfileUseCase: GetProfileUseCase
+    private val profileRepository: ProfileRepository
 ) : CoroutineExecutor<ProfileStore.Intent, ProfileStore.Action, ProfileStore.State, ProfileStoreFactory.Message, ProfileStore.Event>() {
 
     override fun executeIntent(intent: ProfileStore.Intent, getState: () -> ProfileStore.State) {
@@ -21,7 +21,7 @@ internal class ProfileExecutor(
     private suspend fun loadProfile() {
         dispatch(ProfileStoreFactory.Message.SetLoading)
 
-        when (val dataResponse = getProfileUseCase.getProfile()) {
+        when (val dataResponse = profileRepository.getProfile()) {
             is DataResponse.Success -> {
                 dispatch(
                     ProfileStoreFactory.Message.SetSuccess(

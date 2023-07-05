@@ -80,8 +80,7 @@ fun SportPicker(
             items(
                 items = sportsWithSportType,
                 contentType = { it::class.java.name }
-            )
-            { item ->
+            ) { item ->
                 when (item) {
                     is SportType -> SportTypeItem(sportType = item)
                     is Sport -> SportItem(sport = item, currentSport = currentSport, onSportSelect = onSportSelect)
@@ -181,7 +180,6 @@ fun getCurrentSportIndex(list: List<Any>, currentSport: Sport): Int {
 @Preview
 @Composable
 fun SportPickerPreview() {
-
     SportPicker(
         currentSport = Sport.Badminton,
         onSportSelect = { }

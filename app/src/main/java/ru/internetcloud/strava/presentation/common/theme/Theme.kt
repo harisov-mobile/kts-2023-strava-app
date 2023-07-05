@@ -40,8 +40,6 @@ private val LightColorPalette = lightColors(
     error = Color.Red
 )
 
-
-
 @Composable
 fun StravaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
