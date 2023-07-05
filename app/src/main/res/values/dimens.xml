@@ -11,4 +11,6 @@
     <dimen name="sport_item_height">50dp</dimen>
     <dimen name="sport_item_icon_size">30dp</dimen>
 
+    <dimen name="training_item_icon_size">32dp</dimen>
+
 </resources>

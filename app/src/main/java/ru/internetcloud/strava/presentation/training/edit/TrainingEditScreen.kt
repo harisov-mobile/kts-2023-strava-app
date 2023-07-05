@@ -127,14 +127,14 @@ fun TrainingEditScreen(
                     if (state is UiState.Success) {
                         if (state.saving) {
                             CircularProgressIndicator(
-                                color = MaterialTheme.colors.surface,
+                                color = MaterialTheme.colors.onPrimary,
                                 modifier = Modifier.padding(end = 16.dp)
                             )
                         }
                         Text(
                             text = stringResource(id = R.string.training_edit_save_button),
                             fontSize = 20.sp,
-                            color = MaterialTheme.colors.surface,
+                            color = MaterialTheme.colors.onPrimary,
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {

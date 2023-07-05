@@ -52,7 +52,7 @@ fun SportPicker(
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Divider(
-            color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
+            color = MaterialTheme.colors.background,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .width(30.dp)
@@ -73,7 +73,7 @@ fun SportPicker(
 
         )
         Divider(
-            color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
+            color = MaterialTheme.colors.background
         )
 
         LazyColumn(modifier = Modifier.fillMaxWidth(), state = listState) {
@@ -143,7 +143,7 @@ fun SportItem(
             )
         }
         Divider(
-            color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
+            color = MaterialTheme.colors.background
         )
     }
 }
@@ -157,7 +157,7 @@ fun SportTypeItem(
         modifier = modifier
             .fillMaxWidth()
             .height(dimensionResource(R.dimen.sport_item_height))
-            .background(color = Color.LightGray)
+            .background(color = MaterialTheme.colors.background)
     ) {
         Text(
             text = stringResource(id = sportType.label),

@@ -11,24 +11,36 @@ import androidx.compose.ui.graphics.Color
 @SuppressLint("ConflictingOnColor")
 private val DarkColorPalette = darkColors(
     primary = tangelo,
-    primaryVariant = Black900,
-    secondary = Black900,
+    primaryVariant = tangelo_dark,
+    onPrimary = gray_light,
+
+    secondary = tangelo,
+    secondaryVariant = Black500,
+    onSecondary = gray_light,
+
     background = Color.Black,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    secondaryVariant = Black500
+    onBackground = gray_light,
+
+    error = tangelo_light
 )
 
 @SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColors(
     primary = tangelo,
     primaryVariant = tangelo_dark,
-    secondary = Color.White,
-    background = gray_light,
     onPrimary = Color.White,
-    onSecondary = Black900,
-    secondaryVariant = Black500
+
+    secondary = tangelo,
+    secondaryVariant = Black500,
+    onSecondary = Color.White,
+
+    background = gray_light,
+    onBackground = Black900,
+
+    error = Color.Red
 )
+
+
 
 @Composable
 fun StravaTheme(

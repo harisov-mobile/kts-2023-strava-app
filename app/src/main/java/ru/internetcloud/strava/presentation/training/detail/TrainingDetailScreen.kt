@@ -34,10 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -55,6 +55,7 @@ import ru.internetcloud.strava.domain.training.util.TrainingConverter
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
+import ru.internetcloud.strava.presentation.common.theme.customTypography
 import ru.internetcloud.strava.presentation.training.detail.model.UiTrainingDetailEvent
 import ru.internetcloud.strava.presentation.training.detail.model.UiTrainingDetailState
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
@@ -127,7 +128,7 @@ fun TrainingDetailScreen(
                                 onEditTraining(trainingId)
                             }) {
                                 Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.normal_margin)))
                                 Text(text = stringResource(id = R.string.menu_edit))
                             }
 
@@ -135,7 +136,7 @@ fun TrainingDetailScreen(
                                 viewModel.deleteTraining()
                             }) {
                                 Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.normal_margin)))
                                 Text(text = stringResource(id = R.string.menu_delete))
                             }
                         }
@@ -211,32 +212,33 @@ fun TrainingDetailScreen(
 
 @Composable
 private fun ShowTraining(
+    modifier: Modifier = Modifier,
     profile: Profile,
     training: Training,
     source: Source
 ) {
     val dateConverter: DateConverter by inject()
 
-    Column {
+    Column(modifier = modifier) {
         ShowSource(source)
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface)
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.big_margin))
         ) {
             Row {
                 AsyncImage(
                     modifier = Modifier
-                        .size(32.dp)
+                        .size(dimensionResource(R.dimen.training_item_icon_size))
                         .clip(CircleShape),
                     model = profile.imageUrlMedium,
                     placeholder = painterResource(id = R.drawable.no_photo),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.big_margin)))
                 Column {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
                     Text(
                         text = "${profile.firstName} ${profile.lastName}",
                         fontSize = 14.sp,
@@ -244,27 +246,26 @@ private fun ShowTraining(
                     )
                     Text(
                         text = dateConverter.getDateTimeStringWithGMT(training.startDate),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal
+                        style = MaterialTheme.typography.caption
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
             Text(
                 text = training.name,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.h6
             )
             if (training.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
                 Text(
                     text = training.description,
-                    fontWeight = FontWeight.Normal
+                    style = MaterialTheme.customTypography.bodyWeak
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.huge_margin)))
             TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
             Text(
                 text = training.sport,
                 fontWeight = FontWeight.Bold
