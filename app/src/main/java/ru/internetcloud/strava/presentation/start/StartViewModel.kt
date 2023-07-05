@@ -10,20 +10,15 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.data.firstlaunch.repository.FirstLaunchRepositoryImpl
-import ru.internetcloud.strava.data.token.repository.TokenRepositoryImpl
 import ru.internetcloud.strava.domain.firstlaunch.usecase.GetFirstLaunchUseCase
 import ru.internetcloud.strava.domain.firstlaunch.usecase.SetFirstLaunchUseCase
 import ru.internetcloud.strava.domain.token.usecase.AuthUseCase
 
-class StartViewModel : ViewModel() {
-
-    private val firstLaunchRepository = FirstLaunchRepositoryImpl()
-    private val getFirstLaunchUseCase = GetFirstLaunchUseCase(firstLaunchRepository)
-    private val setFirstLaunchUseCase = SetFirstLaunchUseCase(firstLaunchRepository)
-
-    private val tokenRepository = TokenRepositoryImpl()
-    private val authUseCase = AuthUseCase(tokenRepository)
+class StartViewModel(
+    private val getFirstLaunchUseCase: GetFirstLaunchUseCase,
+    private val setFirstLaunchUseCase: SetFirstLaunchUseCase,
+    private val authUseCase: AuthUseCase
+) : ViewModel() {
 
     private val directionChannel = Channel<NavDirections>(Channel.BUFFERED)
     val directionFlow: Flow<NavDirections>

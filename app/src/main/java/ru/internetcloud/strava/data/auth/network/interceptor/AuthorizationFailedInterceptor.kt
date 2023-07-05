@@ -8,11 +8,14 @@ import net.openid.appauth.AuthorizationService
 import okhttp3.Interceptor
 import okhttp3.Response
 import ru.internetcloud.strava.data.auth.network.AppAuth
-import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
+import ru.internetcloud.strava.domain.token.TokenRepository
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
 
 class AuthorizationFailedInterceptor(
-    private val authorizationService: AuthorizationService
+    private val authorizationService: AuthorizationService,
+    private val tokenRepository: TokenRepository,
+    private val appAuth: AppAuth,
+    private val unauthorizedHandler: UnauthorizedHandler
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -39,16 +42,16 @@ class AuthorizationFailedInterceptor(
         val tokenRefreshed = runBlocking {
             runCatching {
                 withContext(Dispatchers.IO) {
-                    val refreshRequest = AppAuth.getRefreshTokenRequest(
-                        TokenSharedPreferencesStorage.getTokenData().refreshToken.orEmpty()
+                    val refreshRequest = appAuth.getRefreshTokenRequest(
+                        tokenRepository.getTokenData().refreshToken.orEmpty()
                     )
-                    AppAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
+                    appAuth.performTokenRequestSuspend(authorizationService, refreshRequest)
                 }
             }
                 .getOrNull()
                 ?.let { tokens ->
                     withContext(Dispatchers.IO) {
-                        TokenSharedPreferencesStorage.saveTokenData(tokens)
+                        tokenRepository.saveTokenData(tokens)
                     }
                     true
                 } ?: false
@@ -57,7 +60,7 @@ class AuthorizationFailedInterceptor(
         if (!tokenRefreshed) {
             // не удалось обновить токен, произвести логаут
             runBlocking {
-                UnauthorizedHandler.onUnauthorized()
+                unauthorizedHandler.onUnauthorized()
             }
         }
         return tokenRefreshed

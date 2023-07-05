@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.inject
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
@@ -36,6 +37,8 @@ fun TrainingItemView(
     training: TrainingListItem,
     onTrainingClickListener: () -> Unit
 ) {
+    val dateConverter: DateConverter by inject()
+
     Card(
         modifier = modifier
             .fillMaxWidth(),
@@ -62,7 +65,7 @@ fun TrainingItemView(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = DateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

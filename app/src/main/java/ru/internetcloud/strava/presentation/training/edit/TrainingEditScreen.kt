@@ -53,8 +53,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.Calendar
+import org.koin.androidx.compose.inject
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.SportTypeKeeper
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -80,9 +82,9 @@ fun TrainingEditScreen(
 
     val shouldExitHere = remember { mutableStateOf(false) }
 
-    val viewModel: TrainingEditViewModel = viewModel(
-        factory = TrainingEditViewModelFactory(id = trainingId, editMode = editMode)
-    )
+    val viewModel: TrainingEditViewModel by viewModel {
+        parametersOf(trainingId, editMode)
+    }
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 
@@ -180,7 +182,14 @@ fun TrainingEditScreen(
                 }
 
                 is UiState.EmptyData -> {
-                    ShowEmptyData(message = stringResource(id = R.string.no_data))
+                    ShowEmptyData(
+                        message = stringResource(id = R.string.no_data),
+                        onRefreshClick = remember {
+                            {
+                                viewModel.fetchTraining(id = trainingId)
+                            }
+                        }
+                    )
                 }
             }
         }
@@ -215,10 +224,13 @@ private fun ShowTrainingEdit(
     stayHere: () -> Unit,
     onBackPressed: () -> Unit
 ) {
+    val dateConverter: DateConverter by inject()
+    val sportTypeKeeper: SportTypeKeeper by inject()
+
     val showDurationDialog = remember { mutableStateOf(false) }
 
     val expandedSportType = remember { mutableStateOf(false) }
-    val suggestions = remember { SportTypeKeeper.getSportTypes() }
+    val suggestions = remember { sportTypeKeeper.getSportTypes() }
     val textfieldSize = remember { mutableStateOf(Size.Zero) }
 
     val context = LocalContext.current
@@ -331,7 +343,7 @@ private fun ShowTrainingEdit(
                 Icon(imageVector = Icons.Filled.CalendarToday, contentDescription = null)
             },
             readOnly = true,
-            value = DateConverter.getDateString(training.startDate),
+            value = dateConverter.getDateString(training.startDate),
             onValueChange = remember { { } },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -353,7 +365,7 @@ private fun ShowTrainingEdit(
                 Icon(imageVector = Icons.Filled.AccessTime, contentDescription = null)
             },
             readOnly = true,
-            value = DateConverter.getTimeString(training.startDate),
+            value = dateConverter.getTimeString(training.startDate),
             onValueChange = remember { { } },
             modifier = Modifier
                 .fillMaxWidth(),

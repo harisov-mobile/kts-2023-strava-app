@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import ru.internetcloud.strava.data.training.repository.TrainingRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.DateConverter
@@ -24,13 +23,12 @@ import ru.internetcloud.strava.presentation.util.UiState
 class TrainingEditViewModel(
     id: Long,
     private val editMode: EditMode,
+    private val getTrainingUseCase: GetTrainingUseCase,
+    private val updateTrainingUseCase: UpdateTrainingUseCase,
+    private val addTrainingUseCase: AddTrainingUseCase,
+    private val dateConverter: DateConverter,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val trainingRepository = TrainingRepositoryImpl()
-    private val getTrainingUseCase = GetTrainingUseCase(trainingRepository)
-    private val updateTrainingUseCase = UpdateTrainingUseCase(trainingRepository)
-    private val addTrainingUseCase = AddTrainingUseCase(trainingRepository)
 
     private val initialState =
         savedStateHandle.get<UiState<Training>>(KEY_TRAINING_EDIT_STATE) ?: UiState.Loading
@@ -118,7 +116,7 @@ class TrainingEditViewModel(
                     val minute = calendar[Calendar.MINUTE]
                     setScreenState(
                         oldTraining.copy(
-                            startDate = DateConverter.getDate(
+                            startDate = dateConverter.getDate(
                                 editTrainingEvent.year,
                                 editTrainingEvent.month,
                                 editTrainingEvent.day,
@@ -137,7 +135,7 @@ class TrainingEditViewModel(
                     val day = calendar[Calendar.DAY_OF_MONTH]
                     setScreenState(
                         oldTraining.copy(
-                            startDate = DateConverter.getDate(
+                            startDate = dateConverter.getDate(
                                 year,
                                 month,
                                 day,

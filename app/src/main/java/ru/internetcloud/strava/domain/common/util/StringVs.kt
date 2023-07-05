@@ -1,4 +1,4 @@
-package ru.internetcloud.strava.presentation.util
+package ru.internetcloud.strava.domain.common.util
 
 import android.content.Context
 import androidx.annotation.PluralsRes

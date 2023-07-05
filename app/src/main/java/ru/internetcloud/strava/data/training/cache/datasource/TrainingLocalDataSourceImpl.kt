@@ -1,13 +1,12 @@
 package ru.internetcloud.strava.data.training.cache.datasource
 
-import ru.internetcloud.strava.data.common.database.AppDatabaseHolder
+import ru.internetcloud.strava.data.common.database.AppDao
 import ru.internetcloud.strava.data.training.cache.model.LocalTraining
 import ru.internetcloud.strava.data.training.cache.model.LocalTrainingListItem
 
-class TrainingLocalDataSourceImpl : TrainingLocalDataSource {
-
-    private val appDao = AppDatabaseHolder.appDao // потом будет dependency injecton вместо этой переменной
-
+class TrainingLocalDataSourceImpl(
+    private val appDao: AppDao
+) : TrainingLocalDataSource {
     override suspend fun getTrainingListItems(): List<LocalTrainingListItem> {
         return appDao.getTrainingListItems()
     }

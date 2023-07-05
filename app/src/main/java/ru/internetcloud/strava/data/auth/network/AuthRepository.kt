@@ -1,42 +1,17 @@
 package ru.internetcloud.strava.data.auth.network
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
-import net.openid.appauth.EndSessionRequest
 import net.openid.appauth.TokenRequest
-import ru.internetcloud.strava.data.token.TokenSharedPreferencesStorage
-import ru.internetcloud.strava.domain.token.model.TokensModel
 
-class AuthRepository {
+interface AuthRepository {
 
-    fun getAuthRequest(): AuthorizationRequest {
-        return AppAuth.getAuthRequest()
-    }
+    fun getAuthRequest(): AuthorizationRequest
 
     suspend fun performTokenRequest(
         authService: AuthorizationService,
         tokenRequest: TokenRequest
-    ) {
-        val tokens = AppAuth.performTokenRequestSuspend(authService, tokenRequest)
-        withContext(Dispatchers.IO) {
-            // обмен кода на токен произошел успешно, сохраняем токены и завершаем авторизацию
-            TokenSharedPreferencesStorage.saveTokenData(
-                TokensModel(
-                    accessToken = tokens.accessToken,
-                    refreshToken = tokens.refreshToken,
-                    idToken = tokens.idToken
-                )
-            )
-        }
-    }
+    )
 
-    fun getEndSessionRequest(): EndSessionRequest {
-        return AppAuth.getEndSessionRequest()
-    }
-
-    suspend fun logout() {
-        TokenSharedPreferencesStorage.clearTokenData()
-    }
+    suspend fun logout()
 }

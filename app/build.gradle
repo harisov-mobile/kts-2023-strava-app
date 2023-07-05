@@ -130,4 +130,18 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+
+    // Koin
+    implementation "io.insert-koin:koin-core:$koinVersion"
+    implementation "io.insert-koin:koin-android:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
+
+    // MviKotlin
+    implementation "com.arkivanov.mvikotlin:mvikotlin:$mviVersion"
+    implementation "com.arkivanov.mvikotlin:mvikotlin-main:$mviVersion"
+    implementation "com.arkivanov.mvikotlin:mvikotlin-logging:$mviVersion"
+    implementation "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:$mviVersion"
+
+    // Leak canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
 }

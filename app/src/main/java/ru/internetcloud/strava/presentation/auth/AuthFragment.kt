@@ -6,12 +6,12 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.databinding.FragmentAuthBinding
 import ru.internetcloud.strava.presentation.util.launchAndCollectIn
@@ -19,7 +19,7 @@ import ru.internetcloud.strava.presentation.util.snackbar
 
 class AuthFragment : Fragment(R.layout.fragment_auth) {
 
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModel()
     private val binding by viewBinding(FragmentAuthBinding::bind)
     private val args by navArgs<AuthFragmentArgs>()
 

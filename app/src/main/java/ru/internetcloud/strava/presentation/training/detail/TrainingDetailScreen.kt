@@ -40,24 +40,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import coil.compose.AsyncImage
+import org.koin.androidx.compose.inject
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.common.util.DateConverter
+import ru.internetcloud.strava.domain.common.util.parseStringVs
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.domain.training.util.TrainingConverter
-import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
 import ru.internetcloud.strava.presentation.common.compose.ShowSource
+import ru.internetcloud.strava.presentation.training.detail.model.UiTrainingDetailEvent
+import ru.internetcloud.strava.presentation.training.detail.model.UiTrainingDetailState
 import ru.internetcloud.strava.presentation.training.list.TimeDistanceSpeed
-import ru.internetcloud.strava.presentation.util.UiState
 import ru.internetcloud.strava.presentation.util.addLine
-import ru.internetcloud.strava.presentation.util.parseStringVs
-
 
 @Composable
 fun TrainingDetailScreen(
@@ -68,9 +69,10 @@ fun TrainingDetailScreen(
     onBackWithRefresh: () -> Unit,
     onEditTraining: (id: Long) -> Unit
 ) {
-    val viewModel: TrainingDetailViewModel = viewModel(
-        factory = TrainingDetailViewModelFactory(id = trainingId)
-    )
+    val viewModel: TrainingDetailViewModel by viewModel {
+        parametersOf(trainingId)
+    }
+
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
 
@@ -84,7 +86,6 @@ fun TrainingDetailScreen(
         }
     }
 
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -94,8 +95,12 @@ fun TrainingDetailScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (state is UiState.Success
-                                && state.isChanged
+                            if ((state is UiTrainingDetailState.Success &&
+                                        state.isChanged) ||
+                                (state is UiTrainingDetailState.Error &&
+                                        state.isChanged) ||
+                                (state is UiTrainingDetailState.Loading &&
+                                        state.isChanged)
                             ) {
                                 onBackWithRefresh()
                             } else {
@@ -110,7 +115,7 @@ fun TrainingDetailScreen(
                     }
                 },
                 actions = {
-                    if (screenState is UiState.Success) {
+                    if (state is UiTrainingDetailState.Success) {
                         IconButton(onClick = { showDropdownMenu.value = !showDropdownMenu.value }) {
                             Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
                         }
@@ -141,32 +146,31 @@ fun TrainingDetailScreen(
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
             when (state) {
-                is UiState.Error -> {
+                is UiTrainingDetailState.Error -> {
                     ShowError(
                         message = stringResource(id = R.string.strava_server_unavailable)
                             .addLine(
                                 state.exception.message.toString()
                             ),
                         onTryAgainClick = {
-                            viewModel.fetchTraining(id = trainingId, isChanged = false)
+                            viewModel.fetchTraining(
+                                id = trainingId,
+                                isChanged = state.isChanged
+                            )
                         }
                     )
                 }
 
-                UiState.Loading -> {
+                is UiTrainingDetailState.Loading -> {
                     ShowLoadingData()
                 }
 
-                is UiState.Success -> {
+                is UiTrainingDetailState.Success -> {
                     ShowTraining(
-                        profile = state.data.profile,
-                        training = state.data.training,
+                        profile = state.profileWithTraining.profile,
+                        training = state.profileWithTraining.training,
                         source = state.source
                     )
-                }
-
-                is UiState.EmptyData -> {
-                    ShowEmptyData(message = stringResource(id = R.string.no_data))
                 }
             }
         }
@@ -175,11 +179,11 @@ fun TrainingDetailScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.screenEventFlow.collect { event ->
             when (event) {
-                is TrainingDetailScreenEvent.NavigateBack -> {
-                    onBackPressed()
+                is UiTrainingDetailEvent.NavigateBack -> {
+                    onBackWithRefresh()
                 }
 
-                is TrainingDetailScreenEvent.ShowMessage -> {
+                is UiTrainingDetailEvent.ShowMessage -> {
                     Toast.makeText(
                         context,
                         context.parseStringVs(event.stringVs),
@@ -191,7 +195,13 @@ fun TrainingDetailScreen(
     }
 
     BackHandler {
-        if ((state is UiState.Success) && state.isChanged) {
+        if ((state is UiTrainingDetailState.Success &&
+                    state.isChanged) ||
+            (state is UiTrainingDetailState.Error &&
+                    state.isChanged) ||
+            (state is UiTrainingDetailState.Loading &&
+                    state.isChanged)
+        ) {
             onBackWithRefresh()
         } else {
             onBackPressed()
@@ -205,6 +215,8 @@ private fun ShowTraining(
     training: Training,
     source: Source
 ) {
+    val dateConverter: DateConverter by inject()
+
     Column {
         ShowSource(source)
         Column(
@@ -231,7 +243,7 @@ private fun ShowTraining(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = DateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

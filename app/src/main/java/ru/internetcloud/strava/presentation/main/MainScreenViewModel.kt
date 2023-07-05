@@ -11,8 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
-import ru.internetcloud.strava.data.internet.repository.InternetStatusRepositoryImpl
-import ru.internetcloud.strava.data.logout.repository.LogoutRepositoryImpl
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.internet.usecase.GetInternetStatusUseCase
 import ru.internetcloud.strava.domain.logout.usecase.LogoutUseCase
@@ -21,20 +19,18 @@ import ru.internetcloud.strava.presentation.logout.LogoutClickHelper
 
 class MainScreenViewModel(
     private val app: Application,
-    private val keyMessage: String
+    private val keyMessage: String,
+    private val getInternetStatusUseCase: GetInternetStatusUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val unauthorizedHandler: UnauthorizedHandler,
+    private val logoutClickHelper: LogoutClickHelper
 ) : ViewModel() {
-
-    private val internetStatusRepository = InternetStatusRepositoryImpl()
-    private val getInternetStatusUseCase = GetInternetStatusUseCase(internetStatusRepository)
-
-    private val logoutRepository = LogoutRepositoryImpl()
-    private val logoutUseCase = LogoutUseCase(logoutRepository)
 
     val internetConnectionAvailable: Flow<Boolean>
         get() = fetchInternetChange()
 
     private val onLogoutClickFlow: Flow<Unit>
-        get() = LogoutClickHelper.logoutClickEventChannel.receiveAsFlow()
+        get() = logoutClickHelper.getLogoutClickEventChannel().receiveAsFlow()
 
     private val _showLogoutDialog = MutableStateFlow(false)
     val showLogoutDialog = _showLogoutDialog.asStateFlow()
@@ -44,7 +40,7 @@ class MainScreenViewModel(
         get() = screenEventChannel.receiveAsFlow()
 
     private val onUnauthorizedEventFlow: Flow<Unit>
-        get() = UnauthorizedHandler.unauthorizedEventChannel.receiveAsFlow()
+        get() = unauthorizedHandler.getUnauthorizedEventChannel().receiveAsFlow()
 
     init {
         viewModelScope.launch {

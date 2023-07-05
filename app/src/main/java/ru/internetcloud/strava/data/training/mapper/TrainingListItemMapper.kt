@@ -5,7 +5,9 @@ import ru.internetcloud.strava.data.training.network.model.TrainingListItemDTO
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 
-class TrainingListItemMapper {
+class TrainingListItemMapper(
+    private val dateConverter: DateConverter
+) {
 
     private fun fromDtoToDomain(trainingDTO: TrainingListItemDTO): TrainingListItem {
         return TrainingListItem(
@@ -14,7 +16,7 @@ class TrainingListItemMapper {
             distance = trainingDTO.distance,
             movingTime = trainingDTO.movingTime,
             type = trainingDTO.type,
-            startDate = DateConverter.fromStringInIso8601ToDate(trainingDTO.startDate)
+            startDate = dateConverter.fromStringInIso8601ToDate(trainingDTO.startDate)
         )
     }
 

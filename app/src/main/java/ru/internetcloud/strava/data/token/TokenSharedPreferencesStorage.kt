@@ -5,18 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import ru.internetcloud.strava.domain.token.model.TokensModel
 
-object TokenSharedPreferencesStorage {
-
-    private const val TOKEN_SHARED_PREFS_NAME = "token_shared_prefs"
-    private const val KEY_ACCESS_TOKEN = "key_access_token"
-    private const val KEY_REFRESH_TOKEN = "key_refresh_token"
-    private const val KEY_ID_TOKEN = "key_id_token"
-
-    private lateinit var tokenSharedPrefs: SharedPreferences
-
-    fun init(applicaton: Application) {
-        tokenSharedPrefs = applicaton.getSharedPreferences(TOKEN_SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-    }
+class TokenSharedPreferencesStorage(
+    applicaton: Application
+) {
+    private var tokenSharedPrefs: SharedPreferences =
+        applicaton.getSharedPreferences(TOKEN_SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     suspend fun getTokenData(): TokensModel {
         return TokensModel(
@@ -40,5 +33,12 @@ object TokenSharedPreferencesStorage {
 
     suspend fun isAuthorized(): Boolean {
         return !getTokenData().accessToken.isNullOrEmpty()
+    }
+
+    companion object {
+        private const val TOKEN_SHARED_PREFS_NAME = "token_shared_prefs"
+        private const val KEY_ACCESS_TOKEN = "key_access_token"
+        private const val KEY_REFRESH_TOKEN = "key_refresh_token"
+        private const val KEY_ID_TOKEN = "key_id_token"
     }
 }

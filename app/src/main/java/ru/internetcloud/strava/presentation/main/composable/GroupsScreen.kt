@@ -19,7 +19,8 @@ fun ShowGroupsScreen() {
     ) { paddingContent ->
         Box(modifier = Modifier.padding(paddingContent)) {
             ShowEmptyData(
-                message = stringResource(id = R.string.groups_under_constraction)
+                message = stringResource(id = R.string.groups_under_constraction),
+                onRefreshClick = {}
             )
         }
     }

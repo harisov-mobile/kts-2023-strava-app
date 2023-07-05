@@ -1,7 +1,6 @@
 package ru.internetcloud.strava.presentation.main.composable
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -23,23 +22,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.presentation.logout.LogoutDialog
 import ru.internetcloud.strava.presentation.main.MainScreenEvent
 import ru.internetcloud.strava.presentation.main.MainScreenViewModel
-import ru.internetcloud.strava.presentation.main.MainScreenViewModelFactory
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
-import ru.internetcloud.strava.presentation.profile.ShowProfileScreen
+import ru.internetcloud.strava.presentation.profile.ProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
-import ru.internetcloud.strava.presentation.training.list.ShowTrainingListScreen
+import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
 
 private val navItemList = listOf(
     NavigationItem.Home,
@@ -60,12 +59,9 @@ fun MainScreen(
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
 
-    val viewModel: MainScreenViewModel = viewModel(
-        factory = MainScreenViewModelFactory(
-            app = LocalContext.current.applicationContext as Application,
-            keyMessage = keyMessage
-        )
-    )
+    val viewModel: MainScreenViewModel by viewModel {
+        parametersOf(keyMessage)
+    }
 
     val internetConnectionAvailable = viewModel.internetConnectionAvailable.collectAsStateWithLifecycle(
         initialValue = true
@@ -135,11 +131,12 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                ShowTrainingListScreen(
+                // ShowTrainingListScreen(
+                TrainingListScreen(
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
-                    onTrainingClickListener = navigationState::navigateToDetail,
-                    onFABClickListener = navigationState::navigateToDetailAdd
+                    onTrainingClick = navigationState::navigateToDetail,
+                    onFloatingActionButtonClick = navigationState::navigateToDetailAdd
                 )
             },
             trainingDetailScreenContent = { currentTrainingId ->
@@ -191,7 +188,7 @@ fun MainScreen(
                 ShowGroupsScreen()
             },
             youScreenContent = {
-                ShowProfileScreen()
+                ProfileScreen()
             }
         )
     }

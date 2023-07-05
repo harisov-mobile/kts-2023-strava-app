@@ -1,18 +1,18 @@
 package ru.internetcloud.strava.data.profile.repository
 
-import ru.internetcloud.strava.data.profile.cache.datasource.ProfileLocalDataSourceImpl
+import ru.internetcloud.strava.data.profile.cache.datasource.ProfileLocalDataSource
 import ru.internetcloud.strava.data.profile.mapper.ProfileMapper
-import ru.internetcloud.strava.data.profile.network.datasource.ProfileRemoteApiDataSourceImpl
+import ru.internetcloud.strava.data.profile.network.datasource.ProfileRemoteApiDataSource
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
 import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.model.Profile
 
-class ProfileRepositoryImpl : ProfileRepository {
-
-    private val profileRemoteApiDataSource = ProfileRemoteApiDataSourceImpl()
-    private val profileLocalDataSource = ProfileLocalDataSourceImpl()
-    private val profileMapper = ProfileMapper()
+class ProfileRepositoryImpl(
+    private val profileRemoteApiDataSource: ProfileRemoteApiDataSource,
+    private val profileLocalDataSource: ProfileLocalDataSource,
+    private val profileMapper: ProfileMapper
+) : ProfileRepository {
 
     override suspend fun getProfile(): DataResponse<Profile> {
         var result = profileRemoteApiDataSource.getProfile()
