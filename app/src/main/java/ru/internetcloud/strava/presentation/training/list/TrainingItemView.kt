@@ -35,7 +35,6 @@ import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.common.theme.customTypography
 import ru.internetcloud.strava.presentation.util.Calculator
 import ru.internetcloud.strava.presentation.util.Formatter
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -74,8 +73,6 @@ fun TrainingItemView(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
-                    Timber.tag("rustam").d("training = ${training.name}")
-                    Timber.tag("rustam").d("getSportByName = ${training.sport}")
                     Row {
                         Image(
                             painter = painterResource(id = getSportByName(training.sport).icon),

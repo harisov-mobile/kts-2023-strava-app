@@ -12,5 +12,6 @@ data class Training(
     val startDate: Date,
     val description: String,
     val trainer: Boolean,
-    val commute: Boolean
+    val commute: Boolean,
+    val photoUrls: List<String>
 )

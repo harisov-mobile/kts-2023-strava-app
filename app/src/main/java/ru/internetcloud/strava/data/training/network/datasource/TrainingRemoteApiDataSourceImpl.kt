@@ -4,6 +4,7 @@ import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
+import ru.internetcloud.strava.data.training.network.model.TrainingPhotoDTO
 import ru.internetcloud.strava.domain.common.list.mvi.model.ListLoadParams
 import ru.internetcloud.strava.domain.common.list.mvi.model.ListState
 import ru.internetcloud.strava.domain.common.model.DataResponse
@@ -51,8 +52,9 @@ class TrainingRemoteApiDataSourceImpl(
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
+                    val photos = getPhotos(id)
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos),
                         source = Source.RemoteApi
                     )
                 } ?: let {
@@ -63,6 +65,22 @@ class TrainingRemoteApiDataSourceImpl(
             }
         } catch (e: Exception) {
             DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
+        }
+    }
+
+    private suspend fun getPhotos(id: Long): List<TrainingPhotoDTO> {
+        return try {
+            val networkResponse = trainingApi.getPhotos(id = id)
+            if (networkResponse.isSuccessful) {
+                val listDTO = networkResponse.body()
+                listDTO ?: let {
+                    emptyList()
+                }
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 
@@ -83,7 +101,7 @@ class TrainingRemoteApiDataSourceImpl(
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos = emptyList()),
                         source = Source.RemoteApi
                     )
                 } ?: let {
@@ -108,8 +126,9 @@ class TrainingRemoteApiDataSourceImpl(
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
+                    val photos = getPhotos(trainingUpdateDTO.id)
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos = photos),
                         source = Source.RemoteApi
                     )
                 } ?: let {

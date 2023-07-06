@@ -175,11 +175,3 @@ fun getCurrentSportIndex(list: List<Any>, currentSport: Sport): Int {
     return currentIndex
 }
 
-//@Preview
-//@Composable
-//fun SportPickerPreview() {
-//    SportPicker(
-//        currentSport = Sport.Badminton,
-//        onSportSelect = { }
-//    )
-//}

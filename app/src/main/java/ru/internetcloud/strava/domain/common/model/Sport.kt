@@ -3,7 +3,6 @@ package ru.internetcloud.strava.domain.common.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import ru.internetcloud.strava.R
-import timber.log.Timber
 
 enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val sportType: SportType) {
     Run(R.string.sport_run, R.drawable.sports_run_normal_large, SportType.FootSports),
@@ -67,7 +66,6 @@ fun getSportsByType(sportType: SportType): List<Sport> {
 }
 
 fun getSportByName(name: String): Sport {
-    Timber.tag("rustam").d("getSportByName = $name")
     return Sport.values().find { sport -> name.equals(sport.toString()) } ?: error("$name is not found in Sport")
 }
 

@@ -58,7 +58,8 @@ class TrainingEditViewModel(
             startDate = Date(),
             description = "",
             trainer = false,
-            commute = false
+            commute = false,
+            photoUrls = emptyList()
         )
 
         _screenState.value = UiState.Success(

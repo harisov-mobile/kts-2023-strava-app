@@ -9,11 +9,25 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.internetcloud.strava.data.training.network.model.PhotoUrlDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingListItemDTO
+import ru.internetcloud.strava.data.training.network.model.TrainingPhotoDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 
 interface TrainingApi {
+
+    @GET("api/v3/activities/{id}/photos")
+    suspend fun getPhotos(
+        @Path(PATH_PARAM_ID)
+        id: Long,
+
+        @Query(QUERY_PARAM_SIZE)
+        size: String = PhotoUrlDTO.QUERY_VALUE_SIZE,
+
+        @Query(QUERY_PARAM_PHOTO_SOURCES)
+        photoSources: Boolean = true
+    ): Response<List<TrainingPhotoDTO>>
 
     @GET("api/v3/activities")
     suspend fun getTrainings(
@@ -61,5 +75,7 @@ interface TrainingApi {
         private const val QUERY_PARAM_PAGE = "page"
         private const val QUERY_PARAM_PER_PAGE = "per_page"
         private const val PATH_PARAM_ID = "id"
+        private const val QUERY_PARAM_PHOTO_SOURCES = "photo_sources"
+        private const val QUERY_PARAM_SIZE = "size"
     }
 }

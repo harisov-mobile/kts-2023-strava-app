@@ -4,8 +4,10 @@ import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -35,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -236,9 +240,8 @@ private fun ShowTraining(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface)
                 .fillMaxSize()
-                .padding(dimensionResource(R.dimen.big_margin))
         ) {
-            Row {
+            Row(modifier = Modifier.padding(dimensionResource(R.dimen.big_margin))) {
                 AsyncImage(
                     modifier = Modifier
                         .size(dimensionResource(R.dimen.training_item_icon_size))
@@ -249,7 +252,7 @@ private fun ShowTraining(
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.big_margin)))
-                Column {
+                Column() {
                     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
                     Text(
                         text = "${profile.firstName} ${profile.lastName}",
@@ -275,19 +278,54 @@ private fun ShowTraining(
                 }
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
-            Text(
-                text = training.name,
-                style = MaterialTheme.typography.h6
-            )
-            if (training.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
+            Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.big_margin))) {
                 Text(
-                    text = training.description,
-                    style = MaterialTheme.customTypography.bodyWeak
+                    text = training.name,
+                    style = MaterialTheme.typography.h6
                 )
+                if (training.description.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
+                    Text(
+                        text = training.description,
+                        style = MaterialTheme.customTypography.bodyWeak
+                    )
+                }
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.big_margin)))
+                TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
             }
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.huge_margin)))
-            TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
+            ShowPhotos(training = training)
+        }
+    }
+}
+
+@Composable
+private fun ShowPhotos(
+    modifier: Modifier = Modifier,
+    training: Training
+) {
+    if (!training.photoUrls.isEmpty()) {
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.big_margin)))
+        LazyRow(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.normal_margin)),
+            contentPadding = PaddingValues(horizontal = dimensionResource(R.dimen.big_margin))
+        ) {
+            training.photoUrls.forEach { url ->
+                item {
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(
+                                dimensionResource(R.dimen.training_detail_photo_size_X),
+                                dimensionResource(R.dimen.training_detail_photo_size_Y)
+                            )
+                            .clip(MaterialTheme.shapes.medium),
+                        model = url,
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.no_photo),
+                        contentDescription = null
+                    )
+                }
+            }
         }
     }
 }

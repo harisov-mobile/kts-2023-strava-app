@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import org.koin.androidx.compose.viewModel
@@ -87,7 +86,7 @@ fun TrainingListScreen(
                         end = dimensionResource(R.dimen.normal_margin),
                         bottom = dimensionResource(R.dimen.bottom_content_padding)
                     ),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.normal_margin))
                 ) {
                     itemsWithListStates(
                         items = screenState.trainingListItemsWithState(),

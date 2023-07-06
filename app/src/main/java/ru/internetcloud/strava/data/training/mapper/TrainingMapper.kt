@@ -2,6 +2,7 @@ package ru.internetcloud.strava.data.training.mapper
 
 import ru.internetcloud.strava.data.training.cache.model.LocalTraining
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
+import ru.internetcloud.strava.data.training.network.model.TrainingPhotoDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.orDefault
@@ -10,7 +11,13 @@ import ru.internetcloud.strava.domain.training.model.Training
 class TrainingMapper(
     private val dateConverter: DateConverter
 ) {
-    fun fromDtoToDomain(trainingDTO: TrainingDTO): Training {
+    fun fromDtoToDomain(trainingDTO: TrainingDTO, photos: List<TrainingPhotoDTO>): Training {
+        val photoUrls = mutableListOf<String>()
+
+        photos.forEach { trainingPhotoDTO ->
+            photoUrls.add(trainingPhotoDTO.urls.url)
+        }
+
         return Training(
             id = trainingDTO.id,
             name = trainingDTO.name,
@@ -21,7 +28,8 @@ class TrainingMapper(
             startDate = dateConverter.fromStringInIso8601ToDate(trainingDTO.startDate),
             description = trainingDTO.description.orEmpty(),
             trainer = trainingDTO.trainer.orDefault(),
-            commute = trainingDTO.commute.orDefault()
+            commute = trainingDTO.commute.orDefault(),
+            photoUrls = photoUrls.toList()
         )
     }
 
@@ -51,7 +59,8 @@ class TrainingMapper(
             startDate = localTraining.startDate,
             description = localTraining.description,
             trainer = localTraining.trainer,
-            commute = localTraining.commute
+            commute = localTraining.commute,
+            photoUrls = emptyList()
         )
     }
 
