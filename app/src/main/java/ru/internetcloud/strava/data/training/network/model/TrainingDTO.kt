@@ -20,9 +20,6 @@ data class TrainingDTO(
     @Json(name = "elapsed_time")
     val elapsedTime: Int,
 
-    @Json(name = "type")
-    val type: String,
-
     @Json(name = "sport_type")
     val sport: String,
 

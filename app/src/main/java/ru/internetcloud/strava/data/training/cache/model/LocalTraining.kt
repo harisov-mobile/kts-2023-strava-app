@@ -23,9 +23,6 @@ data class LocalTraining(
     @ColumnInfo(name = TrainingContract.Columns.ELAPSED_TIME)
     val elapsedTime: Int,
 
-    @ColumnInfo(name = TrainingContract.Columns.TYPE)
-    val type: String,
-
     @ColumnInfo(name = TrainingContract.Columns.SPORT)
     val sport: String,
 

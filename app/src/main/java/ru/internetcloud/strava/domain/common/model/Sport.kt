@@ -3,6 +3,7 @@ package ru.internetcloud.strava.domain.common.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import ru.internetcloud.strava.R
+import timber.log.Timber
 
 enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val sportType: SportType) {
     Run(R.string.sport_run, R.drawable.sports_run_normal_large, SportType.FootSports),
@@ -10,6 +11,7 @@ enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val spor
     Walk(R.string.sport_walk, R.drawable.sports_walk_normal_large, SportType.FootSports),
     Hike(R.string.sport_hike, R.drawable.sports_hike_normal_large, SportType.FootSports),
     Wheelchair(R.string.sport_wheelchair, R.drawable.sports_wheelchair_normal_large, SportType.FootSports),
+    VirtualRun(R.string.sport_virtual_run, R.drawable.sports_run_normal_large, SportType.FootSports),
 
     Ride(R.string.sport_ride, R.drawable.sports_bike_normal_large, SportType.CycleSports),
     MountainBikeRide(R.string.sport_mountain_bike_ride, R.drawable.sports_bike_mountain_normal_large, SportType.CycleSports),
@@ -18,6 +20,7 @@ enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val spor
     EMountainBikeRide(R.string.sport_e_mountain_bike_ride, R.drawable.sports_bike_e_mountain_normal_large, SportType.CycleSports),
     Handcycle(R.string.sport_handcycle, R.drawable.sports_handcycle_normal_large, SportType.CycleSports),
     Velomobile(R.string.sport_velomobile, R.drawable.sports_velomobile_normal_large, SportType.CycleSports),
+    VirtualRide(R.string.sport_virtual_ride, R.drawable.sports_bike_normal_large, SportType.CycleSports),
 
     Swim(R.string.sport_swim, R.drawable.sports_water_normal_large, SportType.WaterSports),
     Surfing(R.string.sport_surfing, R.drawable.sports_surfing_normal_large, SportType.WaterSports),
@@ -28,6 +31,7 @@ enum class Sport(@StringRes val label: Int, @DrawableRes val icon: Int, val spor
     Rowing(R.string.sport_rowing, R.drawable.sports_rowing_normal_large, SportType.WaterSports),
     Canoeing(R.string.sport_canoeing, R.drawable.sports_kayaking_normal_large, SportType.WaterSports),
     Sail(R.string.sport_sail, R.drawable.sports_windsurf_normal_large, SportType.WaterSports),
+    VirtualRow(R.string.sport_virtual_row, R.drawable.sports_virtual_row_normal_large, SportType.WaterSports),
 
     IceSkate(R.string.sport_ice_skate, R.drawable.sports_ice_skate_normal_large, SportType.WinterSports),
     AlpineSki(R.string.sport_alpine_ski, R.drawable.sports_ski_normal_large, SportType.WinterSports),
@@ -63,6 +67,7 @@ fun getSportsByType(sportType: SportType): List<Sport> {
 }
 
 fun getSportByName(name: String): Sport {
+    Timber.tag("rustam").d("getSportByName = $name")
     return Sport.values().find { sport -> name.equals(sport.toString()) } ?: error("$name is not found in Sport")
 }
 

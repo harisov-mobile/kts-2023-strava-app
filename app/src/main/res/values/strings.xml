@@ -112,6 +112,7 @@
     <string name="sport_walk">Walk</string>
     <string name="sport_hike">Hike</string>
     <string name="sport_wheelchair">Wheelchair</string>
+    <string name="sport_virtual_run">Virtual Run</string>
 
     <string name="sport_ride">Ride</string>
     <string name="sport_mountain_bike_ride">Mountain Bike Ride</string>
@@ -120,6 +121,7 @@
     <string name="sport_e_mountain_bike_ride">E-Mountain Bike Ride</string>
     <string name="sport_handcycle">Handcycle</string>
     <string name="sport_velomobile">Velomobile</string>
+    <string name="sport_virtual_ride">Virtual Ride</string>
 
     <string name="sport_swim">Swim</string>
     <string name="sport_surfing">Surfing</string>
@@ -130,6 +132,7 @@
     <string name="sport_rowing">Rowing</string>
     <string name="sport_canoeing">Canoeing</string>
     <string name="sport_sail">Sail</string>
+    <string name="sport_virtual_row">Virtual Row</string>
 
     <string name="sport_ice_skate">Ice Skate</string>
     <string name="sport_alpine_ski">Alpine Ski</string>

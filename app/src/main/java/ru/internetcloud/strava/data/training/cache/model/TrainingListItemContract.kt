@@ -8,7 +8,7 @@ object TrainingListItemContract {
         const val NAME = "name"
         const val DISTANCE = "distance"
         const val MOVING_TIME = "moving_time"
-        const val TYPE = "type"
+        const val SPORT = "sport"
         const val START_DATE = "start_date"
     }
 }

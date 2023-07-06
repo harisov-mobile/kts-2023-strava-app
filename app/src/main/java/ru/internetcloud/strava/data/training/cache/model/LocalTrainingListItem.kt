@@ -20,8 +20,8 @@ data class LocalTrainingListItem(
     @ColumnInfo(name = TrainingListItemContract.Columns.MOVING_TIME)
     val movingTime: Int,
 
-    @ColumnInfo(name = TrainingListItemContract.Columns.TYPE)
-    val type: String,
+    @ColumnInfo(name = TrainingListItemContract.Columns.SPORT)
+    val sport: String,
 
     @ColumnInfo(name = TrainingListItemContract.Columns.START_DATE)
     val startDate: Date

@@ -9,7 +9,6 @@ object TrainingContract {
         const val DISTANCE = "distance"
         const val MOVING_TIME = "moving_time"
         const val ELAPSED_TIME = "elapsed_time"
-        const val TYPE = "type"
         const val SPORT = "sport"
         const val START_DATE = "start_date"
         const val DESCRIPTION = "description"

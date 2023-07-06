@@ -30,7 +30,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
@@ -176,11 +175,11 @@ fun getCurrentSportIndex(list: List<Any>, currentSport: Sport): Int {
     return currentIndex
 }
 
-@Preview
-@Composable
-fun SportPickerPreview() {
-    SportPicker(
-        currentSport = Sport.Badminton,
-        onSportSelect = { }
-    )
-}
+//@Preview
+//@Composable
+//fun SportPickerPreview() {
+//    SportPicker(
+//        currentSport = Sport.Badminton,
+//        onSportSelect = { }
+//    )
+//}

@@ -17,8 +17,8 @@ data class TrainingListItemDTO(
     @Json(name = "moving_time")
     val movingTime: Int,
 
-    @Json(name = "type")
-    val type: String,
+    @Json(name = "sport_type")
+    val sport: String,
 
     @Json(name = "start_date_local")
     val startDate: String

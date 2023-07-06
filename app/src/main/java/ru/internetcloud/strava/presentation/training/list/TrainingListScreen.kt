@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -81,10 +82,10 @@ fun TrainingListScreen(
                 ShowSource(screenState.source)
                 LazyColumn(
                     contentPadding = PaddingValues(
-                        top = 8.dp,
-                        start = 8.dp,
-                        end = 8.dp,
-                        bottom = 72.dp
+                        top = dimensionResource(R.dimen.normal_margin),
+                        start = dimensionResource(R.dimen.normal_margin),
+                        end = dimensionResource(R.dimen.normal_margin),
+                        bottom = dimensionResource(R.dimen.bottom_content_padding)
                     ),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {

@@ -54,7 +54,6 @@ class TrainingEditViewModel(
             distance = 0f,
             movingTime = 0,
             elapsedTime = 0,
-            type = INITIAL_SPORT_TYPE,
             sport = INITIAL_SPORT_TYPE,
             startDate = Date(),
             description = "",

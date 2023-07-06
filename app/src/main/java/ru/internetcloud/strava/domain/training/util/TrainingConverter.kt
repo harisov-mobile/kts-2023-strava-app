@@ -12,7 +12,7 @@ class TrainingConverter {
                 name = training.name,
                 distance = training.distance,
                 movingTime = training.movingTime,
-                type = training.type,
+                sport = training.sport,
                 startDate = training.startDate
             )
         }

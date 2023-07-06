@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.training.list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
@@ -26,12 +28,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.inject
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.domain.common.model.getSportByName
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.presentation.common.theme.customTypography
 import ru.internetcloud.strava.presentation.util.Calculator
 import ru.internetcloud.strava.presentation.util.Formatter
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -55,7 +59,8 @@ fun TrainingItemView(
                 AsyncImage(
                     modifier = Modifier
                         .size(dimensionResource(R.dimen.training_item_icon_size))
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .align(Alignment.CenterVertically),
                     model = profile.imageUrlMedium,
                     placeholder = painterResource(id = R.drawable.no_photo),
                     contentDescription = null
@@ -68,6 +73,26 @@ fun TrainingItemView(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
+                    Timber.tag("rustam").d("training = ${training.name}")
+                    Timber.tag("rustam").d("getSportByName = ${training.sport}")
+                    Row {
+                        Image(
+                            painter = painterResource(id = getSportByName(training.sport).icon),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(size = dimensionResource(R.dimen.training_detail_sport_icon_size))
+                                .align(Alignment.CenterVertically)
+                        )
+                        Text(
+                            text = stringResource(
+                                id = getSportByName(training.sport).label
+                            ),
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .padding(start = dimensionResource(R.dimen.small_margin))
+                        )
+                    }
                     Text(
                         text = dateConverter.getDateTimeString(training.startDate),
                         fontSize = 12.sp,

@@ -8,7 +8,6 @@ data class Training(
     val distance: Float,
     val movingTime: Int,
     val elapsedTime: Int,
-    val type: String,
     val sport: String,
     val startDate: Date,
     val description: String,

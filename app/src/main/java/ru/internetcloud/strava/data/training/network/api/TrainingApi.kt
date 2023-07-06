@@ -33,7 +33,6 @@ interface TrainingApi {
     @POST("api/v3/activities")
     suspend fun addTraining(
         @Query("name") name: String,
-        @Query("type") type: String,
         @Query("sport_type") sport: String,
         @Query("start_date_local") startDate: String,
         @Query("elapsed_time") elapsedTime: Int,

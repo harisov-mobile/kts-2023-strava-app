@@ -113,6 +113,7 @@
     <string name="sport_walk">Ходьба</string>
     <string name="sport_hike">Хайкинг</string>
     <string name="sport_wheelchair">Кресло-коляска</string>
+    <string name="sport_virtual_run">Виртуальный забег</string>
 
     <string name="sport_ride">Заезд</string>
     <string name="sport_mountain_bike_ride">Горный велозаезд</string>
@@ -121,6 +122,7 @@
     <string name="sport_e_mountain_bike_ride">Заезд на горном электровелосипеде</string>
     <string name="sport_handcycle">Ручной велосипед</string>
     <string name="sport_velomobile">Веломобиль</string>
+    <string name="sport_virtual_ride">Виртуальный заезд</string>
 
     <string name="sport_swim">Заплыв</string>
     <string name="sport_surfing">Серфинг</string>
@@ -131,6 +133,7 @@
     <string name="sport_rowing">Гребля</string>
     <string name="sport_canoeing">Каноэ</string>
     <string name="sport_sail">Парусный спорт</string>
+    <string name="sport_virtual_row">Виртуальная гребля</string>
 
     <string name="sport_ice_skate">Коньки</string>
     <string name="sport_alpine_ski">Горные лыжи</string>
