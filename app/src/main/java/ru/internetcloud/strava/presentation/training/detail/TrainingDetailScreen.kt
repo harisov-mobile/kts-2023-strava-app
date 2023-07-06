@@ -27,7 +27,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
@@ -145,14 +144,6 @@ fun TrainingDetailScreen(
                                 Icon(imageVector = Icons.Filled.Edit, contentDescription = null)
                                 Spacer(modifier = Modifier.width(dimensionResource(R.dimen.normal_margin)))
                                 Text(text = stringResource(id = R.string.menu_edit))
-                            }
-
-                            DropdownMenuItem(onClick = {
-                                viewModel.deleteTraining()
-                            }) {
-                                Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
-                                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.normal_margin)))
-                                Text(text = stringResource(id = R.string.menu_delete))
                             }
                         }
                     }
