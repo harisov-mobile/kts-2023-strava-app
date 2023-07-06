@@ -1,7 +1,6 @@
 package ru.internetcloud.strava.presentation.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -17,12 +16,6 @@ sealed class NavigationItem(
         screen = Screen.Home,
         titleResId = R.string.navigation_item_home,
         icon = Icons.Outlined.Home
-    )
-
-    object Groups : NavigationItem(
-        screen = Screen.Groups,
-        titleResId = R.string.navigation_item_groups,
-        icon = Icons.Outlined.Groups
     )
 
     object You : NavigationItem(

@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
-    groupsScreenContent: @Composable () -> Unit,
     youScreenContent: @Composable () -> Unit,
     trainingListScreenContent: @Composable () -> Unit,
     trainingDetailScreenContent: @Composable (id: Long) -> Unit,
@@ -28,10 +27,6 @@ fun AppNavGraph(
             trainingDetailEditScreenContent = trainingDetailEditScreenContent,
             trainingDetailAddScreenContent = trainingDetailAddScreenContent
         )
-
-        composable(Screen.Groups.route) {
-            groupsScreenContent()
-        }
 
         composable(Screen.You.route) {
             youScreenContent()

@@ -42,7 +42,6 @@ import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
 
 private val navItemList = listOf(
     NavigationItem.Home,
-    NavigationItem.Groups,
     NavigationItem.You
 )
 
@@ -131,7 +130,6 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                // ShowTrainingListScreen(
                 TrainingListScreen(
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
@@ -182,10 +180,6 @@ fun MainScreen(
                         )
                     }
                 )
-            },
-
-            groupsScreenContent = {
-                ShowGroupsScreen()
             },
             youScreenContent = {
                 ProfileScreen()
