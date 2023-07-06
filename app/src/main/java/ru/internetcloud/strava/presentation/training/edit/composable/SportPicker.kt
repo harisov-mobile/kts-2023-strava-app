@@ -132,7 +132,6 @@ fun SportItem(
                     .size(size = dimensionResource(R.dimen.sport_item_icon_size))
                     .align(Alignment.CenterVertically)
             )
-
             Text(
                 text = stringResource(id = sport.label),
                 color = textColor,

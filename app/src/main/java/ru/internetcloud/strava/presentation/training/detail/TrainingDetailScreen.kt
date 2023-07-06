@@ -2,6 +2,7 @@ package ru.internetcloud.strava.presentation.training.detail
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -47,6 +49,7 @@ import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.common.model.getSportByName
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.parseStringVs
 import ru.internetcloud.strava.domain.profile.model.Profile
@@ -91,7 +94,15 @@ fun TrainingDetailScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.training_app_bar_title))
+                    Text(
+                        text = if (state is UiTrainingDetailState.Success) {
+                            stringResource(
+                                id = getSportByName(state.profileWithTraining.training.sport).label
+                            )
+                        } else {
+                            stringResource(id = R.string.training_app_bar_title)
+                        }
+                    )
                 },
                 navigationIcon = {
                     IconButton(
@@ -231,7 +242,8 @@ private fun ShowTraining(
                 AsyncImage(
                     modifier = Modifier
                         .size(dimensionResource(R.dimen.training_item_icon_size))
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .align(Alignment.CenterVertically),
                     model = profile.imageUrlMedium,
                     placeholder = painterResource(id = R.drawable.no_photo),
                     contentDescription = null
@@ -244,10 +256,22 @@ private fun ShowTraining(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        text = dateConverter.getDateTimeString(training.startDate),
-                        style = MaterialTheme.typography.caption
-                    )
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
+                    Row {
+                        Image(
+                            painter = painterResource(id = getSportByName(training.sport).icon),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(size = dimensionResource(R.dimen.training_detail_sport_icon_size))
+                                .align(Alignment.CenterVertically)
+                        )
+                        Text(
+                            text = dateConverter.getDateTimeString(training.startDate),
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .padding(start = dimensionResource(R.dimen.small_margin))
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
@@ -264,12 +288,6 @@ private fun ShowTraining(
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.huge_margin)))
             TimeDistanceSpeed(training = TrainingConverter.fromTrainingToTrainingListItem(training))
-
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
-            Text(
-                text = training.sport,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
 }

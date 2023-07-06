@@ -13,4 +13,6 @@
 
     <dimen name="training_item_icon_size">32dp</dimen>
 
+    <dimen name="training_detail_sport_icon_size">16dp</dimen>
+
 </resources>
