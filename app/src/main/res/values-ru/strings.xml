@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Strava-client</string>
+    <string name="app_name">My Strava</string>
 
     <string name="onboarding_get_started">Начать</string>
     <string name="onboarding_description_logo">Логотип Страва</string>
