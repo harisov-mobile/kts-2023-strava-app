@@ -11,5 +11,6 @@ data class Profile(
     val imageUrlMedium: String,
     val imageUrl: String,
     val friendCount: Int,
-    val followerCount: Int
+    val followerCount: Int,
+    val weight: Float
 )

@@ -28,7 +28,10 @@ internal class ProfileStoreFactory(
 
     sealed interface Message {
         object SetLoading : Message
-        data class SetSuccess(val profile: Profile, val source: Source) : Message
+        data class SetSuccess(
+            val profile: Profile,
+            val source: Source,
+            val saving: Boolean = false) : Message
         data class SetError(val error: Exception) : Message
     }
 }

@@ -7,5 +7,7 @@ interface ProfileRepository {
 
     suspend fun getProfile(): DataResponse<Profile>
 
+    suspend fun saveWeight(weight: Float): DataResponse<Profile>
+
     suspend fun deleteProfileInLocalCache()
 }

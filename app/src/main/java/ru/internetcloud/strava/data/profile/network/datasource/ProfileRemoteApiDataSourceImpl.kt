@@ -31,4 +31,23 @@ class ProfileRemoteApiDataSourceImpl(
             DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
     }
+
+    override suspend fun saveWeight(weight: Float): DataResponse<Profile> {
+        return try {
+            val networkResponse = profileApi.saveWeight(weight.toDouble())
+            if (networkResponse.isSuccessful) {
+                val stravaAthleteDTO = networkResponse.body()
+                stravaAthleteDTO?.let { currentDTO ->
+                    val profile = profileMapper.fromDtoToDomain(currentDTO)
+                    DataResponse.Success(profile, source = Source.RemoteApi)
+                } ?: let {
+                    DataResponse.Error(exception = IllegalStateException("No profile found"))
+                }
+            } else {
+                DataResponse.Error(Exception(errorMessageConverter.getMessageToHTTPCode(networkResponse.code())))
+            }
+        } catch (e: Exception) {
+            DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
+        }
+    }
 }

@@ -36,5 +36,8 @@ data class ProfileDTO(
     val friendCount: Int?,
 
     @Json(name = "follower_count")
-    val followerCount: Int?
+    val followerCount: Int?,
+
+    @Json(name = "weight")
+    val weight: Float?
 )

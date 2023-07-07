@@ -32,6 +32,17 @@ class ProfileRepositoryImpl(
         return result
     }
 
+    override suspend fun saveWeight(weight: Float): DataResponse<Profile> {
+        var result = profileRemoteApiDataSource.saveWeight(weight)
+
+        if (result is DataResponse.Success) {
+            profileLocalDataSource.deleteProfile()
+            profileLocalDataSource.insertProfile(profileMapper.fromDomainToDbModel(result.data))
+        }
+
+        return result
+    }
+
     override suspend fun deleteProfileInLocalCache() {
         profileLocalDataSource.deleteProfile()
     }

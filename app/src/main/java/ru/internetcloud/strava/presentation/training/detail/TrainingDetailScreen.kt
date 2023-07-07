@@ -228,17 +228,15 @@ private fun ShowTraining(
     val dateConverter: DateConverter by inject()
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = modifier
-            .verticalScroll(
-                state = scrollState
-            )
-    ) {
+    Column {
         ShowSource(source)
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface)
                 .fillMaxSize()
+                .verticalScroll(
+                    state = scrollState
+                )
         ) {
             Row(modifier = Modifier.padding(dimensionResource(R.dimen.big_margin))) {
                 AsyncImage(

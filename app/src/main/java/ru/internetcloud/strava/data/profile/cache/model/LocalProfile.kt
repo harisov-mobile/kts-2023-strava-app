@@ -38,5 +38,8 @@ data class LocalProfile(
     val friendCount: Int,
 
     @ColumnInfo(name = ProfileContract.Columns.FOLLOWER_COUNT)
-    val followerCount: Int
+    val followerCount: Int,
+
+    @ColumnInfo(name = ProfileContract.Columns.WEIGHT)
+    val weight: Float
 )
