@@ -47,7 +47,7 @@
     <string name="training_distance_title">Distance</string>
     <string name="training_speed_title">Speed</string>
     <string name="training_hours_minutes">%sh %sm</string>
-    <string name="training_minutes_seconds">%sm %ss</string>
+    <string name="training_minutes_seconds">%sm</string>
     <string name="training_distance_format">%.2f km</string>
     <string name="training_speed_format">%.1f km/h</string>
     <string name="training_edit_app_bar_title">Edit Activity</string>

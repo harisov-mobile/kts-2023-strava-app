@@ -64,6 +64,7 @@ import org.koin.core.parameter.parametersOf
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.getSportByName
 import ru.internetcloud.strava.domain.common.util.DateConverter
+import ru.internetcloud.strava.domain.common.util.convertToString
 import ru.internetcloud.strava.domain.common.util.toFloatOrDefault
 import ru.internetcloud.strava.domain.training.model.Training
 import ru.internetcloud.strava.presentation.common.compose.ShowEmptyData
@@ -459,7 +460,7 @@ private fun ShowTrainingEdit(
 
                 // Distance
                 OutlinedTextField(
-                    value = training.distance.toInt().toString(),
+                    value = training.distance.toInt().convertToString(),
                     onValueChange = remember { { onEvent(EditTrainingEvent.OnDistanceChange(it.toFloatOrDefault())) } },
                     label = { Text(text = stringResource(id = R.string.training_edit_field_distance)) },
                     modifier = Modifier.fillMaxWidth(),

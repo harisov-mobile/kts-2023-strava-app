@@ -48,7 +48,7 @@
     <string name="training_distance_title">Расстояние</string>
     <string name="training_speed_title">Скорость</string>
     <string name="training_hours_minutes">%sч. %sмин.</string>
-    <string name="training_minutes_seconds">%sмин. %sсек.</string>
+    <string name="training_minutes_seconds">%sмин.</string>
     <string name="training_distance_format">%.2f км</string>
     <string name="training_speed_format">%.1f км/ч</string>
     <string name="training_edit_app_bar_title">Изменить</string>

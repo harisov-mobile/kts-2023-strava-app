@@ -38,6 +38,8 @@ import coil.compose.AsyncImage
 import org.koin.androidx.compose.viewModel
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.common.util.convertToString
+import ru.internetcloud.strava.domain.common.util.toFloatOrDefault
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.presentation.common.compose.ShowError
 import ru.internetcloud.strava.presentation.common.compose.ShowLoadingData
@@ -187,18 +189,18 @@ private fun ShowProfile(
                     readOnly = if (state is UiProfileState.Success) {
                             state.saving
                         } else false,
-                    value = profile.weight.toString(),
-                    onValueChange =  remember { { onEvent(EditProfileEvent.OnWeightChange(it.toFloat())) } },
+                    value = profile.weight.toInt().convertToString(),
+                    onValueChange =  remember { { onEvent(EditProfileEvent.OnWeightChange(it.toFloatOrDefault())) } },
                     label = { Text(text = stringResource(id = R.string.profile_weight)) },
                     modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Decimal)
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.normal_margin)))
 
                 Button(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .height(56.dp),
                     onClick = {
                         if (state is UiProfileState.Success) {
                             if (!state.saving) {
@@ -211,7 +213,7 @@ private fun ShowProfile(
                         if (state.saving) {
                             CircularProgressIndicator(
                                 color = MaterialTheme.colors.onPrimary,
-                                modifier = Modifier.padding(end = 16.dp)
+                                modifier = Modifier.padding(end = 10.dp)
                             )
                         }
                         Text(
@@ -223,25 +225,3 @@ private fun ShowProfile(
         }
     }
 }
-
-
-//@Preview
-//@Composable
-//fun ProfilePreview() {
-//    ShowProfile(
-//        profile = Profile(
-//            id = 1,
-//            firstName = "Rustam",
-//            lastName = "Harisov",
-//            city = "Tallin",
-//            state = "Hollan",
-//            country = "Country",
-//            sex = "M",
-//            imageUrlMedium = "",
-//            imageUrl = "",
-//            friendCount = 5,
-//            followerCount = 2
-//        ),
-//        source = Source.RemoteApi
-//    )
-//}
