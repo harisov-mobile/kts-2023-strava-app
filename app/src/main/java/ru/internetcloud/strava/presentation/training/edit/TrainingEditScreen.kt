@@ -46,8 +46,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -217,7 +219,7 @@ fun TrainingEditScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun ShowTrainingEdit(
     training: Training,
@@ -263,6 +265,7 @@ private fun ShowTrainingEdit(
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
     val gesturesEnabled = rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
     val sportBottomDrawerState: BottomDrawerState =
         rememberBottomDrawerState(BottomDrawerValue.Closed, confirmStateChange = {
             if (it == BottomDrawerValue.Closed) {
@@ -317,7 +320,7 @@ private fun ShowTrainingEdit(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Sport Type
+                // Sport
                 OutlinedTextField(
                     readOnly = true,
                     value = stringResource(id = getSportByName(training.sport).label),
@@ -331,6 +334,7 @@ private fun ShowTrainingEdit(
                             contentDescription = null,
                             modifier = Modifier.clickable {
                                 coroutineScope.launch {
+                                    focusManager.clearFocus()
                                     gesturesEnabled.value = true
                                     sportBottomDrawerState.open()
                                 }
@@ -361,7 +365,12 @@ private fun ShowTrainingEdit(
                             imageVector = Icons.Filled.KeyboardArrowDown,
                             contentDescription = null,
                             modifier = Modifier.clickable(
-                                onClick = remember { { datePickerDialog.show() } }
+                                onClick = remember {
+                                    {
+                                        focusManager.clearFocus()
+                                        datePickerDialog.show()
+                                    }
+                                }
                             )
                         )
                     }
@@ -383,7 +392,12 @@ private fun ShowTrainingEdit(
                             imageVector = Icons.Filled.KeyboardArrowDown,
                             contentDescription = null,
                             modifier = Modifier.clickable(
-                                onClick = remember { { timePickerDialog.show() } }
+                                onClick = remember {
+                                    {
+                                        focusManager.clearFocus()
+                                        timePickerDialog.show()
+                                    }
+                                }
                             )
                         )
                     }
@@ -434,6 +448,7 @@ private fun ShowTrainingEdit(
                             modifier = Modifier.clickable(
                                 onClick = remember {
                                     {
+                                        focusManager.clearFocus()
                                         showDurationDialog.value = true
                                     }
                                 }
