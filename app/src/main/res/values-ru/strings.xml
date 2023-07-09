@@ -42,6 +42,8 @@
     <string name="profile_city">Город</string>
     <string name="profile_weight">Вес</string>
     <string name="profile_save_button">Сохранить</string>
+    <string name="profile_share_subject">Профиль пользователя %s в Strava</string>
+    <string name="profile_share_text">Я уже в Strava: https://www.strava.com/athletes/%s</string>
 
     <string name="training_app_bar_title">Strava</string>
     <string name="training_time_title">Время</string>

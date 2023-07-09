@@ -174,4 +174,3 @@ fun getCurrentSportIndex(list: List<Any>, currentSport: Sport): Int {
     }
     return currentIndex
 }
-

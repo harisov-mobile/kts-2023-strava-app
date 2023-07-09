@@ -76,8 +76,8 @@ class ProfileViewModel(
 
     fun saveProfile() {
         val state = _screenState.value
-        if (state is UiProfileState.Success
-            && state.source == Source.RemoteApi
+        if (state is UiProfileState.Success &&
+            state.source == Source.RemoteApi
         ) {
             store.accept(
                 ProfileStore.Intent.Save(

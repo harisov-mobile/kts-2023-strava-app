@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.profile
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,15 +18,20 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -96,6 +102,7 @@ private fun ShowProfile(
     state: UiProfileState
 ) {
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
 
     Column {
         ShowSource(source)
@@ -121,7 +128,7 @@ private fun ShowProfile(
                 Column {
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
-                        text = "${profile.firstName} ${profile.lastName}",
+                        text = getUserName(profile),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -153,6 +160,29 @@ private fun ShowProfile(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal
                     )
+                }
+                Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.big_margin)))
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    val shareSubject = stringResource(R.string.profile_share_subject, getUserName(profile))
+                    val shareText = stringResource(R.string.profile_share_text, profile.id.toString())
+                    Button(
+                        modifier = Modifier.align(alignment = Alignment.End),
+                        onClick = remember {
+                            {
+                                val reportIntent = Intent(Intent.ACTION_SEND).apply {
+                                    type = "text/plain"
+                                    putExtra(Intent.EXTRA_SUBJECT, shareSubject)
+                                    putExtra(Intent.EXTRA_TEXT, shareText)
+                                }
+                                context.startActivity(reportIntent)
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Share,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
             Column {
@@ -187,10 +217,10 @@ private fun ShowProfile(
 
                 OutlinedTextField(
                     readOnly = if (state is UiProfileState.Success) {
-                            state.saving
-                        } else false,
+                        state.saving
+                    } else false,
                     value = profile.weight.toInt().convertToString(),
-                    onValueChange =  remember { { onEvent(EditProfileEvent.OnWeightChange(it.toFloatOrDefault())) } },
+                    onValueChange = remember { { onEvent(EditProfileEvent.OnWeightChange(it.toFloatOrDefault())) } },
                     label = { Text(text = stringResource(id = R.string.profile_weight)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Decimal)
@@ -224,4 +254,8 @@ private fun ShowProfile(
             }
         }
     }
+}
+
+fun getUserName(profile: Profile): String {
+    return "${profile.firstName} ${profile.lastName}"
 }

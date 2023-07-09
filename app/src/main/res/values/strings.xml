@@ -41,6 +41,8 @@
     <string name="profile_city">City</string>
     <string name="profile_weight">Weight</string>
     <string name="profile_save_button">Save</string>
+    <string name="profile_share_subject">User\'s profile %s in Strava</string>
+    <string name="profile_share_text">I am in Strava: https://www.strava.com/athletes/%s</string>
 
     <string name="training_app_bar_title">Strava</string>
     <string name="training_time_title">Time</string>
