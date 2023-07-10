@@ -39,6 +39,7 @@ import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
+import ru.internetcloud.strava.presentation.web.WebScreen
 
 private val navItemList = listOf(
     NavigationItem.Home,
@@ -183,6 +184,10 @@ fun MainScreen(
             },
             youScreenContent = {
                 ProfileScreen()
+            },
+
+            webScreenContent = { link ->
+                WebScreen(link)
             }
         )
     }

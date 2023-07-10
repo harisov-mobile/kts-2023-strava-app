@@ -42,7 +42,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
                 }
             )
         ) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getLong("id").orDefault()
+            val id = navBackStackEntry.arguments?.getLong(Screen.KEY_ID).orDefault()
             trainingDetailEditScreenContent(id = id)
         }
 

@@ -23,7 +23,6 @@ class NavigationState(val navHostController: NavHostController) {
     }
 
     fun navigateToDetailEdit(id: Long) {
-        // navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
     }
 
@@ -50,6 +49,10 @@ class NavigationState(val navHostController: NavHostController) {
                 }
             }
         }
+    }
+
+    fun navigateToWeb(link: String) {
+        navHostController.navigate(Screen.Web.getRouteWithArg(link))
     }
 }
 

@@ -25,6 +25,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Web
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -162,6 +163,19 @@ private fun ShowProfile(
                     )
                 }
                 Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.big_margin)))
+                Button(
+                    onClick = remember {
+                        {
+
+                        }
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Web,
+                        contentDescription = null
+                    )
+                }
+
                 Column(modifier = Modifier.fillMaxWidth()) {
                     val shareSubject = stringResource(R.string.profile_share_subject, getUserName(profile))
                     val shareText = stringResource(R.string.profile_share_text, profile.id.toString())

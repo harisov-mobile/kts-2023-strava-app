@@ -21,6 +21,13 @@ sealed class Screen(
 
     object TrainingDetailAdd : Screen(ROUTE_TRAINING_DETAIL_ADD)
 
+    object Web : Screen(ROUTE_WEB) {
+        private const val ROUTE_FOR_ARGS = "web"
+        fun getRouteWithArg(link: String): String {
+            return "$ROUTE_FOR_ARGS/$link"
+        }
+    }
+
     companion object {
         const val ROUTE_HOME = "home"
         const val ROUTE_YOU = "you"
@@ -29,7 +36,9 @@ sealed class Screen(
         const val ROUTE_TRAINING_DETAIL = "training_detail/{id}"
         const val ROUTE_TRAINING_DETAIL_EDIT = "training_detail_edit/{id}"
         const val ROUTE_TRAINING_DETAIL_ADD = "training_detail_add"
+        const val ROUTE_WEB = "web/{link}"
 
         const val KEY_ID = "id"
+        const val KEY_LINK = "link"
     }
 }
