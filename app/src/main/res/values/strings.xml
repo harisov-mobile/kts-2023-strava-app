@@ -101,6 +101,7 @@
     <string name="training_edit_field_distance">distance, in meters</string>
     <string name="training_edit_chapter_activity_stats">Activity Stats</string>
     <string name="training_edit_saving_error">Failed to save an Activity:</string>
+    <string name="training_edit_choose_sport">Choose a Sport</string>
 
     <string name="list_state_error_data_loading">Не удалось загрузить данные</string>
     <string name="list_state_empty_data">Нет данных</string>

@@ -61,7 +61,7 @@ fun SportPicker(
                 )
         )
         Text(
-            text = "Choose a Sport",
+            text = stringResource(id = R.string.training_edit_choose_sport),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
