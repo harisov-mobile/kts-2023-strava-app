@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.data.training.network.datasource
 
+import java.util.Calendar
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
@@ -117,7 +118,12 @@ class TrainingRemoteApiDataSourceImpl(
 
     override suspend fun updateTraining(training: Training): DataResponse<Training> {
         return try {
-            val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training)
+            // сдвинуть время на 2 часа назад
+            val calendar = Calendar.getInstance()
+            calendar.time = training.startDate
+            calendar.add(Calendar.HOUR, HOUR_OFFSET)
+
+            val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training.copy(startDate = calendar.time))
 
             val networkResponse = trainingApi.updateTraining(
                 id = trainingUpdateDTO.id,
@@ -156,5 +162,9 @@ class TrainingRemoteApiDataSourceImpl(
         } catch (e: Exception) {
             DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
+    }
+
+    companion object {
+        private const val HOUR_OFFSET = -2
     }
 }
