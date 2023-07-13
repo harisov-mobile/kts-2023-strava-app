@@ -27,6 +27,7 @@
     <string name="main_likes_amount">Количество лайков = %s</string>
 
     <string name="navigation_item_home">Главная</string>
+    <string name="navigation_item_web">Web</string>
     <string name="navigation_item_you">Профиль</string>
 
     <string name="strava_server_unavailable">Произошла ошибка при попытке получить данные от сервера Strava:</string>

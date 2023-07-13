@@ -15,8 +15,8 @@ fun NavGraphBuilder.homeScreenNavGraph(
     trainingDetailAddScreenContent: @Composable () -> Unit
 ) {
     navigation(
-        startDestination = Screen.TrainingList.route,
-        route = Screen.Home.route
+        route = Screen.Home.route,
+        startDestination = Screen.TrainingList.route
     ) {
         composable(Screen.TrainingList.route) {
             trainingListScreenContent()

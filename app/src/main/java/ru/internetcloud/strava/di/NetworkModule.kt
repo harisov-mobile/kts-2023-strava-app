@@ -16,7 +16,6 @@ import ru.internetcloud.strava.data.profile.network.api.ProfileApi
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
 import ru.internetcloud.strava.domain.token.TokenRepository
 import ru.internetcloud.strava.domain.token.UnauthorizedHandler
-import timber.log.Timber
 
 val networkModule = module {
 
@@ -41,8 +40,8 @@ val networkModule = module {
 
         if (BuildConfig.DEBUG) {
             val httpLoggingInterceptor = HttpLoggingInterceptor {
-                Timber.tag("rustam").d("-------")
-                Timber.tag("rustam").d("HttpLoggingInterceptor BODY = $it")
+                // Timber.tag("rustam").d("-------")
+                // Timber.tag("rustam").d("HttpLoggingInterceptor BODY = $it")
             }
                 .setLevel(HttpLoggingInterceptor.Level.BODY)
             okHttpClientBuilder.addInterceptor(httpLoggingInterceptor)

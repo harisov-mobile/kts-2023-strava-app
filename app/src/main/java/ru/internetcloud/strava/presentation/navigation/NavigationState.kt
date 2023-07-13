@@ -10,12 +10,38 @@ class NavigationState(val navHostController: NavHostController) {
 
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
-            popUpTo(navHostController.graph.findStartDestination().id) {
+            val startDestination = navHostController.graph.findStartDestination()
+            val parentStartDestination = startDestination.parent
+
+            var maxEntry = navHostController.graph.findStartDestination().id
+
+            navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+                if (navBackStackEntry.destination.parent == parentStartDestination) {
+                    maxEntry = navBackStackEntry.destination.id
+                }
+            }
+
+            popUpTo(maxEntry) {
                 saveState = true
             }
             launchSingleTop = true
             restoreState = true
         }
+    }
+
+    fun navigateToHomeItem() {
+        val startDestination = navHostController.graph.findStartDestination()
+        val parentStartDestination = startDestination.parent
+
+        var maxEntry = navHostController.graph.findStartDestination().id
+
+        navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+            if (navBackStackEntry.destination.parent == parentStartDestination) {
+                maxEntry = navBackStackEntry.destination.id
+            }
+        }
+
+        navHostController.popBackStack(destinationId = maxEntry, inclusive = false, saveState = true)
     }
 
     fun navigateToDetail(id: Long) {

@@ -30,13 +30,13 @@ sealed class Screen(
 
     companion object {
         const val ROUTE_HOME = "home"
+        const val ROUTE_WEB = "web/{link}"
         const val ROUTE_YOU = "you"
 
         const val ROUTE_TRAINING_LIST = "training_list"
         const val ROUTE_TRAINING_DETAIL = "training_detail/{id}"
         const val ROUTE_TRAINING_DETAIL_EDIT = "training_detail_edit/{id}"
         const val ROUTE_TRAINING_DETAIL_ADD = "training_detail_add"
-        const val ROUTE_WEB = "web/{link}"
 
         const val KEY_ID = "id"
         const val KEY_LINK = "link"

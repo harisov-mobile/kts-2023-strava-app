@@ -18,7 +18,6 @@ import ru.internetcloud.strava.domain.profile.mvi.impl.ProfileStoreFactory
 import ru.internetcloud.strava.domain.training.TrainingRepository
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
 import ru.internetcloud.strava.domain.training.mvi.impl.TrainingDetailStoreFactory
-import timber.log.Timber
 
 val storeModule = module {
 
@@ -26,7 +25,7 @@ val storeModule = module {
         val logger = object : Logger {
             override fun log(text: String) {
                 if (BuildConfig.DEBUG) {
-                    Timber.tag("MVI").d(text)
+                    // Timber.tag("MVI").d(text)
                 }
             }
         }

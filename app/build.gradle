@@ -29,7 +29,7 @@ android {
         ]
 
         // чтобы не "светить" Api ключи в публичном гит-хабе,
-        // создан файл keystore.properties и в этотй файл помещены значения CLIENT_ID и CLIENT_SECRET
+        // создан файл keystore.properties и в этот файл помещены значения CLIENT_ID и CLIENT_SECRET
         buildConfigField 'String', 'CLIENT_ID', keystoreProperties['CLIENT_ID']
         buildConfigField 'String', 'CLIENT_SECRET', keystoreProperties['CLIENT_SECRET']
 
@@ -143,5 +143,5 @@ dependencies {
     implementation "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:$mviVersion"
 
     // Leak canary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
 }

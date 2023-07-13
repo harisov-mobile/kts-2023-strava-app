@@ -26,6 +26,7 @@
     <string name="main_likes_amount">Amount of likes = %s</string>
 
     <string name="navigation_item_home">Home</string>
+    <string name="navigation_item_web">Web</string>
     <string name="navigation_item_you">Profile</string>
 
     <string name="strava_server_unavailable">An error occurred while trying to get data from the Strava server:</string>
