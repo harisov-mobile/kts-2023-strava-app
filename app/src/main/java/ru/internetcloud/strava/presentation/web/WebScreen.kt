@@ -18,7 +18,6 @@ import ru.internetcloud.strava.presentation.common.compose.TopAppBarWithNavigati
 @Composable
 fun WebScreen(link: String) {
     val context = LocalContext.current
-    // Toast.makeText(context, "Link $link", Toast.LENGTH_LONG).show()
 
     Scaffold(
         topBar = {

@@ -28,9 +28,12 @@ sealed class Screen(
         }
     }
 
+    object WebDeepLink : Screen(ROUTE_WEBDEEPLINK)
+
     companion object {
         const val ROUTE_HOME = "home"
         const val ROUTE_WEB = "web/{stravaLink}"
+        const val ROUTE_WEBDEEPLINK = "webdeeplink"
         const val ROUTE_YOU = "you"
 
         const val ROUTE_TRAINING_LIST = "training_list"

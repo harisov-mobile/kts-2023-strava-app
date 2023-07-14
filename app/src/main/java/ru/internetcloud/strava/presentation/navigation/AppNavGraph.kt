@@ -1,5 +1,6 @@
 package ru.internetcloud.strava.presentation.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -7,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 
 @Composable
 fun AppNavGraph(
@@ -47,6 +49,17 @@ fun AppNavGraph(
             link?.let { currentLink ->
                 webScreenContent(link = currentLink)
             }
+        }
+
+        composable(
+            route = Screen.WebDeepLink.route,
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "https://internetcloud.ru"
+                action = Intent.ACTION_VIEW
+            })
+        ) {
+            val currentLink =  "https://internetcloud.ru/sites/gllacy/index.html"
+            webScreenContent(link = currentLink)
         }
     }
 }
