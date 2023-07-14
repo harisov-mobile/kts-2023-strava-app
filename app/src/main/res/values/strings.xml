@@ -170,4 +170,6 @@
     <string name="sport_hiit">HIIT</string>
     <string name="sport_pilates">Pilates</string>
 
+    <string name="web_title">WebView</string>
+
 </resources>

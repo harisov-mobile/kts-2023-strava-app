@@ -2,8 +2,8 @@ package ru.internetcloud.strava.presentation.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.OpenInBrowser
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Web
 import androidx.compose.ui.graphics.vector.ImageVector
 import ru.internetcloud.strava.R
 
@@ -21,8 +21,8 @@ sealed class NavigationItem(
 
     object Web : NavigationItem(
         screen = Screen.Web,
-        titleResId = R.string.navigation_item_home,
-        icon = Icons.Outlined.Web
+        titleResId = R.string.navigation_item_web,
+        icon = Icons.Outlined.OpenInBrowser
     )
     object You : NavigationItem(
         screen = Screen.You,

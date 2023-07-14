@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ru.internetcloud.strava.presentation.util.replaceForUrl
 
 class NavigationState(val navHostController: NavHostController) {
 
@@ -77,8 +78,29 @@ class NavigationState(val navHostController: NavHostController) {
         }
     }
 
+    fun navigateToWebWithPopUp(link: String) {
+        navHostController.navigate(Screen.Web.getRouteWithArg(link.replaceForUrl())) {
+            val startDestination = navHostController.graph.findStartDestination()
+            val parentStartDestination = startDestination.parent
+
+            var maxEntry = navHostController.graph.findStartDestination().id
+
+            navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+                if (navBackStackEntry.destination.parent == parentStartDestination) {
+                    maxEntry = navBackStackEntry.destination.id
+                }
+            }
+
+            popUpTo(maxEntry) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     fun navigateToWeb(link: String) {
-        navHostController.navigate(Screen.Web.getRouteWithArg(link))
+        navHostController.navigate(Screen.Web.getRouteWithArg(link.replaceForUrl()))
     }
 }
 

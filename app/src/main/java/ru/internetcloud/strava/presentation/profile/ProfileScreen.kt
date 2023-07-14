@@ -24,8 +24,8 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Web
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -55,8 +55,12 @@ import ru.internetcloud.strava.presentation.common.compose.TopBarWithLogout
 import ru.internetcloud.strava.presentation.profile.model.UiProfileState
 import ru.internetcloud.strava.presentation.util.addLine
 
+private const val PROFILE_URL = "https://www.strava.com/athletes/"
+
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onShowProfileInWebView: (String) -> Unit
+) {
     val viewModel: ProfileViewModel by viewModel()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val state = screenState
@@ -86,7 +90,8 @@ fun ProfileScreen() {
                         source = state.source,
                         onSave = viewModel::saveProfile,
                         state = state,
-                        onEvent = viewModel::handleEvent
+                        onEvent = viewModel::handleEvent,
+                        onShowProfileInWebView = onShowProfileInWebView
                     )
                 }
             }
@@ -100,6 +105,7 @@ private fun ShowProfile(
     source: Source,
     onSave: () -> Unit,
     onEvent: (EditProfileEvent) -> Unit,
+    onShowProfileInWebView: (String) -> Unit,
     state: UiProfileState
 ) {
     val scrollState = rememberScrollState()
@@ -166,12 +172,12 @@ private fun ShowProfile(
                 Button(
                     onClick = remember {
                         {
-
+                            onShowProfileInWebView("$PROFILE_URL${profile.id}")
                         }
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Web,
+                        imageVector = Icons.Filled.OpenInBrowser,
                         contentDescription = null
                     )
                 }

@@ -41,6 +41,7 @@ import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
 import ru.internetcloud.strava.presentation.web.WebScreen
+import timber.log.Timber
 
 private val navItemList = listOf(
     NavigationItem.Home,
@@ -92,10 +93,29 @@ fun MainScreen(
                         modifier = Modifier.background(MaterialTheme.colors.surface),
                         selected = selected,
                         onClick = {
+
+                            // распечатаем текущий бек-стек:
+                            val list = navigationState.navHostController.backQueue.reversed()
+                            Timber.tag("rustam").d("===========================================")
+                            list.forEachIndexed { index, navBackStackEntry ->
+                                Timber.tag("rustam").d(
+                                    "backQueue, index = $index, id = ${navBackStackEntry.destination.id}"
+                                )
+                                Timber.tag("rustam").d(
+                                    " destination = ${navBackStackEntry.destination}"
+                                )
+                                Timber.tag("rustam").d(
+                                    " destination.route = ${navBackStackEntry.destination.route}" +
+                                            "      destination.parent = ${navBackStackEntry.destination.parent}"
+                                )
+                                Timber.tag("rustam").d("-------------")
+                            }
+                            Timber.tag("rustam").d("===========================================")
+
                             if (!selected) {
                                 val currentRoute = item.screen.route
                                 when (currentRoute) {
-                                    Screen.Web.route -> navigationState.navigateToWeb(link = "https://www.strava.com")
+                                    Screen.Web.route -> navigationState.navigateToWebWithPopUp(link = "https://www.strava.com")
                                     Screen.Home.route -> navigationState.navigateToHomeItem()
                                     else -> navigationState.navigateTo(currentRoute)
                                 }
@@ -191,7 +211,9 @@ fun MainScreen(
                 )
             },
             youScreenContent = {
-                ProfileScreen()
+                ProfileScreen(
+                    onShowProfileInWebView = navigationState::navigateToWeb
+                )
             },
 
             webScreenContent = { link ->

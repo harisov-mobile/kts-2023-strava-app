@@ -171,4 +171,6 @@
     <string name="sport_hiit">ВИИТ</string>
     <string name="sport_pilates">Пилатес</string>
 
+    <string name="web_title">WebView</string>
+
 </resources>
