@@ -1,5 +1,7 @@
 package ru.internetcloud.strava.presentation.util
 
+import android.net.Uri
+
 fun String.addLine(line: String): String {
     return if (this.isEmpty()) {
         line
@@ -55,4 +57,8 @@ fun String.replaceForUrl(): String {
         .replace("\\}".toRegex(), "%7d") // Закрывающаяся фигурная скобка
         .replace("~".toRegex(), "%7e") // Тильда
 
+}
+
+fun String.encode(): String {
+    return Uri.encode(this)
 }
