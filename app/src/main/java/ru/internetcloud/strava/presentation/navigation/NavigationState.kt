@@ -5,12 +5,24 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ru.internetcloud.strava.presentation.util.replaceForUrl
 
 class NavigationState(val navHostController: NavHostController) {
 
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
-            popUpTo(navHostController.graph.findStartDestination().id) {
+            val startDestination = navHostController.graph.findStartDestination()
+            val parentStartDestination = startDestination.parent
+
+            var maxEntry = navHostController.graph.findStartDestination().id
+
+            navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+                if (navBackStackEntry.destination.parent == parentStartDestination) {
+                    maxEntry = navBackStackEntry.destination.id
+                }
+            }
+
+            popUpTo(maxEntry) {
                 saveState = true
             }
             launchSingleTop = true
@@ -18,12 +30,26 @@ class NavigationState(val navHostController: NavHostController) {
         }
     }
 
+    fun navigateToHomeItem() {
+        val startDestination = navHostController.graph.findStartDestination()
+        val parentStartDestination = startDestination.parent
+
+        var maxEntry = navHostController.graph.findStartDestination().id
+
+        navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+            if (navBackStackEntry.destination.parent == parentStartDestination) {
+                maxEntry = navBackStackEntry.destination.id
+            }
+        }
+
+        navHostController.popBackStack(destinationId = maxEntry, inclusive = false, saveState = true)
+    }
+
     fun navigateToDetail(id: Long) {
         navHostController.navigate(Screen.TrainingDetail.getRouteWithArg(id))
     }
 
     fun navigateToDetailEdit(id: Long) {
-        // navHostController.popBackStack()
         navHostController.navigate(Screen.TrainingDetailEdit.getRouteWithArg(id))
     }
 
@@ -50,6 +76,31 @@ class NavigationState(val navHostController: NavHostController) {
                 }
             }
         }
+    }
+
+    fun navigateToWebWithPopUp(link: String) {
+        navHostController.navigate(Screen.Web.getRouteWithArg(link.replaceForUrl())) {
+            val startDestination = navHostController.graph.findStartDestination()
+            val parentStartDestination = startDestination.parent
+
+            var maxEntry = navHostController.graph.findStartDestination().id
+
+            navHostController.backQueue.forEachIndexed { index, navBackStackEntry ->
+                if (navBackStackEntry.destination.parent == parentStartDestination) {
+                    maxEntry = navBackStackEntry.destination.id
+                }
+            }
+
+            popUpTo(maxEntry) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    fun navigateToWeb(link: String) {
+        navHostController.navigate(Screen.Web.getRouteWithArg(link.replaceForUrl()))
     }
 }
 

@@ -7,6 +7,6 @@ data class TrainingListItem(
     val name: String,
     val distance: Float,
     val movingTime: Int,
-    val type: String,
+    val sport: String,
     val startDate: Date
 )

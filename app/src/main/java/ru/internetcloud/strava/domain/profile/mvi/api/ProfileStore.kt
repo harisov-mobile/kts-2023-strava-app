@@ -7,7 +7,10 @@ import ru.internetcloud.strava.domain.profile.model.Profile
 interface ProfileStore : Store<ProfileStore.Intent, ProfileStore.State, ProfileStore.Event> {
 
     sealed interface State {
-        data class Success(val profile: Profile, val source: Source) : State
+        data class Success(
+            val profile: Profile,
+            val source: Source,
+            val saving: Boolean = false) : State
 
         data class Error(val exception: Exception) : State
 
@@ -16,6 +19,8 @@ interface ProfileStore : Store<ProfileStore.Intent, ProfileStore.State, ProfileS
 
     sealed interface Intent {
         object Load : Intent
+        data class Save(val profile: Profile, val source: Source) : Intent
+        data class Change(val profile: Profile, val source: Source) : Intent
     }
 
     sealed interface Event

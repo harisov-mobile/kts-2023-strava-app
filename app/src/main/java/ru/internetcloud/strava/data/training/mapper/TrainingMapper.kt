@@ -2,6 +2,7 @@ package ru.internetcloud.strava.data.training.mapper
 
 import ru.internetcloud.strava.data.training.cache.model.LocalTraining
 import ru.internetcloud.strava.data.training.network.model.TrainingDTO
+import ru.internetcloud.strava.data.training.network.model.TrainingPhotoDTO
 import ru.internetcloud.strava.data.training.network.model.TrainingUpdateDTO
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.common.util.orDefault
@@ -10,19 +11,25 @@ import ru.internetcloud.strava.domain.training.model.Training
 class TrainingMapper(
     private val dateConverter: DateConverter
 ) {
-    fun fromDtoToDomain(trainingDTO: TrainingDTO): Training {
+    fun fromDtoToDomain(trainingDTO: TrainingDTO, photos: List<TrainingPhotoDTO>): Training {
+        val photoUrls = mutableListOf<String>()
+
+        photos.forEach { trainingPhotoDTO ->
+            photoUrls.add(trainingPhotoDTO.urls.url)
+        }
+
         return Training(
             id = trainingDTO.id,
             name = trainingDTO.name,
             distance = trainingDTO.distance,
             movingTime = trainingDTO.movingTime,
             elapsedTime = trainingDTO.elapsedTime,
-            type = trainingDTO.type,
-            sportType = trainingDTO.sportType,
+            sport = trainingDTO.sport,
             startDate = dateConverter.fromStringInIso8601ToDate(trainingDTO.startDate),
             description = trainingDTO.description.orEmpty(),
             trainer = trainingDTO.trainer.orDefault(),
-            commute = trainingDTO.commute.orDefault()
+            commute = trainingDTO.commute.orDefault(),
+            photoUrls = photoUrls.toList()
         )
     }
 
@@ -33,8 +40,7 @@ class TrainingMapper(
             distance = training.distance,
             movingTime = training.movingTime,
             elapsedTime = training.elapsedTime,
-            type = training.type,
-            sportType = training.sportType,
+            sport = training.sport,
             startDate = training.startDate,
             description = training.description,
             trainer = training.trainer,
@@ -49,12 +55,12 @@ class TrainingMapper(
             distance = localTraining.distance,
             movingTime = localTraining.movingTime,
             elapsedTime = localTraining.elapsedTime,
-            type = localTraining.type,
-            sportType = localTraining.sportType,
+            sport = localTraining.sport,
             startDate = localTraining.startDate,
             description = localTraining.description,
             trainer = localTraining.trainer,
-            commute = localTraining.commute
+            commute = localTraining.commute,
+            photoUrls = emptyList()
         )
     }
 
@@ -64,11 +70,10 @@ class TrainingMapper(
             name = training.name,
             distance = training.distance,
             movingTime = training.movingTime,
-            type = training.type,
             startDate = dateConverter.getDateISO8601String(training.startDate),
             description = training.description,
             elapsedTime = training.elapsedTime,
-            sportType = training.sportType,
+            sport = training.sport,
             trainer = training.trainer,
             commute = training.commute
         )
@@ -79,7 +84,7 @@ class TrainingMapper(
             id = training.id,
             name = training.name,
             description = training.description,
-            sportType = training.sportType,
+            sport = training.sport,
             trainer = training.trainer,
             commute = training.commute,
             startDate = dateConverter.getDateISO8601String(training.startDate),

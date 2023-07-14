@@ -12,7 +12,8 @@ internal class ProfileReducer : Reducer<ProfileStore.State, ProfileStoreFactory.
 
         is ProfileStoreFactory.Message.SetSuccess -> ProfileStore.State.Success(
             profile = msg.profile,
-            source = msg.source
+            source = msg.source,
+            saving = msg.saving
         )
 
         is ProfileStoreFactory.Message.SetError -> ProfileStore.State.Error(

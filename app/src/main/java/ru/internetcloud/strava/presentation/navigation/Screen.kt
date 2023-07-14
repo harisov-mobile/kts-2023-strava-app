@@ -4,7 +4,6 @@ sealed class Screen(
     val route: String
 ) {
     object Home : Screen(ROUTE_HOME)
-    object Groups : Screen(ROUTE_GROUPS)
     object You : Screen(ROUTE_YOU)
     object TrainingList : Screen(ROUTE_TRAINING_LIST)
     object TrainingDetail : Screen(ROUTE_TRAINING_DETAIL) {
@@ -22,9 +21,19 @@ sealed class Screen(
 
     object TrainingDetailAdd : Screen(ROUTE_TRAINING_DETAIL_ADD)
 
+    object Web : Screen(ROUTE_WEB) {
+        private const val ROUTE_FOR_ARGS = "web"
+        fun getRouteWithArg(link: String): String {
+            return "$ROUTE_FOR_ARGS/$link"
+        }
+    }
+
+    object WebDeepLink : Screen(ROUTE_WEBDEEPLINK)
+
     companion object {
         const val ROUTE_HOME = "home"
-        const val ROUTE_GROUPS = "groups"
+        const val ROUTE_WEB = "web/{stravaLink}"
+        const val ROUTE_WEBDEEPLINK = "webdeeplink"
         const val ROUTE_YOU = "you"
 
         const val ROUTE_TRAINING_LIST = "training_list"
@@ -33,5 +42,6 @@ sealed class Screen(
         const val ROUTE_TRAINING_DETAIL_ADD = "training_detail_add"
 
         const val KEY_ID = "id"
+        const val KEY_LINK = "stravaLink"
     }
 }

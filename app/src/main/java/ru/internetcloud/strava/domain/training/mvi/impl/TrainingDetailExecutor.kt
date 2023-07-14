@@ -5,17 +5,15 @@ import kotlinx.coroutines.launch
 import ru.internetcloud.strava.R
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.util.toStringVs
+import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
-import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
+import ru.internetcloud.strava.domain.training.TrainingRepository
 import ru.internetcloud.strava.domain.training.mvi.api.TrainingDetailStore
-import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingUseCase
-import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 
 internal class TrainingDetailExecutor(
-    private val getProfileUseCase: GetProfileUseCase,
-    private val getTrainingUseCase: GetTrainingUseCase,
-    private val deleteTrainingUseCase: DeleteTrainingUseCase
+    private val profileRepository: ProfileRepository,
+    private val trainingRepository: TrainingRepository
 ) : CoroutineExecutor<TrainingDetailStore.Intent, TrainingDetailStore.Action, TrainingDetailStore.State, TrainingDetailStoreFactory.Message, TrainingDetailStore.Event>() {
 
     override fun executeIntent(intent: TrainingDetailStore.Intent, getState: () -> TrainingDetailStore.State) {
@@ -31,7 +29,7 @@ internal class TrainingDetailExecutor(
     private suspend fun loadTraining(trainingId: Long) {
         dispatch(TrainingDetailStoreFactory.Message.SetLoading)
 
-        when (val profileDataResponse = getProfileUseCase.getProfile()) {
+        when (val profileDataResponse = profileRepository.getProfile()) {
             is DataResponse.Success -> {
                 val profile = profileDataResponse.data
                 loadProfileWithTraining(profile = profile, trainingId = trainingId)
@@ -48,7 +46,7 @@ internal class TrainingDetailExecutor(
     }
 
     private suspend fun loadProfileWithTraining(profile: Profile, trainingId: Long) {
-        when (val trainingDataResponse = getTrainingUseCase.getTraining(id = trainingId)) {
+        when (val trainingDataResponse = trainingRepository.getTraining(id = trainingId)) {
             is DataResponse.Success -> {
                 val profileWithTraining = ProfileWithTraining(
                     profile = profile,
@@ -74,7 +72,7 @@ internal class TrainingDetailExecutor(
 
     private suspend fun deleteTraining(state: TrainingDetailStore.State) {
         if (state is TrainingDetailStore.State.Success) {
-            when (val deleteDataResponse = deleteTrainingUseCase.deleteTraining(
+            when (val deleteDataResponse = trainingRepository.deleteTraining(
                 state.profileWithTraining.training.id
             )) {
                 is DataResponse.Success -> {

@@ -8,6 +8,15 @@
     <dimen name="big_margin">16dp</dimen>
     <dimen name="huge_margin">32dp</dimen>
 
+    <dimen name="bottom_content_padding">76dp</dimen>
 
+    <dimen name="sport_item_height">50dp</dimen>
+    <dimen name="sport_item_icon_size">30dp</dimen>
+
+    <dimen name="training_item_icon_size">32dp</dimen>
+
+    <dimen name="training_detail_sport_icon_size">16dp</dimen>
+    <dimen name="training_detail_photo_size_X">170dp</dimen>
+    <dimen name="training_detail_photo_size_Y">250dp</dimen>
 
 </resources>

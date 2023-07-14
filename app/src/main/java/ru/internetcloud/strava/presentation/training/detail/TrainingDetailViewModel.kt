@@ -57,8 +57,6 @@ class TrainingDetailViewModel(
         store.accept(TrainingDetailStore.Intent.Load(id))
     }
 
-    fun deleteTraining() = store.accept(TrainingDetailStore.Intent.Delete)
-
     private fun acceptState(state: UiTrainingDetailState) {
         _screenState.value = when (state) {
             is UiTrainingDetailState.Error -> state.copy(isChanged = this.isChanged)

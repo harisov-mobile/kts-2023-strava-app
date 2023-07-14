@@ -15,8 +15,8 @@ fun NavGraphBuilder.homeScreenNavGraph(
     trainingDetailAddScreenContent: @Composable () -> Unit
 ) {
     navigation(
-        startDestination = Screen.TrainingList.route,
-        route = Screen.Home.route
+        route = Screen.Home.route,
+        startDestination = Screen.TrainingList.route
     ) {
         composable(Screen.TrainingList.route) {
             trainingListScreenContent()
@@ -30,7 +30,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
                 }
             )
         ) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getLong("id").orDefault()
+            val id = navBackStackEntry.arguments?.getLong(Screen.KEY_ID).orDefault()
             trainingDetailScreenContent(id = id)
         }
 
@@ -42,7 +42,7 @@ fun NavGraphBuilder.homeScreenNavGraph(
                 }
             )
         ) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getLong("id").orDefault()
+            val id = navBackStackEntry.arguments?.getLong(Screen.KEY_ID).orDefault()
             trainingDetailEditScreenContent(id = id)
         }
 

@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.internetcloud.strava.R
@@ -26,12 +25,12 @@ fun ShowSource(source: Source) {
             Card(
                 shape = MaterialTheme.shapes.medium,
                 backgroundColor = MaterialTheme.colors.surface,
-                border = BorderStroke(width = 1.dp, color = Color.Red)
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.error)
             ) {
                 Text(
                     text = stringResource(id = R.string.source_description),
                     modifier = Modifier.padding(8.dp),
-                    color = Color.Red
+                    color = MaterialTheme.colors.error
                 )
             }
         }

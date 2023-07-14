@@ -15,7 +15,7 @@ class TrainingListItemMapper(
             name = trainingDTO.name,
             distance = trainingDTO.distance,
             movingTime = trainingDTO.movingTime,
-            type = trainingDTO.type,
+            sport = trainingDTO.sport,
             startDate = dateConverter.fromStringInIso8601ToDate(trainingDTO.startDate)
         )
     }
@@ -30,7 +30,7 @@ class TrainingListItemMapper(
             name = trainingListItem.name,
             distance = trainingListItem.distance,
             movingTime = trainingListItem.movingTime,
-            type = trainingListItem.type,
+            sport = trainingListItem.sport,
             startDate = trainingListItem.startDate
         )
     }
@@ -41,7 +41,7 @@ class TrainingListItemMapper(
             name = localTrainingListItem.name,
             distance = localTrainingListItem.distance,
             movingTime = localTrainingListItem.movingTime,
-            type = localTrainingListItem.type,
+            sport = localTrainingListItem.sport,
             startDate = localTrainingListItem.startDate
         )
     }

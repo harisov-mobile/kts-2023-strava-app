@@ -1,9 +1,11 @@
 package ru.internetcloud.strava.data.training.network.datasource
 
+import java.util.Calendar
 import ru.internetcloud.strava.data.common.ErrorMessageConverter
 import ru.internetcloud.strava.data.training.mapper.TrainingListItemMapper
 import ru.internetcloud.strava.data.training.mapper.TrainingMapper
 import ru.internetcloud.strava.data.training.network.api.TrainingApi
+import ru.internetcloud.strava.data.training.network.model.TrainingPhotoDTO
 import ru.internetcloud.strava.domain.common.list.mvi.model.ListLoadParams
 import ru.internetcloud.strava.domain.common.list.mvi.model.ListState
 import ru.internetcloud.strava.domain.common.model.DataResponse
@@ -51,8 +53,9 @@ class TrainingRemoteApiDataSourceImpl(
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
+                    val photos = getPhotos(id)
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos),
                         source = Source.RemoteApi
                     )
                 } ?: let {
@@ -66,13 +69,28 @@ class TrainingRemoteApiDataSourceImpl(
         }
     }
 
+    private suspend fun getPhotos(id: Long): List<TrainingPhotoDTO> {
+        return try {
+            val networkResponse = trainingApi.getPhotos(id = id)
+            if (networkResponse.isSuccessful) {
+                val listDTO = networkResponse.body()
+                listDTO ?: let {
+                    emptyList()
+                }
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
     override suspend fun addTraining(training: Training): DataResponse<Training> {
         return try {
             val newTrainingDTO = trainingMapper.fromDomainToDto(training)
             val networkResponse = trainingApi.addTraining(
                 name = newTrainingDTO.name,
-                type = newTrainingDTO.type,
-                sportType = newTrainingDTO.sportType,
+                sport = newTrainingDTO.sport,
                 startDate = newTrainingDTO.startDate,
                 elapsedTime = newTrainingDTO.elapsedTime,
                 description = newTrainingDTO.description.orEmpty(),
@@ -84,7 +102,7 @@ class TrainingRemoteApiDataSourceImpl(
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos = emptyList()),
                         source = Source.RemoteApi
                     )
                 } ?: let {
@@ -100,7 +118,12 @@ class TrainingRemoteApiDataSourceImpl(
 
     override suspend fun updateTraining(training: Training): DataResponse<Training> {
         return try {
-            val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training)
+            // сдвинуть время на 2 часа назад
+            val calendar = Calendar.getInstance()
+            calendar.time = training.startDate
+            calendar.add(Calendar.HOUR, HOUR_OFFSET)
+
+            val trainingUpdateDTO = trainingMapper.fromDomainToUpdateDto(training.copy(startDate = calendar.time))
 
             val networkResponse = trainingApi.updateTraining(
                 id = trainingUpdateDTO.id,
@@ -109,8 +132,9 @@ class TrainingRemoteApiDataSourceImpl(
             if (networkResponse.isSuccessful) {
                 val trainingDTO = networkResponse.body()
                 trainingDTO?.let { currentDTO ->
+                    val photos = getPhotos(trainingUpdateDTO.id)
                     DataResponse.Success(
-                        data = trainingMapper.fromDtoToDomain(currentDTO),
+                        data = trainingMapper.fromDtoToDomain(currentDTO, photos = photos),
                         source = Source.RemoteApi
                     )
                 } ?: let {
@@ -138,5 +162,9 @@ class TrainingRemoteApiDataSourceImpl(
         } catch (e: Exception) {
             DataResponse.Error(Exception(errorMessageConverter.getMessageToException(e)))
         }
+    }
+
+    companion object {
+        private const val HOUR_OFFSET = -2
     }
 }

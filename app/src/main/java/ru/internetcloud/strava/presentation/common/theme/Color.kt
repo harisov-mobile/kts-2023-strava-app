@@ -3,6 +3,7 @@ package ru.internetcloud.strava.presentation.common.theme
 import androidx.compose.ui.graphics.Color
 
 val Black500 = Color(0xff9a9b9d)
+val Black700 = Color(0xff616161)
 val Black900 = Color(0xff191919)
 
 val tangelo = Color(0xFFFC4C02)

@@ -6,7 +6,7 @@ sealed interface EditTrainingEvent {
 
     data class OnDescriptionChange(val description: String) : EditTrainingEvent
 
-    data class OnSportTypeChange(val sportType: String) : EditTrainingEvent
+    data class OnSportTypeChange(val sport: String) : EditTrainingEvent
 
     data class OnStartDateChange(val year: Int, val month: Int, val day: Int) : EditTrainingEvent
 

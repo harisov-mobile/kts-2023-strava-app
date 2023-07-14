@@ -16,4 +16,6 @@ interface DateConverter {
     fun fromStringInIso8601ToDate(dateString: String): Date
 
     fun getDateTimeStringWithGMT(date: Date?): String
+
+    fun getDateTimeString(date: Date?): String
 }

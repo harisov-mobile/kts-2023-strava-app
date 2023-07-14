@@ -19,7 +19,8 @@ class ProfileMapper {
             imageUrlMedium = profileDTO.profileMedium.orEmpty(),
             imageUrl = profileDTO.profile.orEmpty(),
             friendCount = profileDTO.friendCount.orDefault(),
-            followerCount = profileDTO.followerCount.orDefault()
+            followerCount = profileDTO.followerCount.orDefault(),
+            weight = profileDTO.weight.orDefault()
         )
     }
 
@@ -35,7 +36,8 @@ class ProfileMapper {
             imageUrlMedium = localProfile.imageUrlMedium,
             imageUrl = localProfile.imageUrl,
             friendCount = localProfile.friendCount,
-            followerCount = localProfile.followerCount
+            followerCount = localProfile.followerCount,
+            weight = localProfile.weight
         )
     }
 
@@ -51,7 +53,8 @@ class ProfileMapper {
             imageUrlMedium = profile.imageUrlMedium,
             imageUrl = profile.imageUrl,
             friendCount = profile.friendCount,
-            followerCount = profile.followerCount
+            followerCount = profile.followerCount,
+            weight = profile.weight
         )
     }
 }

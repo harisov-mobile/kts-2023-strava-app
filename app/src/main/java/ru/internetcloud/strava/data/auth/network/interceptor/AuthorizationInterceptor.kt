@@ -28,6 +28,7 @@ class AuthorizationInterceptor(
                 withContext(Dispatchers.IO) {
                     val token = tokenRepository.getTokenData().accessToken
                     if (token != null) {
+                        // Timber.tag("rustam").d("Bearer $token")
                         header(AUTH_HEADER_NAME, token.withBearer())
                     }
                 }

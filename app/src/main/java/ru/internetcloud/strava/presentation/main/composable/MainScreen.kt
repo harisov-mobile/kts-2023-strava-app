@@ -33,16 +33,17 @@ import ru.internetcloud.strava.presentation.main.MainScreenEvent
 import ru.internetcloud.strava.presentation.main.MainScreenViewModel
 import ru.internetcloud.strava.presentation.navigation.AppNavGraph
 import ru.internetcloud.strava.presentation.navigation.NavigationItem
+import ru.internetcloud.strava.presentation.navigation.Screen
 import ru.internetcloud.strava.presentation.navigation.rememberNavigationState
 import ru.internetcloud.strava.presentation.profile.ProfileScreen
 import ru.internetcloud.strava.presentation.training.detail.TrainingDetailScreen
 import ru.internetcloud.strava.presentation.training.edit.EditMode
 import ru.internetcloud.strava.presentation.training.edit.TrainingEditScreen
 import ru.internetcloud.strava.presentation.training.list.TrainingListScreen
+import ru.internetcloud.strava.presentation.web.WebScreen
 
 private val navItemList = listOf(
     NavigationItem.Home,
-    NavigationItem.Groups,
     NavigationItem.You
 )
 
@@ -54,7 +55,7 @@ fun MainScreen(
     keyMessage: String,
     onNavigate: (Int, Bundle?) -> Unit
 ) {
-    val navigationState = rememberNavigationState()
+    val navigationState = rememberNavigationState() // функция Андрея Сумина
 
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
@@ -91,7 +92,11 @@ fun MainScreen(
                         selected = selected,
                         onClick = {
                             if (!selected) {
-                                navigationState.navigateTo(item.screen.route)
+                                val currentRoute = item.screen.route
+                                when (currentRoute) {
+                                    Screen.Home.route -> navigationState.navigateToHomeItem()
+                                    else -> navigationState.navigateTo(currentRoute)
+                                }
                             }
                         },
                         icon = {
@@ -111,6 +116,7 @@ fun MainScreen(
             true -> {
                 snackbarHostState.currentSnackbarData?.dismiss()
             }
+
             false -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(
@@ -131,7 +137,6 @@ fun MainScreen(
             modifier = Modifier.padding(paddingValues),
             navHostController = navigationState.navHostController,
             trainingListScreenContent = {
-                // ShowTrainingListScreen(
                 TrainingListScreen(
                     currentBackStackEntry = navigationState.navHostController.currentBackStackEntry,
                     refreshKey = KEY_REFRESH,
@@ -183,12 +188,14 @@ fun MainScreen(
                     }
                 )
             },
-
-            groupsScreenContent = {
-                ShowGroupsScreen()
-            },
             youScreenContent = {
-                ProfileScreen()
+                ProfileScreen(
+                    onShowProfileInWebView = navigationState::navigateToWeb
+                )
+            },
+
+            webScreenContent = { link ->
+                WebScreen(link)
             }
         )
     }
@@ -207,3 +214,4 @@ fun MainScreen(
         }
     }
 }
+

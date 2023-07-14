@@ -1,5 +1,7 @@
 package ru.internetcloud.strava.presentation.training.list
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,10 +13,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +28,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.inject
 import ru.internetcloud.strava.R
+import ru.internetcloud.strava.domain.common.model.getSportByName
 import ru.internetcloud.strava.domain.common.util.DateConverter
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.training.model.TrainingListItem
+import ru.internetcloud.strava.presentation.common.theme.customTypography
 import ru.internetcloud.strava.presentation.util.Calculator
 import ru.internetcloud.strava.presentation.util.Formatter
 
@@ -45,38 +52,57 @@ fun TrainingItemView(
         onClick = onTrainingClickListener
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(dimensionResource(R.dimen.big_margin))
         ) {
             Row {
                 AsyncImage(
                     modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape),
+                        .size(dimensionResource(R.dimen.training_item_icon_size))
+                        .clip(CircleShape)
+                        .align(Alignment.CenterVertically),
                     model = profile.imageUrlMedium,
                     placeholder = painterResource(id = R.drawable.no_photo),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(dimensionResource(R.dimen.big_margin)))
                 Column {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
                     Text(
                         text = "${profile.firstName} ${profile.lastName}",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_margin)))
+                    Row {
+                        Image(
+                            painter = painterResource(id = getSportByName(training.sport).icon),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(size = dimensionResource(R.dimen.training_detail_sport_icon_size))
+                                .align(Alignment.CenterVertically)
+                        )
+                        Text(
+                            text = stringResource(
+                                id = getSportByName(training.sport).label
+                            ),
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .padding(start = dimensionResource(R.dimen.small_margin))
+                        )
+                    }
                     Text(
-                        text = dateConverter.getDateTimeStringWithGMT(training.startDate),
+                        text = dateConverter.getDateTimeString(training.startDate),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
             Text(
                 text = training.name,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.normal_margin)))
             TimeDistanceSpeed(training = training)
         }
     }
@@ -90,22 +116,15 @@ fun TimeDistanceSpeed(
     Row(
         modifier = modifier
     ) {
-        Column {
-            Text(
-                text = stringResource(id = R.string.training_time_title),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Normal
-            )
-            Text(
-                text = Formatter.getDetailedTime(
-                    training.movingTime,
-                    stringResource(id = R.string.training_hours_minutes),
-                    stringResource(id = R.string.training_minutes_seconds)
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal
-            )
-        }
+        ShowPart(
+            title = stringResource(id = R.string.training_time_title),
+            value = Formatter.getDetailedTime(
+                training.movingTime,
+                stringResource(id = R.string.training_hours_minutes),
+                stringResource(id = R.string.training_minutes_seconds)
+            ),
+            enableStartPadding = false
+        )
         if (training.distance > 0) {
             ShowPart(
                 title = stringResource(id = R.string.training_distance_title),
@@ -129,20 +148,22 @@ fun TimeDistanceSpeed(
 
 @Composable
 fun ShowPart(
+    modifier: Modifier = Modifier,
     title: String,
-    value: String
+    value: String,
+    enableStartPadding: Boolean = true
 ) {
-    Spacer(modifier = Modifier.width(16.dp))
-    Column {
-        Text(
-            text = title,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Normal
-        )
-        Text(
-            text = value,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal
-        )
+    val startPadding = if (enableStartPadding) dimensionResource(R.dimen.big_margin) else 0.dp
+    Box(modifier = modifier.padding(start = startPadding)) {
+        Column {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.caption
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.customTypography.bodyMedium
+            )
+        }
     }
 }

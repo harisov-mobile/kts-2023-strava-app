@@ -3,13 +3,13 @@ package ru.internetcloud.strava.domain.profile.mvi.impl
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.model.Profile
 import ru.internetcloud.strava.domain.profile.mvi.api.ProfileStore
-import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
 
 internal class ProfileStoreFactory(
     private val storeFactory: StoreFactory,
-    private val getProfileUseCase: GetProfileUseCase
+    private val profileRepository: ProfileRepository
 ) {
 
     fun create(): ProfileStore = object :
@@ -20,7 +20,7 @@ internal class ProfileStoreFactory(
             bootstrapper = null,
             executorFactory = {
                 ProfileExecutor(
-                    getProfileUseCase = getProfileUseCase
+                    profileRepository = profileRepository
                 )
             },
             reducer = ProfileReducer()
@@ -28,7 +28,10 @@ internal class ProfileStoreFactory(
 
     sealed interface Message {
         object SetLoading : Message
-        data class SetSuccess(val profile: Profile, val source: Source) : Message
+        data class SetSuccess(
+            val profile: Profile,
+            val source: Source,
+            val saving: Boolean = false) : Message
         data class SetError(val error: Exception) : Message
     }
 }

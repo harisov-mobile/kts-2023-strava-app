@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Strava-client</string>
+    <string name="app_name">My Strava</string>
 
     <string name="onboarding_get_started">Начать</string>
     <string name="onboarding_description_logo">Логотип Страва</string>
@@ -27,8 +27,8 @@
     <string name="main_likes_amount">Количество лайков = %s</string>
 
     <string name="navigation_item_home">Главная</string>
-    <string name="navigation_item_groups">Группы</string>
-    <string name="navigation_item_you">Вы</string>
+    <string name="navigation_item_web">Web</string>
+    <string name="navigation_item_you">Профиль</string>
 
     <string name="strava_server_unavailable">Произошла ошибка при попытке получить данные от сервера Strava:</string>
     <string name="try_again_button">Повторить попытку</string>
@@ -38,13 +38,20 @@
 
     <string name="profile_following">Подписки</string>
     <string name="profile_followers">Подписчики</string>
+    <string name="profile_country">Страна</string>
+    <string name="profile_state">Регион</string>
+    <string name="profile_city">Город</string>
+    <string name="profile_weight">Вес</string>
+    <string name="profile_save_button">Сохранить</string>
+    <string name="profile_share_subject">Профиль пользователя %s в Strava</string>
+    <string name="profile_share_text">Я уже в Strava: https://www.strava.com/athletes/%s</string>
 
-    <string name="training_app_bar_title">Тренировка</string>
+    <string name="training_app_bar_title">Strava</string>
     <string name="training_time_title">Время</string>
     <string name="training_distance_title">Расстояние</string>
     <string name="training_speed_title">Скорость</string>
     <string name="training_hours_minutes">%sч. %sмин.</string>
-    <string name="training_minutes_seconds">%sмин. %sсек.</string>
+    <string name="training_minutes_seconds">%sмин.</string>
     <string name="training_distance_format">%.2f км</string>
     <string name="training_speed_format">%.1f км/ч</string>
     <string name="training_edit_app_bar_title">Изменить</string>
@@ -89,12 +96,81 @@
     <string name="training_edit_discard_dialog_dismiss_button">Отмена</string>
     <string name="training_edit_field_name">название</string>
     <string name="training_edit_field_description">описание</string>
-    <string name="training_edit_field_sport_type">тип</string>
+    <string name="training_edit_field_sport">тип</string>
     <string name="training_edit_field_date">дата</string>
     <string name="training_edit_field_start_time">время начала</string>
     <string name="training_edit_field_duration">продолжительность</string>
     <string name="training_edit_field_distance">дистанция, метры</string>
     <string name="training_edit_chapter_activity_stats">Статистика тренировки</string>
     <string name="training_edit_saving_error">Не удалось сохранить тренировку:</string>
+    <string name="training_edit_choose_sport">Вид спорта</string>
+
+    <string name="list_state_error_data_loading">Не удалось загрузить данные</string>
+    <string name="list_state_empty_data">Нет данных</string>
+    <string name="default_error">Loading error</string>
+    <string name="empty_data_message">Нет данных</string>
+
+    <string name="sport_type_foot_sports">Бег и ходьба</string>
+    <string name="sport_type_cycle_sports">Велосипедный спорт</string>
+    <string name="sport_type_water_sports">Водные виды спорта</string>
+    <string name="sport_type_winter_sports">Зимние виды спорта</string>
+    <string name="sport_type_other_sports">Другие виды спорта</string>
+
+    <string name="sport_run">Забег</string>
+    <string name="sport_trail_run">Трейлраннинг</string>
+    <string name="sport_walk">Ходьба</string>
+    <string name="sport_hike">Хайкинг</string>
+    <string name="sport_wheelchair">Кресло-коляска</string>
+    <string name="sport_virtual_run">Виртуальный забег</string>
+
+    <string name="sport_ride">Заезд</string>
+    <string name="sport_mountain_bike_ride">Горный велозаезд</string>
+    <string name="sport_gravel_ride">Гравийный велозаезд</string>
+    <string name="sport_e_bike_ride">Заезд на электровелосипеде</string>
+    <string name="sport_e_mountain_bike_ride">Заезд на горном электровелосипеде</string>
+    <string name="sport_handcycle">Ручной велосипед</string>
+    <string name="sport_velomobile">Веломобиль</string>
+    <string name="sport_virtual_ride">Виртуальный заезд</string>
+
+    <string name="sport_swim">Заплыв</string>
+    <string name="sport_surfing">Серфинг</string>
+    <string name="sport_stand_up_paddling">Гребля на доске стоя</string>
+    <string name="sport_windsurf">Виндсерфинг</string>
+    <string name="sport_kitesurf">Кайтсерфинг</string>
+    <string name="sport_kayaking">Каякинг</string>
+    <string name="sport_rowing">Гребля</string>
+    <string name="sport_canoeing">Каноэ</string>
+    <string name="sport_sail">Парусный спорт</string>
+    <string name="sport_virtual_row">Виртуальная гребля</string>
+
+    <string name="sport_ice_skate">Коньки</string>
+    <string name="sport_alpine_ski">Горные лыжи</string>
+    <string name="sport_nordic_ski">Лыжи</string>
+    <string name="sport_backcountry_ski">Бэккантри</string>
+    <string name="sport_snowboard">Сноуборд</string>
+    <string name="sport_snowshoe">Снегоступы</string>
+
+    <string name="sport_inline_skate">Роликовые коньки</string>
+    <string name="sport_roller_ski">Роликовые лыжи</string>
+    <string name="sport_workout">Тренировка</string>
+    <string name="sport_rock_climbing">Скалолазание</string>
+    <string name="sport_weight_training">Силовая тренировка</string>
+    <string name="sport_elliptical">Эллиптический тренажер</string>
+    <string name="sport_stair_stepper">Тренажер-степпер</string>
+    <string name="sport_crossfit">Кроссфит</string>
+    <string name="sport_yoga">Йога</string>
+    <string name="sport_skateboard">Скейтбординг</string>
+    <string name="sport_soccer">Футбол</string>
+    <string name="sport_golf">Гольф</string>
+    <string name="sport_tennis">Теннис</string>
+    <string name="sport_pickleball">Пиклбол</string>
+    <string name="sport_racquetball">Ракетбол</string>
+    <string name="sport_squash">Сквош</string>
+    <string name="sport_badminton">Бадминтон</string>
+    <string name="sport_table_tennis">Настольный теннис</string>
+    <string name="sport_hiit">ВИИТ</string>
+    <string name="sport_pilates">Пилатес</string>
+
+    <string name="web_title">WebView</string>
 
 </resources>

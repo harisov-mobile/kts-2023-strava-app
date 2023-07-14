@@ -7,7 +7,8 @@ sealed interface UiProfileState {
 
     data class Success(
         val profile: Profile,
-        val source: Source
+        val source: Source,
+        val saving: Boolean = false
     ) : UiProfileState
 
     data class Error(val exception: Exception) : UiProfileState

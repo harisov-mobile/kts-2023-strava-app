@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -18,8 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import org.koin.androidx.compose.viewModel
@@ -61,8 +60,6 @@ fun TrainingListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.primary,
-                contentColor = MaterialTheme.colors.onPrimary,
                 onClick = remember { { onFloatingActionButtonClick() } }
             ) {
                 Icon(Icons.Filled.Add, contentDescription = null)
@@ -84,12 +81,12 @@ fun TrainingListScreen(
                 ShowSource(screenState.source)
                 LazyColumn(
                     contentPadding = PaddingValues(
-                        top = 8.dp,
-                        start = 8.dp,
-                        end = 8.dp,
-                        bottom = 72.dp
+                        top = dimensionResource(R.dimen.normal_margin),
+                        start = dimensionResource(R.dimen.normal_margin),
+                        end = dimensionResource(R.dimen.normal_margin),
+                        bottom = dimensionResource(R.dimen.bottom_content_padding)
                     ),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.normal_margin))
                 ) {
                     itemsWithListStates(
                         items = screenState.trainingListItemsWithState(),

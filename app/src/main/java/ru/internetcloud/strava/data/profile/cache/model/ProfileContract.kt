@@ -15,6 +15,6 @@ object ProfileContract {
         const val IMAGE_URL = "image_url"
         const val FRIEND_COUNT = "friend_count"
         const val FOLLOWER_COUNT = "followerCount"
-        const val AGE = "age"
+        const val WEIGHT = "weight"
     }
 }

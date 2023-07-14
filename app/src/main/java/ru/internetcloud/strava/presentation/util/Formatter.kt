@@ -19,10 +19,14 @@ class Formatter {
             } else {
                 val minutes: Int = movingTime / SECONDS_IN_MINUTE
                 val seconds: Int = movingTime - minutes * SECONDS_IN_MINUTE
+//                String.format(
+//                    formatMinutesSeconds,
+//                    minutes,
+//                    seconds
+//                )
                 String.format(
                     formatMinutesSeconds,
-                    minutes,
-                    seconds
+                    minutes
                 )
             }
         }

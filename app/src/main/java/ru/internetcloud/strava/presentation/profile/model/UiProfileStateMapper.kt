@@ -9,9 +9,14 @@ class UiProfileStateMapper : Mapper<ProfileStore.State, UiProfileState> {
         return when (item) {
             is ProfileStore.State.Loading -> UiProfileState.Loading
 
-            is ProfileStore.State.Success -> UiProfileState.Success(profile = item.profile, source = item.source)
+            is ProfileStore.State.Success -> UiProfileState.Success(
+                profile = item.profile,
+                source = item.source,
+                saving = item.saving
+            )
 
             is ProfileStore.State.Error -> UiProfileState.Error(exception = item.exception)
+
         }
     }
 }

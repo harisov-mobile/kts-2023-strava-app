@@ -3,17 +3,15 @@ package ru.internetcloud.strava.domain.training.mvi.impl
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import ru.internetcloud.strava.domain.common.model.Source
+import ru.internetcloud.strava.domain.profile.ProfileRepository
 import ru.internetcloud.strava.domain.profile.model.ProfileWithTraining
-import ru.internetcloud.strava.domain.profile.usecase.GetProfileUseCase
+import ru.internetcloud.strava.domain.training.TrainingRepository
 import ru.internetcloud.strava.domain.training.mvi.api.TrainingDetailStore
-import ru.internetcloud.strava.domain.training.usecase.DeleteTrainingUseCase
-import ru.internetcloud.strava.domain.training.usecase.GetTrainingUseCase
 
 internal class TrainingDetailStoreFactory(
     private val storeFactory: StoreFactory,
-    private val getProfileUseCase: GetProfileUseCase,
-    private val getTrainingUseCase: GetTrainingUseCase,
-    private val deleteTrainingUseCase: DeleteTrainingUseCase
+    private val profileRepository: ProfileRepository,
+    private val trainingRepository: TrainingRepository
 ) {
 
     fun create(): TrainingDetailStore = object :
@@ -24,9 +22,8 @@ internal class TrainingDetailStoreFactory(
             bootstrapper = null,
             executorFactory = {
                 TrainingDetailExecutor(
-                    getProfileUseCase = getProfileUseCase,
-                    getTrainingUseCase = getTrainingUseCase,
-                    deleteTrainingUseCase = deleteTrainingUseCase
+                    profileRepository = profileRepository,
+                    trainingRepository = trainingRepository
                 )
             },
             reducer = TrainingDetailReducer()
