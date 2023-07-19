@@ -1,7 +1,6 @@
 package ru.internetcloud.strava.domain.profile.mvi.impl
 
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.internetcloud.strava.domain.common.model.DataResponse
 import ru.internetcloud.strava.domain.common.model.Source
@@ -31,8 +30,6 @@ internal class ProfileExecutor(
                 saving = true
             )
         )
-
-        delay(5000)
 
         when (val dataResponse = profileRepository.saveWeight(profile.weight)) {
             is DataResponse.Success -> {
