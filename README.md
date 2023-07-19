@@ -14,6 +14,7 @@ Strava - это сервис для отслеживания активност�
 - Оффлайн-режим;
 - Логаут (выход из аккаунта пользователя).
 
+
 <b>Стек:</b>
 - XML-разметка & Compose
 - Single activity
@@ -27,12 +28,13 @@ Strava - это сервис для отслеживания активност�
 - Koin
 - Clean Architecture
 
-
+<br/>
 После февраля 2022 года работать с сайтом strava.com надо через VPN.<br/>
 Зарегистрируйтесь как разработчик по ссылке <a href="https://www.strava.com/settings/api">https://www.strava.com/settings/api</a><br/>
 и получите CLIENT_ID и CLIENT_SECRET.<br/>
 В файл keystore.properties необходимо записать Ваши CLIENT_ID и CLIENT_SECRET.<br/>
 
+<br/>
 <kbd>
   <img src="/screenshots/OnBoarding.png"> 
 </kbd>
@@ -49,16 +51,9 @@ Strava - это сервис для отслеживания активност�
 <br/>
 
 <kbd>
-  <img src="/screenshots/Training_detail.png"> 
-</kbd>
-&#160;
-<kbd>
   <img src="/screenshots/Training_edit.png"> 
 </kbd>
-
-<br/>
-<br/>
-
+&#160;
 <kbd>
   <img src="/screenshots/Sport_picker.png"> 
 </kbd>
@@ -77,19 +72,9 @@ Strava - это сервис для отслеживания активност�
 <kbd>
   <img src="/screenshots/Duration_picker.png"> 
 </kbd>
-
-<br/>
-<br/>
-
+&#160;
 <kbd>
   <img src="/screenshots/Profile.png"> 
 </kbd>
-&#160;
-<kbd>
-  <img src="/screenshots/Logout.png"> 
-</kbd>
-
-<br/>
-<br/>
 
  
